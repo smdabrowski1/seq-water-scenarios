@@ -1,0 +1,2827 @@
+[
+  [
+    "site_name",
+    "site_no",
+    "site_id"
+  ],
+  [
+    "10513",
+    "w00114-sg-o10513",
+    "3922001"
+  ],
+  [
+    "215212",
+    "w00231-215212",
+    "3082750"
+  ],
+  [
+    "AMPHITHEATRE RES. HG",
+    "w00032-408216A",
+    "2705642"
+  ],
+  [
+    "ARTHURS LAKE",
+    "w00129-418",
+    "3162456"
+  ],
+  [
+    "AUGUSTA LAKE",
+    "w00129-155",
+    "3162359"
+  ],
+  [
+    "AVON DAM",
+    "w00077-212211",
+    "16372088"
+  ],
+  [
+    "AVON RIVER AT AVON DAM",
+    "w00231-212211",
+    "3082484"
+  ],
+  [
+    "Allen Reservoir",
+    "w00013-RE931",
+    "6833075"
+  ],
+  [
+    "Apollo Bay Basin",
+    "w00013-SB898",
+    "6833103"
+  ],
+  [
+    "Armadeus",
+    "w00076-6100236",
+    "388803"
+  ],
+  [
+    "Aroona Creek at Aroona Dam",
+    "w00078-A5100500",
+    "1619652"
+  ],
+  [
+    "Atkinson Head Water",
+    "w00066-143234A",
+    "115228"
+  ],
+  [
+    "Awoonga Dam HW",
+    "w00066-133005A",
+    "21919637"
+  ],
+  [
+    "BALRANALD LAGOON",
+    "w00077-41010307",
+    "1082825"
+  ],
+  [
+    "BARRINGTON LAKE",
+    "w00129-604",
+    "3162512"
+  ],
+  [
+    "BEACONSFIELD RES",
+    "w00151-228268A",
+    "3178221"
+  ],
+  [
+    "BEREMBED STORAGE",
+    "w00077-41010904",
+    "588381"
+  ],
+  [
+    "BERRY JERRY LAGOON",
+    "w00077-41010293",
+    "1082753"
+  ],
+  [
+    "BITTERN RES WH100",
+    "w00151-228265A",
+    "3178205"
+  ],
+  [
+    "BLOWERING DAM",
+    "w00077-410102",
+    "641446"
+  ],
+  [
+    "BOGGABILLA W.STORAGE",
+    "w00077-416065",
+    "1083714"
+  ],
+  [
+    "BP Dam HW",
+    "w00066-136210A",
+    "21924891"
+  ],
+  [
+    "BREWSTER STORAGE",
+    "w00077-412108",
+    "641528"
+  ],
+  [
+    "BROGO DAM",
+    "w00077-219027",
+    "587365"
+  ],
+  [
+    "BRONTE LAGOON",
+    "w00129-167",
+    "3162371"
+  ],
+  [
+    "BULLARTO RES. H.G.",
+    "w00032-407327A",
+    "2705616"
+  ],
+  [
+    "BUNDIDGERRY STORAGE",
+    "w00077-410190",
+    "1083001"
+  ],
+  [
+    "BURBURY LAKE",
+    "w00129-298",
+    "3162446"
+  ],
+  [
+    "BURRENDONG DAM",
+    "w00077-421078",
+    "641670"
+  ],
+  [
+    "BURRINJUCK DAM",
+    "w00077-410131",
+    "641475"
+  ],
+  [
+    "Balonne_R  Beardmore",
+    "w00066-422212B",
+    "115668"
+  ],
+  [
+    "Barkers Creek Storage",
+    "w00045-BARKERSCREEK",
+    "3152405"
+  ],
+  [
+    "Barossa Diversion Weir (SA Water)",
+    "w00209-SAWBAWR",
+    "5585820"
+  ],
+  [
+    "Barossa Reservoir (SA Water)",
+    "w00209-SAWBARS",
+    "5585816"
+  ],
+  [
+    "Barrage",
+    "w00198-128",
+    "3101979"
+  ],
+  [
+    "Barron_R Tin Dam HW",
+    "w00066-110014A",
+    "21891643"
+  ],
+  [
+    "Bedford Weir",
+    "w00227-130104A",
+    "3242401"
+  ],
+  [
+    "Ben Anderson Barrage",
+    "w00227-136020A",
+    "3242661"
+  ],
+  [
+    "Ben Dor Weir",
+    "w00227-416406A",
+    "3242835"
+  ],
+  [
+    "Bendora Res. at Dam",
+    "w00002-410717",
+    "13334"
+  ],
+  [
+    "Bill Gunn Dam L Dyer",
+    "w00066-143228A",
+    "115216"
+  ],
+  [
+    "Bingegang Weir",
+    "w00227-130106A",
+    "3242409"
+  ],
+  [
+    "Bingegang Weir H/W",
+    "w00066-130106A",
+    "71996"
+  ],
+  [
+    "Bjelke-Petersen Dam",
+    "w00227-136210A",
+    "3242749"
+  ],
+  [
+    "Boondooma Dam",
+    "w00227-136316A",
+    "3242796"
+  ],
+  [
+    "Boondooma Dam HW",
+    "w00066-136316A",
+    "21927567"
+  ],
+  [
+    "Border rivers",
+    "w00160-BorderRivers",
+    "22073695"
+  ],
+  [
+    "Bostock Reservoir",
+    "w00013-RE670",
+    "6832703"
+  ],
+  [
+    "Bowen River Weir",
+    "w00227-120299A",
+    "3242345"
+  ],
+  [
+    "Bridgedams",
+    "w00076-6091772",
+    "387688"
+  ],
+  [
+    "Brisbane River Basin",
+    "w00191-143",
+    "3922221"
+  ],
+  [
+    "Broken_R Eungella",
+    "w00066-120211A",
+    "21900127"
+  ],
+  [
+    "Brooklands",
+    "w00076-6100237",
+    "388809"
+  ],
+  [
+    "Buangor Storage",
+    "w00115-BUANGOR_STORAGE",
+    "7328429"
+  ],
+  [
+    "Bucca Weir",
+    "w00227-135008A",
+    "3242604"
+  ],
+  [
+    "Bucca Weir HW",
+    "w00066-135008A",
+    "21920753"
+  ],
+  [
+    "Buckinbah Weir",
+    "w00227-4222008A",
+    "3242870"
+  ],
+  [
+    "Burdekin Falls Dam",
+    "w00227-120016A",
+    "3242325"
+  ],
+  [
+    "Burnett_R Bingera",
+    "w00066-136005A",
+    "114073"
+  ],
+  [
+    "CARCOAR DAM",
+    "w00077-412106",
+    "641516"
+  ],
+  [
+    "CARDINIA RES HG",
+    "w00151-228263A",
+    "3178193"
+  ],
+  [
+    "CARGELLIGO STORAGE",
+    "w00077-412107",
+    "641522"
+  ],
+  [
+    "CASCADE CK DAM NO.1",
+    "w00077-212281",
+    "16375145"
+  ],
+  [
+    "CASCADE CK DAM NO.2",
+    "w00077-212282",
+    "16375151"
+  ],
+  [
+    "CASCADE CK DAM NO.3",
+    "w00077-212283",
+    "16375157"
+  ],
+  [
+    "CASCADE CREEK AT CASCADE CREEK DAM No 1 (Middle)",
+    "w00231-212281",
+    "3082590"
+  ],
+  [
+    "CASCADE CREEK AT CASCADE CREEK DAM No 2 (Bottom)",
+    "w00231-212282",
+    "3082602"
+  ],
+  [
+    "CASCADE CREEK AT CASCADE CREEK DAM No 3 (Top)",
+    "w00231-212283",
+    "3082614"
+  ],
+  [
+    "CATAGUNYA LAKE",
+    "w00129-592",
+    "3162504"
+  ],
+  [
+    "CATARACT DAM",
+    "w00077-212232",
+    "16372106"
+  ],
+  [
+    "CATARACT RIVER AT CATARACT DAM",
+    "w00231-212232",
+    "3082538"
+  ],
+  [
+    "CENTENARY RES HG",
+    "w00032-407335A",
+    "2705626"
+  ],
+  [
+    "CETHANA LAKE",
+    "w00129-625",
+    "3162520"
+  ],
+  [
+    "CHAFFEY DAM",
+    "w00077-419069",
+    "589908"
+  ],
+  [
+    "CLUNY LAGOON",
+    "w00129-573",
+    "3162490"
+  ],
+  [
+    "COCHRANE DAM STORAGE",
+    "w00077-219033",
+    "587378"
+  ],
+  [
+    "COLDENE LAGOON",
+    "w00077-41010290",
+    "1082741"
+  ],
+  [
+    "COPETON DAM",
+    "w00077-418035",
+    "589467"
+  ],
+  [
+    "CORDEAUX DAM",
+    "w00077-212220",
+    "16372100"
+  ],
+  [
+    "CORDEAUX RIVER AT CORDEAUX DAM",
+    "w00231-212220",
+    "3082516"
+  ],
+  [
+    "Cairn Curran Reservoir",
+    "w00114-sg-o14931",
+    "3922105"
+  ],
+  [
+    "Callide Ck Dam HW",
+    "w00066-130314B",
+    "21913847"
+  ],
+  [
+    "Callide Dam HW",
+    "w00066-130314A",
+    "21913839"
+  ],
+  [
+    "Callide Dam Intake",
+    "w00227-130314B",
+    "3242497"
+  ],
+  [
+    "Callide Dam Wall",
+    "w00227-130314C",
+    "4827808"
+  ],
+  [
+    "Cania Dam",
+    "w00227-136115A",
+    "3242703"
+  ],
+  [
+    "Cania Dam HW",
+    "w00066-136115A",
+    "21923679"
+  ],
+  [
+    "Chichester Dam",
+    "w00126-D3",
+    "6961273"
+  ],
+  [
+    "Chinchilla HW Intake",
+    "w00227-422358A",
+    "4299345"
+  ],
+  [
+    "Chinchilla Weir",
+    "w00227-422358B",
+    "3242926"
+  ],
+  [
+    "Chinchilla Weir H/W",
+    "w00066-422358A",
+    "116016"
+  ],
+  [
+    "Clare Weir",
+    "w00066-120012A",
+    "112838"
+  ],
+  [
+    "Clare Weir",
+    "w00227-120012A",
+    "3242319"
+  ],
+  [
+    "Clarendon Head Water",
+    "w00066-143235A",
+    "115234"
+  ],
+  [
+    "Clarendon Weir (SA Water)",
+    "w00209-SAWCLRNDWR",
+    "5585824"
+  ],
+  [
+    "Claude Wharton HW",
+    "w00066-136003C",
+    "21921491"
+  ],
+  [
+    "Claude Wharton Weir",
+    "w00227-136003C",
+    "3242635"
+  ],
+  [
+    "Colac Service Basin No.4",
+    "w00013-SB855",
+    "6833091"
+  ],
+  [
+    "Colac Service Basin No.5",
+    "w00013-SB855B",
+    "6833097"
+  ],
+  [
+    "Condamine_R Cecil Wr",
+    "w00066-422316A",
+    "74058"
+  ],
+  [
+    "Condamine_R Loudouns",
+    "w00066-422333A",
+    "74132"
+  ],
+  [
+    "Cooby Dam",
+    "w00238-69",
+    "3152845"
+  ],
+  [
+    "Coolmunda Dam",
+    "w00227-416409A",
+    "3242841"
+  ],
+  [
+    "Coolmunda Headwater",
+    "w00066-416409A",
+    "21949253"
+  ],
+  [
+    "Corin Res. at Dam",
+    "w00002-410742",
+    "13401"
+  ],
+  [
+    "Cotter Res. at Dam",
+    "w00002-410704",
+    "13306"
+  ],
+  [
+    "Cressbrook Dam",
+    "w00238-70",
+    "3152851"
+  ],
+  [
+    "DADENONG MR WR4",
+    "w00151-228269A",
+    "3178227"
+  ],
+  [
+    "DARTMOUTH DAM",
+    "w00077-401224A",
+    "1081750"
+  ],
+  [
+    "DEE LAGOON",
+    "w00129-179",
+    "3162395"
+  ],
+  [
+    "DEVILBEND RESERVOIR",
+    "w00151-228264A",
+    "3178199"
+  ],
+  [
+    "Dartmouth",
+    "w00114-sg-o10301",
+    "3921971"
+  ],
+  [
+    "Darwin River Dam - Intake Tower",
+    "w00189-G8150011",
+    "68864"
+  ],
+  [
+    "Dawson Gyranda Wr HW",
+    "w00066-130354A",
+    "21916075"
+  ],
+  [
+    "Dawson_R Glebe Wr HW",
+    "w00066-130338A",
+    "113690"
+  ],
+  [
+    "Dawson_R Theodore",
+    "w00066-130305A",
+    "21913081"
+  ],
+  [
+    "Di Fri Dam",
+    "w00076-607035",
+    "385703"
+  ],
+  [
+    "Dock Lake",
+    "w00115-DOCK",
+    "3101645"
+  ],
+  [
+    "E.J. Beardmore Dam",
+    "w00227-422212B",
+    "3242877"
+  ],
+  [
+    "ECHO LAKE",
+    "w00129-176",
+    "3162389"
+  ],
+  [
+    "EUROLEY LAGOON",
+    "w00077-41010297",
+    "1082777"
+  ],
+  [
+    "Elmhurst Storage",
+    "w00115-ELMHURST",
+    "7326505"
+  ],
+  [
+    "Eungella Dam",
+    "w00227-120211A",
+    "3242331"
+  ],
+  [
+    "Evolution Dam HW",
+    "w00066-136022A",
+    "72649"
+  ],
+  [
+    "Ewlyamartup",
+    "w00076-6090057",
+    "386309"
+  ],
+  [
+    "FELLMONGERS C @ RES",
+    "w00032-233272A",
+    "2700440"
+  ],
+  [
+    "FITZROY FALLS DAM",
+    "w00077-215235",
+    "16376081"
+  ],
+  [
+    "FRANKSTON MR WH142",
+    "w00151-228267A",
+    "3178216"
+  ],
+  [
+    "Fairbairn Dam",
+    "w00227-130216A",
+    "3242438"
+  ],
+  [
+    "Fred Haigh Dam",
+    "w00227-135009A",
+    "3242613"
+  ],
+  [
+    "Fred Haigh Dam HW",
+    "w00066-135009A",
+    "21920761"
+  ],
+  [
+    "GAIRDNER LAKE",
+    "w00129-613",
+    "3162516"
+  ],
+  [
+    "GANMAIN NO1 LAGOON",
+    "w00077-41010294",
+    "1082759"
+  ],
+  [
+    "GANMAIN NO2 LAGOON",
+    "w00077-41010295",
+    "1082765"
+  ],
+  [
+    "GLENBAWN DAM",
+    "w00077-210097",
+    "641232"
+  ],
+  [
+    "GLENLYON DAM",
+    "w00077-416315A",
+    "1083767"
+  ],
+  [
+    "GLENLYON DAM",
+    "w00160-416315A",
+    "3082177"
+  ],
+  [
+    "GLENNIES CREEK DAM",
+    "w00077-210117",
+    "641241"
+  ],
+  [
+    "GLENQUARRY CUT",
+    "w00077-212212",
+    "16372096"
+  ],
+  [
+    "GLENQUARRY CUT AT  WINGECARRIBEE STORAGE",
+    "w00231-212212",
+    "3082500"
+  ],
+  [
+    "GOGELDRIE STORAGE",
+    "w00077-41010922",
+    "588387"
+  ],
+  [
+    "GOORAGOOL LAGOON",
+    "w00077-41010300",
+    "1082789"
+  ],
+  [
+    "GORAN LK@HOKEY POKEY",
+    "w00077-419066",
+    "1084070"
+  ],
+  [
+    "GORDON LAKE",
+    "w00129-646",
+    "3162536"
+  ],
+  [
+    "GREAT LAKE",
+    "w00129-139",
+    "3162353"
+  ],
+  [
+    "GREAVES CREEK AT GREAVES CREEK DAM",
+    "w00231-212285",
+    "3082648"
+  ],
+  [
+    "GREAVES CREEK AT LAKE MEDLOW DAM",
+    "w00231-212284",
+    "3082636"
+  ],
+  [
+    "GREAVES CREEK DAM",
+    "w00077-212285",
+    "16373360"
+  ],
+  [
+    "GREENVALE RESERVOIR",
+    "w00151-229407A",
+    "3179137"
+  ],
+  [
+    "Gandy Dam 1",
+    "w00076-607036",
+    "385709"
+  ],
+  [
+    "Gandy Dam 2",
+    "w00076-607037",
+    "385715"
+  ],
+  [
+    "Geehi at Geehi Res",
+    "w00205-401570",
+    "3377997"
+  ],
+  [
+    "Giru Weir",
+    "w00227-119007A",
+    "3242295"
+  ],
+  [
+    "Glebe Weir",
+    "w00227-130338A",
+    "3242517"
+  ],
+  [
+    "Goleby Weir HW",
+    "w00066-136120A",
+    "21924217"
+  ],
+  [
+    "Gooburrum Pump Stn",
+    "w00066-135010B",
+    "21920769"
+  ],
+  [
+    "Googong Res at Dam",
+    "w00002-410748",
+    "13425"
+  ],
+  [
+    "Goombungee Dam",
+    "w00238-67",
+    "3152835"
+  ],
+  [
+    "Gorge Weir (SA Water)",
+    "w00209-SAWTOGOWR",
+    "5586300"
+  ],
+  [
+    "Goulburn Weir",
+    "w00114-sg-o14967",
+    "3922139"
+  ],
+  [
+    "Grahamstown Dam",
+    "w00126-D13",
+    "6952744"
+  ],
+  [
+    "Green",
+    "w00115-GREEN-LAKE-HORSH-HG",
+    "40848513"
+  ],
+  [
+    "Greens Lake",
+    "w00114-sg-o10457",
+    "3921991"
+  ],
+  [
+    "Gumeracha Weir (SA Water)",
+    "w00209-SAWGUMWR",
+    "5585828"
+  ],
+  [
+    "Gungahlin Pond",
+    "w00075-410788",
+    "13929"
+  ],
+  [
+    "Guthega Pondage RL",
+    "w00205-222537",
+    "3377931"
+  ],
+  [
+    "Gyranda Weir",
+    "w00227-130354A",
+    "3242553"
+  ],
+  [
+    "HAY STORAGE",
+    "w00077-41010928",
+    "588393"
+  ],
+  [
+    "HENTY LAKE",
+    "w00129-286",
+    "3162422"
+  ],
+  [
+    "HUME DAM",
+    "w00077-409011",
+    "1082040"
+  ],
+  [
+    "HUME DAM STORAGE",
+    "w00077-401027",
+    "587589"
+  ],
+  [
+    "Happy Valley Reservoir (SA Water)",
+    "w00209-SAWHAPVRS",
+    "5585836"
+  ],
+  [
+    "Hope Valley Reservoir (SA Water)",
+    "w00209-SAWHOPVRS",
+    "5585840"
+  ],
+  [
+    "INFLOW @ EASTERNSPIL",
+    "w00077-41200211",
+    "4383502"
+  ],
+  [
+    "INNEASTERN@LAKE BREW",
+    "w00077-41200216",
+    "4383526"
+  ],
+  [
+    "IRIS PARK SWAMP",
+    "w00077-41010292",
+    "1082747"
+  ],
+  [
+    "Isis OS",
+    "w00227-136026A",
+    "5454836"
+  ],
+  [
+    "Island Bend Pondage",
+    "w00205-222539",
+    "3377943"
+  ],
+  [
+    "JACKSON @ ROSSLYNNE",
+    "w00102-230216A",
+    "3546117"
+  ],
+  [
+    "JEMALONG STORAGE",
+    "w00077-412172",
+    "1083541"
+  ],
+  [
+    "Jack Taylor H.W.",
+    "w00066-422214A",
+    "115674"
+  ],
+  [
+    "Jack Taylor Weir",
+    "w00227-422214A",
+    "3242883"
+  ],
+  [
+    "Jetty 4099",
+    "w00076-6090056",
+    "386303"
+  ],
+  [
+    "Joe Sippel Weir",
+    "w00227-136215A",
+    "3242776"
+  ],
+  [
+    "John Goleby Weir",
+    "w00227-136120A",
+    "3242724"
+  ],
+  [
+    "Jones Weir HW",
+    "w00066-136004A",
+    "72600"
+  ],
+  [
+    "Jounama Pondage RL",
+    "w00205-410573",
+    "3378065"
+  ],
+  [
+    "Julius Dam",
+    "w00227-913015B",
+    "4686159"
+  ],
+  [
+    "Julius Dam",
+    "w00227-913015A",
+    "3242965"
+  ],
+  [
+    "KEEPIT DAM",
+    "w00077-419041",
+    "589811"
+  ],
+  [
+    "KING WILLIAM LAKE",
+    "w00129-128",
+    "3162343"
+  ],
+  [
+    "KIRKS RES",
+    "w00032-CHWKIRR",
+    "2705670"
+  ],
+  [
+    "KORJAMNUNNIP C-PYKES",
+    "w00151-231222A",
+    "3179962"
+  ],
+  [
+    "Kangaroo Creek Reservoir (SA Water)",
+    "w00209-SAWKACKRS",
+    "5585844"
+  ],
+  [
+    "Kellys",
+    "w00285-130",
+    "6342230"
+  ],
+  [
+    "Kerferd Reservoir",
+    "w00172-RES_BEEWKFS",
+    "3162562"
+  ],
+  [
+    "Kidston HW",
+    "w00066-917116A",
+    "74595"
+  ],
+  [
+    "Kinchant Dam",
+    "w00227-126004A",
+    "3242388"
+  ],
+  [
+    "Kinchant Dam HW",
+    "w00066-126004A",
+    "71909"
+  ],
+  [
+    "Kirar Weir",
+    "w00227-136121A",
+    "3242730"
+  ],
+  [
+    "Kolan Barrage HW",
+    "w00227-135010B",
+    "3242622"
+  ],
+  [
+    "Korweinguboora Reservoir",
+    "w00013-RE690",
+    "6832707"
+  ],
+  [
+    "Kroombit Dam",
+    "w00227-130360A",
+    "3242573"
+  ],
+  [
+    "Kroombit Dam HW",
+    "w00066-130360A",
+    "21916353"
+  ],
+  [
+    "L PAMARAROO   COPI H",
+    "w00077-425021",
+    "590853"
+  ],
+  [
+    "L TANDURE@STORAGE",
+    "w00077-425047",
+    "14178676"
+  ],
+  [
+    "L WETHERELL TANDURE",
+    "w00077-425020",
+    "590847"
+  ],
+  [
+    "L WETHERELL@STORAGE",
+    "w00077-425046",
+    "14178530"
+  ],
+  [
+    "LA TROBE R NARRACAN",
+    "w00102-226236A",
+    "3546008"
+  ],
+  [
+    "LACHLAN LAKE B WEIR",
+    "w00077-412048",
+    "588829"
+  ],
+  [
+    "LAKE CAWNDILLA",
+    "w00077-425023",
+    "590865"
+  ],
+  [
+    "LAKE MENINDEE",
+    "w00077-425022",
+    "590859"
+  ],
+  [
+    "LAKE PAMAMAROO",
+    "w00077-42510036",
+    "16647205"
+  ],
+  [
+    "LAL LAL C BEALES RES",
+    "w00032-232219A",
+    "2705569"
+  ],
+  [
+    "LAL LAL C WILSON RES",
+    "w00032-232220A",
+    "30934561"
+  ],
+  [
+    "LAL LAL RES. H.G.",
+    "w00032-232222A",
+    "30934521"
+  ],
+  [
+    "LANDSBOROUGH RES HG",
+    "w00032-415275A",
+    "2705664"
+  ],
+  [
+    "LAUGHING JACK LAGOON",
+    "w00129-211",
+    "3162405"
+  ],
+  [
+    "LEXTON RES. H.G.",
+    "w00032-407326A",
+    "2705610"
+  ],
+  [
+    "LIAPOOTAH POND",
+    "w00129-579",
+    "3162494"
+  ],
+  [
+    "LITTLE PINE LAGOON",
+    "w00129-236",
+    "3162411"
+  ],
+  [
+    "LOSTOCK DAM",
+    "w00077-210102",
+    "586742"
+  ],
+  [
+    "Laanecoorie Reservoir",
+    "w00114-sg-o14952",
+    "3922130"
+  ],
+  [
+    "Lake Albert",
+    "w00160-LKALBERT",
+    "3082183"
+  ],
+  [
+    "Lake Albert at Meningie Sailing Club Jetty Daily",
+    "w00078-A4261057",
+    "1618177"
+  ],
+  [
+    "Lake Alexandrina",
+    "w00160-LKALEX",
+    "3082189"
+  ],
+  [
+    "Lake Alexandrina at Goolwa Barrage Daily",
+    "w00078-A4261005",
+    "1617942"
+  ],
+  [
+    "Lake Alexandrina at Milang Jetty Daily",
+    "w00078-A4261004",
+    "1617936"
+  ],
+  [
+    "Lake Alexandrina at Mundoo Barrage Daily",
+    "w00078-A4260526",
+    "1617199"
+  ],
+  [
+    "Lake Alexandrina at Tauwitchere Barrage Daily",
+    "w00078-A4261006",
+    "1617949"
+  ],
+  [
+    "Lake Awoonga",
+    "w00103-63",
+    "3101581"
+  ],
+  [
+    "Lake Batyo Catyo",
+    "w00115-BATYO_CATYO",
+    "3101639"
+  ],
+  [
+    "Lake Buffalo",
+    "w00114-sg-o10112",
+    "3921954"
+  ],
+  [
+    "Lake Eildon",
+    "w00114-sg-o14980",
+    "3922164"
+  ],
+  [
+    "Lake Eppalock",
+    "w00114-sg-o14925",
+    "3922094"
+  ],
+  [
+    "Lake Eucumbene RL",
+    "w00205-222538",
+    "3377937"
+  ],
+  [
+    "Lake Jindabyne RL",
+    "w00205-222540",
+    "3377949"
+  ],
+  [
+    "Lake Julius P/S",
+    "w00066-913015A",
+    "21963921"
+  ],
+  [
+    "Lake Mokoan",
+    "w00114-sg-o10809",
+    "3922019"
+  ],
+  [
+    "Lake Nillahcootie",
+    "w00114-sg-o14977",
+    "3922156"
+  ],
+  [
+    "Lake Paluma",
+    "w00241-9575",
+    "3114991"
+  ],
+  [
+    "Lake Victoria",
+    "w00077-4261093",
+    "9256149"
+  ],
+  [
+    "Lake Victoria at Lake Centre",
+    "w00209-A4261093",
+    "3342234"
+  ],
+  [
+    "Lake Victoria at Outlet Regulator",
+    "w00078-A4260553",
+    "1617345"
+  ],
+  [
+    "Lake William Hovell",
+    "w00114-sg-o14976",
+    "3922147"
+  ],
+  [
+    "Lake_Bellfield",
+    "w00115-LAKE-BELLFD-HG",
+    "41020327"
+  ],
+  [
+    "Lake_Fyans",
+    "w00115-LAKE-FYANS-HG",
+    "41020348"
+  ],
+  [
+    "Lake_Lonsdale",
+    "w00115-LAKE-LONSD-HG",
+    "41020359"
+  ],
+  [
+    "Lauriston Reservoir",
+    "w00045-LAURISTON",
+    "3152426"
+  ],
+  [
+    "Lemon Tree Weir",
+    "w00066-422349A",
+    "21957059"
+  ],
+  [
+    "Lemon Tree Weir HW",
+    "w00227-422349A",
+    "3242911"
+  ],
+  [
+    "Lenthalls Dam HW",
+    "w00066-137303A",
+    "72903"
+  ],
+  [
+    "Leslie Dam",
+    "w00227-422315B",
+    "3242895"
+  ],
+  [
+    "Little Para Reservoir (SA Water)",
+    "w00209-SAWLPRS",
+    "5585848"
+  ],
+  [
+    "Logan-Albert Rivers Basin",
+    "w00191-145",
+    "3922259"
+  ],
+  [
+    "Loombah Reservoir",
+    "w00172-RES_BENWLOR",
+    "3162568"
+  ],
+  [
+    "Luzny Dam",
+    "w00076-607041",
+    "385733"
+  ],
+  [
+    "MACALISTER @ GLENMAG",
+    "w00102-225225A",
+    "3545654"
+  ],
+  [
+    "MACKENZIE LAKE",
+    "w00129-629",
+    "3162530"
+  ],
+  [
+    "MACKINTOSH LAKE",
+    "w00129-656",
+    "3162544"
+  ],
+  [
+    "MALPAS DAM",
+    "w00077-206036",
+    "641164"
+  ],
+  [
+    "MARGARET LAKE",
+    "w00129-370",
+    "3162450"
+  ],
+  [
+    "MAUDE STORAGE",
+    "w00077-41010941",
+    "588399"
+  ],
+  [
+    "MCCALLUMS C EVAN RES",
+    "w00032-407333A",
+    "2700445"
+  ],
+  [
+    "MCKENNAS LAGOON",
+    "w00077-41010304",
+    "1082807"
+  ],
+  [
+    "MEADOWBANK LAKE",
+    "w00129-565",
+    "3162486"
+  ],
+  [
+    "MEDLOW DAM",
+    "w00077-212284",
+    "16375163"
+  ],
+  [
+    "MENINDEE TOTAL",
+    "w00077-425049",
+    "1215591"
+  ],
+  [
+    "MENINDEE@COPI HOLLOW",
+    "w00077-42510037",
+    "1084824"
+  ],
+  [
+    "MITCHAM MR WR10",
+    "w00151-229409A",
+    "3179149"
+  ],
+  [
+    "MOLLEYS LAGOON",
+    "w00077-41010298",
+    "1082783"
+  ],
+  [
+    "MOORABOOL WB RES HG",
+    "w00032-232217A",
+    "2700398"
+  ],
+  [
+    "MORANG MR WR33",
+    "w00151-229413A",
+    "3179179"
+  ],
+  [
+    "MOUNT WAVERLEY WR15",
+    "w00151-229410A",
+    "3179155"
+  ],
+  [
+    "MURCHISON LAKE",
+    "w00129-657",
+    "3162548"
+  ],
+  [
+    "MUSICAL GULLY RES.",
+    "w00032-236228A",
+    "2705585"
+  ],
+  [
+    "Malmsbury Reservoir",
+    "w00045-MALMSBURY",
+    "3152442"
+  ],
+  [
+    "Mannum Summit Storage (SA Water)",
+    "w00209-SAWMASS",
+    "5585852"
+  ],
+  [
+    "Marengo Basin",
+    "w00013-SB903",
+    "6833109"
+  ],
+  [
+    "Marian Weir",
+    "w00227-125003A",
+    "3242363"
+  ],
+  [
+    "Maroochy River Basin",
+    "w00191-141",
+    "3922193"
+  ],
+  [
+    "Mary Barrage",
+    "w00227-138013B",
+    "3242816"
+  ],
+  [
+    "Mary Barrage HW",
+    "w00066-138013B",
+    "21929769"
+  ],
+  [
+    "Mary River Basin",
+    "w00191-138",
+    "3922175"
+  ],
+  [
+    "McCallsay Reservoir",
+    "w00172-RES_BENWMSR",
+    "3162574"
+  ],
+  [
+    "McCay Storage",
+    "w00045-MCCAY",
+    "3152453"
+  ],
+  [
+    "Millbrook Reservoir (SA Water)",
+    "w00209-SAWMILBRS",
+    "5585860"
+  ],
+  [
+    "Mirani Weir",
+    "w00227-125008A",
+    "3242369"
+  ],
+  [
+    "Mirani Weir HW",
+    "w00066-125008A",
+    "113205"
+  ],
+  [
+    "Moogerah Dam HW",
+    "w00066-143111A",
+    "21939193"
+  ],
+  [
+    "Moolabah Weir",
+    "w00227-4222007A",
+    "3242863"
+  ],
+  [
+    "Moora",
+    "w00115-MOORA-RES-HG",
+    "41020391"
+  ],
+  [
+    "Moura OSS",
+    "w00227-130351A",
+    "4012341"
+  ],
+  [
+    "Moura Weir",
+    "w00227-130350B",
+    "3242538"
+  ],
+  [
+    "Mt Bold Reservoir (SA Water)",
+    "w00209-SAWMTBORS",
+    "5585864"
+  ],
+  [
+    "Mt_Cole",
+    "w00115-MTCOLE-RES-HG",
+    "41020402"
+  ],
+  [
+    "Mundic West Sump",
+    "w00066-130372A",
+    "72326"
+  ],
+  [
+    "Murray 2 Dam",
+    "w00205-401571",
+    "3378003"
+  ],
+  [
+    "Myponga Reservoir (SA Water)",
+    "w00209-SAWMYPRS",
+    "5586292"
+  ],
+  [
+    "NAMOI@GUNIDGERA STOR",
+    "w00077-419060",
+    "589873"
+  ],
+  [
+    "NAMOI@MOLLEE WR STOR",
+    "w00077-419062",
+    "589884"
+  ],
+  [
+    "NARRANDERA SF LAGOON",
+    "w00077-41010296",
+    "1082771"
+  ],
+  [
+    "NEPEAN DAM",
+    "w00077-212205",
+    "16372082"
+  ],
+  [
+    "NEPEAN RIVER AT NEPEAN DAM",
+    "w00231-212205",
+    "3082464"
+  ],
+  [
+    "NEWTON LAKE",
+    "w00129-296",
+    "3162440"
+  ],
+  [
+    "NINE MILE LAGOON",
+    "w00077-41010305",
+    "1082813"
+  ],
+  [
+    "NORTH ESSENDON WR6",
+    "w00151-229408A",
+    "3179143"
+  ],
+  [
+    "NORTHERN @ U/SOFREGU",
+    "w00077-41200213",
+    "4383514"
+  ],
+  [
+    "NOTTING HILL WR17",
+    "w00151-229411A",
+    "3179161"
+  ],
+  [
+    "Ned Churchward Weir",
+    "w00227-136023A",
+    "3242667"
+  ],
+  [
+    "Ned Churchward Wr HW",
+    "w00066-136023A",
+    "21922517"
+  ],
+  [
+    "Neville Hewitt Weir",
+    "w00227-130304B",
+    "3242481"
+  ],
+  [
+    "Neville Hewitt Wr HW",
+    "w00066-130304B",
+    "21912653"
+  ],
+  [
+    "Newlyn Reservoir",
+    "w00114-sg-o14917",
+    "3922085"
+  ],
+  [
+    "Nil Gully Reservoir",
+    "w00172-RES_MYRWNGR",
+    "3162580"
+  ],
+  [
+    "No 7 Dam",
+    "w00198-132",
+    "3101991"
+  ],
+  [
+    "Nogoa R_Fairbairn",
+    "w00066-130216A",
+    "21911915"
+  ],
+  [
+    "OBERON DAM",
+    "w00077-421189",
+    "641689"
+  ],
+  [
+    "ODSS_11327_STAMN",
+    "w00247-ODSS_11327_STAMN",
+    "3558769"
+  ],
+  [
+    "ODSS_11418_STAMN",
+    "w00247-ODSS_11418_STAMN",
+    "3558820"
+  ],
+  [
+    "ODSS_11453_STAMN",
+    "w00247-ODSS_11453_STAMN",
+    "3558855"
+  ],
+  [
+    "ODSS_11463_STAMN",
+    "w00247-ODSS_11463_STAMN",
+    "3558866"
+  ],
+  [
+    "ODSS_11633_STAMN",
+    "w00247-ODSS_11633_STAMN",
+    "3558917"
+  ],
+  [
+    "ODSS_11709_STAMN",
+    "w00247-ODSS_11709_STAMN",
+    "3558938"
+  ],
+  [
+    "ODSS_11933_STAMN",
+    "w00247-ODSS_11933_STAMN",
+    "3559017"
+  ],
+  [
+    "ODSS_11962_STAMN",
+    "w00247-ODSS_11962_STAMN",
+    "3559028"
+  ],
+  [
+    "ODSS_12030_STAMN",
+    "w00247-ODSS_12030_STAMN",
+    "3559045"
+  ],
+  [
+    "ODSS_18106_STAMN",
+    "w00247-ODSS_18106_STAMN",
+    "3560768"
+  ],
+  [
+    "ODSS_18207_STAMN",
+    "w00247-ODSS_18207_STAMN",
+    "3560875"
+  ],
+  [
+    "ODSS_18313_WSLAHD",
+    "w00247-ODSS_18313_WSLAHD",
+    "3561006"
+  ],
+  [
+    "ODSS_18315_WSLAHD",
+    "w00247-ODSS_18315_WSLAHD",
+    "3561015"
+  ],
+  [
+    "ODSS_18317_STAMN",
+    "w00247-ODSS_18317_STAMN",
+    "3561022"
+  ],
+  [
+    "ODSS_18317_WSLAHD",
+    "w00247-ODSS_18317_WSLAHD",
+    "3561027"
+  ],
+  [
+    "ODSS_18319_STAMN",
+    "w00247-ODSS_18319_STAMN",
+    "3561032"
+  ],
+  [
+    "ODSS_18319_WSLAHD",
+    "w00247-ODSS_18319_WSLAHD",
+    "3561037"
+  ],
+  [
+    "ODSS_18320_STAMN",
+    "w00247-ODSS_18320_STAMN",
+    "3561042"
+  ],
+  [
+    "ODSS_18320_WSLAHD",
+    "w00247-ODSS_18320_WSLAHD",
+    "3561047"
+  ],
+  [
+    "ODSS_18325_STAMN",
+    "w00247-ODSS_18325_STAMN",
+    "3561064"
+  ],
+  [
+    "ODSS_18325_WSLAHD",
+    "w00247-ODSS_18325_WSLAHD",
+    "3561069"
+  ],
+  [
+    "ODSS_18326_STAMN",
+    "w00247-ODSS_18326_STAMN",
+    "3561074"
+  ],
+  [
+    "ODSS_18326_WSLAHD",
+    "w00247-ODSS_18326_WSLAHD",
+    "3561079"
+  ],
+  [
+    "ODSS_18327_WSLAHD",
+    "w00247-ODSS_18327_WSLAHD",
+    "3561086"
+  ],
+  [
+    "ODSS_18331_WSLAHD",
+    "w00247-ODSS_18331_WSLAHD",
+    "3561101"
+  ],
+  [
+    "ODSS_18332_STAMN",
+    "w00247-ODSS_18332_STAMN",
+    "3561106"
+  ],
+  [
+    "ODSS_18332_WSLAHD",
+    "w00247-ODSS_18332_WSLAHD",
+    "3561111"
+  ],
+  [
+    "ODSS_18335_STAMN",
+    "w00247-ODSS_18335_STAMN",
+    "3561120"
+  ],
+  [
+    "ODSS_18335_WSLAHD",
+    "w00247-ODSS_18335_WSLAHD",
+    "3561125"
+  ],
+  [
+    "ODSS_18337_WSLAHD",
+    "w00247-ODSS_18337_WSLAHD",
+    "3561130"
+  ],
+  [
+    "ODSS_21137_WSLAHD",
+    "w00247-ODSS_21137_WSLAHD",
+    "3561219"
+  ],
+  [
+    "ODSS_21138_WSLAHD",
+    "w00247-ODSS_21138_WSLAHD",
+    "3561224"
+  ],
+  [
+    "ODSS_21139_WSLAHD",
+    "w00247-ODSS_21139_WSLAHD",
+    "3561229"
+  ],
+  [
+    "ODSS_21140_WSLAHD",
+    "w00247-ODSS_21140_WSLAHD",
+    "3561231"
+  ],
+  [
+    "ODSS_21165_WSLAHD",
+    "w00247-ODSS_21165_WSLAHD",
+    "3561236"
+  ],
+  [
+    "ODSS_21166_WSLAHD",
+    "w00247-ODSS_21166_WSLAHD",
+    "3561241"
+  ],
+  [
+    "ODSS_21167_WSLAHD",
+    "w00247-ODSS_21167_WSLAHD",
+    "3561246"
+  ],
+  [
+    "ODSS_21168_WSLAHD",
+    "w00247-ODSS_21168_WSLAHD",
+    "3561251"
+  ],
+  [
+    "ODSS_22241_GLEVN",
+    "w00247-ODSS_22241_GLEVN",
+    "3561438"
+  ],
+  [
+    "ODSS_22241_STAMN",
+    "w00247-ODSS_22241_STAMN",
+    "3561443"
+  ],
+  [
+    "ODSS_22257_SLEVELM",
+    "w00247-ODSS_22257_SLEVELM",
+    "3561466"
+  ],
+  [
+    "ODSS_22257_STAMN",
+    "w00247-ODSS_22257_STAMN",
+    "3561471"
+  ],
+  [
+    "ODSS_39563_WSLAHD",
+    "w00247-ODSS_39563_WSLAHD",
+    "3564872"
+  ],
+  [
+    "ODSS_42363_GLEVN",
+    "w00247-ODSS_42363_GLEVN",
+    "3565984"
+  ],
+  [
+    "ODSS_45321_SLEVELM",
+    "w00247-ODSS_45321_SLEVELM",
+    "3566517"
+  ],
+  [
+    "ODSS_45321_STAMN",
+    "w00247-ODSS_45321_STAMN",
+    "3566522"
+  ],
+  [
+    "ODSS_45529_WSLAHD",
+    "w00247-ODSS_45529_WSLAHD",
+    "3566629"
+  ],
+  [
+    "ODSS_45531_WSLAHD",
+    "w00247-ODSS_45531_WSLAHD",
+    "3566636"
+  ],
+  [
+    "ODSS_45532_WSLAHD",
+    "w00247-ODSS_45532_WSLAHD",
+    "3566641"
+  ],
+  [
+    "ODSS_45533_WSLAHD",
+    "w00247-ODSS_45533_WSLAHD",
+    "3566646"
+  ],
+  [
+    "ODSS_45534_WSLAHD",
+    "w00247-ODSS_45534_WSLAHD",
+    "3566651"
+  ],
+  [
+    "ODSS_46394_STAMN",
+    "w00247-ODSS_46394_STAMN",
+    "3567174"
+  ],
+  [
+    "ODSS_46394_WSLAHD",
+    "w00247-ODSS_46394_WSLAHD",
+    "3567179"
+  ],
+  [
+    "ODSS_46616_WSLAHD",
+    "w00247-ODSS_46616_WSLAHD",
+    "3567264"
+  ],
+  [
+    "ODSS_47359_WSLAHD",
+    "w00247-ODSS_47359_WSLAHD",
+    "3567461"
+  ],
+  [
+    "ODSS_47683_WSLAHD",
+    "w00247-ODSS_47683_WSLAHD",
+    "3567598"
+  ],
+  [
+    "ODSS_47866_WSLAHD",
+    "w00247-ODSS_47866_WSLAHD",
+    "3567702"
+  ],
+  [
+    "ODSS_51192_WSLAHD",
+    "w00247-ODSS_51192_WSLAHD",
+    "3568483"
+  ],
+  [
+    "ODSS_52306_WSLAHD",
+    "w00247-ODSS_52306_WSLAHD",
+    "3568660"
+  ],
+  [
+    "ODSS_53437_WSLAHD",
+    "w00247-ODSS_53437_WSLAHD",
+    "3569355"
+  ],
+  [
+    "ODSS_53443_WSLAHD",
+    "w00247-ODSS_53443_WSLAHD",
+    "3569360"
+  ],
+  [
+    "ODSS_55089_WSLAHD",
+    "w00247-ODSS_55089_WSLAHD",
+    "3569627"
+  ],
+  [
+    "ODSS_55912_WSLAHD",
+    "w00247-ODSS_55912_WSLAHD",
+    "3569870"
+  ],
+  [
+    "ODSS_56221_WSLAHD",
+    "w00247-ODSS_56221_WSLAHD",
+    "3569913"
+  ],
+  [
+    "ODSS_56581_WSLAHD",
+    "w00247-ODSS_56581_WSLAHD",
+    "3570016"
+  ],
+  [
+    "ODSS_57330_WSLAHD",
+    "w00247-ODSS_57330_WSLAHD",
+    "3570205"
+  ],
+  [
+    "ODSS_57389_WSLAHD",
+    "w00247-ODSS_57389_WSLAHD",
+    "3570218"
+  ],
+  [
+    "ODSS_57568_WSLAHD",
+    "w00247-ODSS_57568_WSLAHD",
+    "3570299"
+  ],
+  [
+    "ODSS_57569_WSLAHD",
+    "w00247-ODSS_57569_WSLAHD",
+    "3570304"
+  ],
+  [
+    "ODSS_57570_WSLAHD",
+    "w00247-ODSS_57570_WSLAHD",
+    "3570309"
+  ],
+  [
+    "ODSS_57614_WSLAHD",
+    "w00247-ODSS_57614_WSLAHD",
+    "3570326"
+  ],
+  [
+    "ODSS_58794_WSLAHD",
+    "w00247-ODSS_58794_WSLAHD",
+    "3570407"
+  ],
+  [
+    "ODSS_58804_WSLAHD",
+    "w00247-ODSS_58804_WSLAHD",
+    "3570414"
+  ],
+  [
+    "ODSS_61661_WSLAHD",
+    "w00247-ODSS_61661_WSLAHD",
+    "3571137"
+  ],
+  [
+    "ODSS_61742_WSLAHD",
+    "w00247-ODSS_61742_WSLAHD",
+    "3571144"
+  ],
+  [
+    "ODSS_61927_WSLAHD",
+    "w00247-ODSS_61927_WSLAHD",
+    "3571197"
+  ],
+  [
+    "OSHANNASSY RES HG",
+    "w00151-229111A",
+    "3178689"
+  ],
+  [
+    "OUTEASTERN@LAKE BREW",
+    "w00077-41200215",
+    "6230645"
+  ],
+  [
+    "OUTWESTERN@LAKEBREWS",
+    "w00077-41200214",
+    "4383520"
+  ],
+  [
+    "Olangolah Reservoir level",
+    "w00013-RE852",
+    "6833069"
+  ],
+  [
+    "Onkaparinga Summit Storage (SA Water)",
+    "w00209-SAWMBOSS",
+    "5585856"
+  ],
+  [
+    "Orange Ck Weir HW",
+    "w00227-1303SS02",
+    "52144536"
+  ],
+  [
+    "PALOONA LAKE",
+    "w00129-627",
+    "3162526"
+  ],
+  [
+    "PARANGANA LAKE",
+    "w00129-594",
+    "3162508"
+  ],
+  [
+    "PEDDER LAKE",
+    "w00129-648",
+    "3162540"
+  ],
+  [
+    "PENSTOCK LAGOON",
+    "w00129-508",
+    "3162466"
+  ],
+  [
+    "PEVENSEY LAGOON",
+    "w00077-41010306",
+    "1082819"
+  ],
+  [
+    "PIEMAN LAKE",
+    "w00129-742",
+    "3162558"
+  ],
+  [
+    "PINDARI DAM",
+    "w00077-416030",
+    "589198"
+  ],
+  [
+    "PINE TIER LAGOON",
+    "w00129-171",
+    "3162383"
+  ],
+  [
+    "PI_13770",
+    "w00247-PI_13770",
+    "3571450"
+  ],
+  [
+    "PI_13881",
+    "w00247-PI_13881",
+    "3571457"
+  ],
+  [
+    "PI_14564",
+    "w00247-PI_14564",
+    "3571462"
+  ],
+  [
+    "PI_1930",
+    "w00247-PI_1930",
+    "3571503"
+  ],
+  [
+    "PI_230028",
+    "w00247-PI_230028",
+    "3572129"
+  ],
+  [
+    "PI_230044",
+    "w00247-PI_230044",
+    "3572136"
+  ],
+  [
+    "PI_230045",
+    "w00247-PI_230045",
+    "3572141"
+  ],
+  [
+    "PI_230046",
+    "w00247-PI_230046",
+    "3572146"
+  ],
+  [
+    "PI_238185",
+    "w00247-PI_238185",
+    "3572153"
+  ],
+  [
+    "PI_321984",
+    "w00247-PI_321984",
+    "3572775"
+  ],
+  [
+    "PI_321994",
+    "w00247-PI_321994",
+    "3572780"
+  ],
+  [
+    "PI_321995",
+    "w00247-PI_321995",
+    "3572785"
+  ],
+  [
+    "PI_342930",
+    "w00247-PI_342930",
+    "3572824"
+  ],
+  [
+    "PI_342931",
+    "w00247-PI_342931",
+    "3572829"
+  ],
+  [
+    "PI_342968",
+    "w00247-PI_342968",
+    "3572836"
+  ],
+  [
+    "PI_342969",
+    "w00247-PI_342969",
+    "3572841"
+  ],
+  [
+    "PI_342971",
+    "w00247-PI_342971",
+    "3572846"
+  ],
+  [
+    "PI_342988",
+    "w00247-PI_342988",
+    "3572851"
+  ],
+  [
+    "PI_342989",
+    "w00247-PI_342989",
+    "3572856"
+  ],
+  [
+    "PI_342996",
+    "w00247-PI_342996",
+    "3572861"
+  ],
+  [
+    "PI_357693",
+    "w00247-PI_357693",
+    "3572874"
+  ],
+  [
+    "PI_357925",
+    "w00247-PI_357925",
+    "3572891"
+  ],
+  [
+    "PI_358347",
+    "w00247-PI_358347",
+    "3572896"
+  ],
+  [
+    "PI_359775",
+    "w00247-PI_359775",
+    "3572905"
+  ],
+  [
+    "PI_427",
+    "w00247-PI_427",
+    "3572916"
+  ],
+  [
+    "PLIMSOLL LAKE",
+    "w00129-294",
+    "3162428"
+  ],
+  [
+    "PRESTON MR WR21",
+    "w00151-229412A",
+    "3179167"
+  ],
+  [
+    "PRESTON MR WR22",
+    "w00151-229412B",
+    "3179173"
+  ],
+  [
+    "PROSPECT RESERVOIR",
+    "w00077-213240",
+    "16375183"
+  ],
+  [
+    "PROSPECT RESERVOIR LEVEL",
+    "w00231-213240",
+    "3082732"
+  ],
+  [
+    "PYKES @ PYKES RESERV",
+    "w00102-231222A",
+    "3546198"
+  ],
+  [
+    "PYRITES @ MERRIMU",
+    "w00102-231223A",
+    "3546206"
+  ],
+  [
+    "PYRITES C-MERRIMU HG",
+    "w00151-231223A",
+    "3179970"
+  ],
+  [
+    "Painkalac Creek Dam",
+    "w00013-RE961",
+    "6833081"
+  ],
+  [
+    "Paradise Dam",
+    "w00227-136024A",
+    "3242675"
+  ],
+  [
+    "Paradise Dam (Alert)",
+    "w00227-136024B",
+    "3242682"
+  ],
+  [
+    "Perseverance Dam",
+    "w00238-71",
+    "3152857"
+  ],
+  [
+    "Pessotto Dam",
+    "w00076-607040",
+    "385727"
+  ],
+  [
+    "Peter Faust Dam",
+    "w00066-122010A",
+    "113135"
+  ],
+  [
+    "Peter Faust Dam",
+    "w00227-122010A",
+    "3242357"
+  ],
+  [
+    "Pike_Ck Glenlyon HW",
+    "w00066-416315A",
+    "73797"
+  ],
+  [
+    "Pine Lake",
+    "w00115-PINE",
+    "3101685"
+  ],
+  [
+    "Pine River Basin",
+    "w00191-142",
+    "3922211"
+  ],
+  [
+    "REDBANK STORAGE",
+    "w00077-41010966",
+    "1082840"
+  ],
+  [
+    "REPULSE LAKE",
+    "w00129-580",
+    "3162500"
+  ],
+  [
+    "ROSEBERY LAKE",
+    "w00129-658",
+    "3162554"
+  ],
+  [
+    "ROWALLAN LAKE",
+    "w00129-562",
+    "3162482"
+  ],
+  [
+    "Risdon Brook Dam",
+    "w00124-RBD1",
+    "3101852"
+  ],
+  [
+    "River Murray at Lock 1 Upstream (AMTD 274.3km)",
+    "w00209-A4260902",
+    "3342228"
+  ],
+  [
+    "River Murray at Lock 2 Upstream (AMTD 362.1km)",
+    "w00209-A4260518",
+    "3342210"
+  ],
+  [
+    "River Murray at Lock 3 Upstream (AMTD 431.4km)",
+    "w00209-A4260516",
+    "3342204"
+  ],
+  [
+    "River Murray at Lock 4 Upstream (AMTD 516.2km)",
+    "w00209-A4260514",
+    "3342198"
+  ],
+  [
+    "River Murray at Lock 5 Upstream (AMTD 562.4km)",
+    "w00209-A4260512",
+    "3342192"
+  ],
+  [
+    "Rocklands",
+    "w00115-ROCKL-RES-HG",
+    "41020422"
+  ],
+  [
+    "Rookwood Weir HW",
+    "w00227-130012A",
+    "38884326"
+  ],
+  [
+    "Ross Dam",
+    "w00241-9573",
+    "3114981"
+  ],
+  [
+    "Ross River Dam",
+    "w00227-532020A",
+    "3242938"
+  ],
+  [
+    "Ross_R Ross R Dam",
+    "w00066-118104A",
+    "71456"
+  ],
+  [
+    "SHANNON LAGOON",
+    "w00129-520",
+    "3162472"
+  ],
+  [
+    "SILVAN RESERVOIR",
+    "w00151-229405A",
+    "3179125"
+  ],
+  [
+    "SOUTH@LAKE BREWSTER",
+    "w00077-41200212",
+    "4383508"
+  ],
+  [
+    "SPLIT ROCK DAM",
+    "w00077-419080",
+    "589943"
+  ],
+  [
+    "STONY C TABLOT RES.",
+    "w00032-407334A",
+    "2705621"
+  ],
+  [
+    "SUGARLOAF RES DAM",
+    "w00151-229607A",
+    "3179247"
+  ],
+  [
+    "SUGARLOAF RES. H.G.",
+    "w00032-408217A",
+    "2705648"
+  ],
+  [
+    "SUNSHOWER LAGOON",
+    "w00077-41010301",
+    "1082795"
+  ],
+  [
+    "Sandhurst Storage",
+    "w00045-SANDHURST",
+    "3152459"
+  ],
+  [
+    "Sandy_C Leslie Dam",
+    "w00066-422315B",
+    "21953217"
+  ],
+  [
+    "Scrivener Dam",
+    "w00227-570016A",
+    "3242944"
+  ],
+  [
+    "Seaham Weir",
+    "w00126-D146",
+    "6952749"
+  ],
+  [
+    "Selma Weir",
+    "w00227-130205B",
+    "17564371"
+  ],
+  [
+    "Serp. P/Head Water Level - Ranger",
+    "w00247-ODSS_21176_STAMN",
+    "3621376"
+  ],
+  [
+    "Silverleaf Weir",
+    "w00227-136205A",
+    "3242735"
+  ],
+  [
+    "Site of Mangrove Creek Dam, MCD",
+    "w00110-DAM_MANGRV",
+    "3310122"
+  ],
+  [
+    "Site of Mardi Dam",
+    "w00257-DAM_MARDI",
+    "3322690"
+  ],
+  [
+    "Site of Mooney Mooney Dam",
+    "w00110-DAM_MOONEY",
+    "3310134"
+  ],
+  [
+    "South Coast Basin",
+    "w00191-146",
+    "3922281"
+  ],
+  [
+    "South Para Reservoir (SA Water)",
+    "w00209-SAWSPARRS",
+    "5586296"
+  ],
+  [
+    "SpringGully Storage",
+    "w00045-SPRINGGULLY",
+    "3152465"
+  ],
+  [
+    "St.CLAIR LAKE",
+    "w00129-131",
+    "3162347"
+  ],
+  [
+    "Stirling Wsl",
+    "w00247-w0247-ODSS_18315_STAMN",
+    "3572957"
+  ],
+  [
+    "Sturt River upstream Flood Control Dam",
+    "w00078-A5040530",
+    "1618974"
+  ],
+  [
+    "Swampy-Khancbn Pond",
+    "w00205-401569",
+    "3377991"
+  ],
+  [
+    "TALLOWA DAM",
+    "w00077-215212",
+    "16376069"
+  ],
+  [
+    "TANJIL @ BLUE ROCK",
+    "w00102-226230A",
+    "3546000"
+  ],
+  [
+    "TARAGO R-TARAGO RES",
+    "w00151-228224A",
+    "3178038"
+  ],
+  [
+    "TAREELAROI STORAGE",
+    "w00077-418043B",
+    "38976598"
+  ],
+  [
+    "TAREELAROI STORAGE",
+    "w00077-418043",
+    "589491"
+  ],
+  [
+    "TARRALEAH No.2 POND",
+    "w00129-553",
+    "3162478"
+  ],
+  [
+    "TEST Meander Dam",
+    "w00197-TEST8345",
+    "37809504"
+  ],
+  [
+    "THOMSON RESERVOIR HG",
+    "w00151-225256A",
+    "3177850"
+  ],
+  [
+    "TOMBULLEN STORAGE",
+    "w00077-41010971",
+    "588415"
+  ],
+  [
+    "TOONUMBAR DAM",
+    "w00077-203042",
+    "585897"
+  ],
+  [
+    "TREVALLYN LAKE",
+    "w00129-158",
+    "3162365"
+  ],
+  [
+    "TUNGATINAH LAGOONS",
+    "w00129-170",
+    "3162377"
+  ],
+  [
+    "TYABB MR WR144",
+    "w00151-228266A",
+    "3178211"
+  ],
+  [
+    "Talbingo Res - RO",
+    "w00205-410572A",
+    "3378059"
+  ],
+  [
+    "Talgai Weir",
+    "w00227-422340A",
+    "3242903"
+  ],
+  [
+    "Talgai Weir HW",
+    "w00066-422340A",
+    "115952"
+  ],
+  [
+    "Tantangara Dam RL",
+    "w00205-410543",
+    "3378045"
+  ],
+  [
+    "Tartrus Weir",
+    "w00227-130109A",
+    "3242417"
+  ],
+  [
+    "Taylors",
+    "w00115-TAYLORS-LAKE-HG",
+    "41021673"
+  ],
+  [
+    "Ted Pukallus Weir",
+    "w00238-68",
+    "3152840"
+  ],
+  [
+    "Teddington Weir HW",
+    "w00066-138005A",
+    "114578"
+  ],
+  [
+    "Teemburra Dam",
+    "w00066-125015A",
+    "21908993"
+  ],
+  [
+    "Teemburra Dam",
+    "w00227-125015A",
+    "3242381"
+  ],
+  [
+    "Theodore Weir",
+    "w00227-130305A",
+    "3242489"
+  ],
+  [
+    "Tinana Barrage",
+    "w00227-138008A",
+    "3242808"
+  ],
+  [
+    "Tinana Barrage HW",
+    "w00066-138008A",
+    "21929761"
+  ],
+  [
+    "Tinaroo Falls Dam",
+    "w00227-110014A",
+    "3242288"
+  ],
+  [
+    "Toolondo",
+    "w00115-TOOLO-RES-HG",
+    "41021684"
+  ],
+  [
+    "Tooma at Tooma Res",
+    "w00205-401565",
+    "3377985"
+  ],
+  [
+    "Torrumbarry Weir",
+    "w00114-sg-o11433",
+    "3922052"
+  ],
+  [
+    "Tullaroop Reservoir",
+    "w00114-sg-o14951",
+    "3922122"
+  ],
+  [
+    "Tumut 2 Dam RL",
+    "w00205-410545",
+    "3378053"
+  ],
+  [
+    "Tumut Pond Reservoir",
+    "w00205-410542",
+    "3378039"
+  ],
+  [
+    "Upper Coliban Reservoir",
+    "w00045-UPPERCOLIBAN",
+    "3152471"
+  ],
+  [
+    "Upper Stony Creek No.2",
+    "w00013-RE604A",
+    "6837630"
+  ],
+  [
+    "Upper Stony Creek No.3",
+    "w00013-RE604B",
+    "6837636"
+  ],
+  [
+    "Upper Stony Creek Reservoirs",
+    "w00013-RE604",
+    "6832699"
+  ],
+  [
+    "Val Bird Weir",
+    "w00227-119008A",
+    "3242301"
+  ],
+  [
+    "WARRAGAMBA RIVER AT WARRAGAMBA DAM U/S",
+    "w00231-212243",
+    "3082562"
+  ],
+  [
+    "WATTS RIV-MAROONDAH",
+    "w00151-229130A",
+    "3178738"
+  ],
+  [
+    "WAYATINAH LAGOON",
+    "w00129-190",
+    "3162401"
+  ],
+  [
+    "WERRIBEE R MELTON RS",
+    "w00102-231221A",
+    "3546190"
+  ],
+  [
+    "WERRIBEE R-MELTON HG",
+    "w00151-231221A",
+    "3179954"
+  ],
+  [
+    "WHITE SPUR POND",
+    "w00129-295",
+    "3162434"
+  ],
+  [
+    "WHITE SWAN RES. HG.",
+    "w00032-233232A",
+    "2700435"
+  ],
+  [
+    "WINDAMERE DAM",
+    "w00077-421148",
+    "590441"
+  ],
+  [
+    "WOMBAT CK @ RES H.G.",
+    "w00032-407313A",
+    "2705595"
+  ],
+  [
+    "WOODFORD DAM",
+    "w00077-212286",
+    "16375171"
+  ],
+  [
+    "WOODS LAKE",
+    "w00129-462",
+    "3162462"
+  ],
+  [
+    "WORONORA DAM",
+    "w00077-213210",
+    "16375177"
+  ],
+  [
+    "WORONORA RIVER AT WORONORA DAM",
+    "w00231-213210",
+    "3082674"
+  ],
+  [
+    "WYANGALA STORAGE",
+    "w00077-412010",
+    "641500"
+  ],
+  [
+    "Waranga Basin",
+    "w00114-sg-o11545",
+    "3922065"
+  ],
+  [
+    "Warragamba Dam",
+    "w00077-212243",
+    "16373342"
+  ],
+  [
+    "Warrego_R Cunnamulla",
+    "w00066-423202C",
+    "74284"
+  ],
+  [
+    "Warren Reservoir (SA Water)",
+    "w00209-SAWWARRRS",
+    "5586304"
+  ],
+  [
+    "Wartook",
+    "w00115-LAKE-WARTK-HG",
+    "41020380"
+  ],
+  [
+    "Water Copperlode Dam",
+    "w00028-1392",
+    "30990"
+  ],
+  [
+    "West Barwon Reservoir",
+    "w00013-RE750",
+    "6832719"
+  ],
+  [
+    "West Gellibrand Reservoir",
+    "w00013-RE851",
+    "6833063"
+  ],
+  [
+    "Whetstone Weir",
+    "w00227-416401A",
+    "3242822"
+  ],
+  [
+    "Woongarra OS",
+    "w00227-136025A",
+    "17564408"
+  ],
+  [
+    "Woongarra Pump Stn",
+    "w00066-136020A",
+    "21921989"
+  ],
+  [
+    "Wurdee Boluc Reservoir",
+    "w00013-RE704",
+    "6832713"
+  ],
+  [
+    "Wuruma Dam",
+    "w00227-136113A",
+    "3242694"
+  ],
+  [
+    "Wuruma Dam HW",
+    "w00066-136113A",
+    "21923671"
+  ],
+  [
+    "YAN YEAN RES HG",
+    "w00151-229406A",
+    "3179131"
+  ],
+  [
+    "YANCO STORAGE",
+    "w00077-41010981",
+    "1082844"
+  ],
+  [
+    "YARRA RIV-UY RES HG",
+    "w00151-229102A",
+    "3178651"
+  ],
+  [
+    "YARRADDA LAGOON",
+    "w00077-41010302",
+    "1082801"
+  ],
+  [
+    "YARRUNGA CREEK AT FITZROY FALLS DAM",
+    "w00231-215235",
+    "3082774"
+  ],
+  [
+    "Yarrawonga Weir",
+    "w00114-sg-o10817",
+    "3922027"
+  ],
+  [
+    "Yealering",
+    "w00076-6150002",
+    "394347"
+  ]
+]

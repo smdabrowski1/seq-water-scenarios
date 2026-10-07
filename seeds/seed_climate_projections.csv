@@ -1,0 +1,7 @@
+region,time_slice,scenario,rainfall_pct_change,metric,baseline_period,source_url,as_at_date
+SEQ,2050,SSP1-2.6,-5.2,annual_average_precipitation_change_pct,1981-2010,https://data.longpaddock.qld.gov.au/static/Regional%20Impact%20Summaries/Qld%20Climate%20Change%20Impact%20Summary_SEQ.pdf,2026-10-02
+SEQ,2050,SSP2-4.5,-4.4,annual_average_precipitation_change_pct,1981-2010,https://data.longpaddock.qld.gov.au/static/Regional%20Impact%20Summaries/Qld%20Climate%20Change%20Impact%20Summary_SEQ.pdf,2026-10-02
+SEQ,2050,SSP3-7.0,-2.3,annual_average_precipitation_change_pct,1981-2010,https://data.longpaddock.qld.gov.au/static/Regional%20Impact%20Summaries/Qld%20Climate%20Change%20Impact%20Summary_SEQ.pdf,2026-10-02
+SEQ,2090,SSP1-2.6,-6.3,annual_average_precipitation_change_pct,1981-2010,https://data.longpaddock.qld.gov.au/static/Regional%20Impact%20Summaries/Qld%20Climate%20Change%20Impact%20Summary_SEQ.pdf,2026-10-02
+SEQ,2090,SSP2-4.5,-6.9,annual_average_precipitation_change_pct,1981-2010,https://data.longpaddock.qld.gov.au/static/Regional%20Impact%20Summaries/Qld%20Climate%20Change%20Impact%20Summary_SEQ.pdf,2026-10-02
+SEQ,2090,SSP3-7.0,-5.3,annual_average_precipitation_change_pct,1981-2010,https://data.longpaddock.qld.gov.au/static/Regional%20Impact%20Summaries/Qld%20Climate%20Change%20Impact%20Summary_SEQ.pdf,2026-10-02

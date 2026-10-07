@@ -1,0 +1,161 @@
+version: 2
+
+models:
+  - name: dim_dam
+    columns:
+      - name: dam_name
+        tests: [unique, not_null]
+      - name: source_url
+        tests: [not_null]
+      - name: as_at_date
+        tests: [not_null]
+
+  - name: fct_dam_storage_daily
+    columns:
+      - name: storage_date
+        tests: [not_null]
+      - name: dam_name
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_dam')
+              field: dam_name
+
+  - name: fct_grid_storage_daily
+    # Real grain is (storage_date, series) - `unique` on storage_date alone is
+    # still correct today only because `series` is always 'observed' (see the
+    # model's own comment). Resolved 2026-10-05: fct_scenario_trajectory
+    # ended up a separate mart (different shape - percentile bands, quarterly
+    # grain, projected not observed dates) rather than unioning into this
+    # table, so `series` staying single-valued here is a real, final design
+    # choice now, not still-pending - see fct_scenario_trajectory's own
+    # comment for why.
+    columns:
+      - name: storage_date
+        tests: [not_null]
+      - name: series
+        tests: [not_null]
+
+  - name: fct_dam_rainfall_daily
+    columns:
+      - name: rainfall_date
+        tests: [not_null]
+      - name: dam_name
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_dam')
+              field: dam_name
+
+  - name: dim_scenario
+    columns:
+      - name: scenario_name
+        tests: [unique, not_null]
+
+  - name: fct_scenario_trajectory
+    columns:
+      - name: scenario_name
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_scenario')
+              field: scenario_name
+      - name: quarter_offset
+        tests: [not_null]
+
+  - name: fct_supply_demand_balance
+    columns:
+      - name: scenario_name
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_scenario')
+              field: scenario_name
+      - name: year
+        tests: [not_null]
+
+  - name: fct_commit_by_dates
+    columns:
+      - name: scenario_name
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_scenario')
+              field: scenario_name
+      - name: option_name
+        tests: [not_null]
+
+  - name: fct_trigger_crossings
+    columns:
+      - name: scenario_name
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_scenario')
+              field: scenario_name
+      - name: trigger_name
+        tests: [not_null]
+
+seeds:
+  - name: dam_grid_membership
+    columns:
+      - name: dam_name
+        tests: [unique, not_null]
+      - name: grid_member
+        tests: [not_null]
+      - name: source_url
+        tests: [not_null]
+      - name: as_at_date
+        tests: [not_null]
+
+  # These four never got schema tests added when they were built
+  # (2026-10-02/04) - a real gap against seeds/README.md's own stated
+  # convention ("a seed row with a null in source_url or as_at_date should
+  # fail dbt test, not slip through"). Fixed here rather than left silent.
+  - name: seed_population_projections
+    columns:
+      - name: lga
+        tests: [not_null]
+      - name: series
+        tests: [not_null]
+      - name: year
+        tests: [not_null]
+      - name: source_url
+        tests: [not_null]
+      - name: as_at_date
+        tests: [not_null]
+
+  - name: seed_climate_projections
+    columns:
+      - name: region
+        tests: [not_null]
+      - name: time_slice
+        tests: [not_null]
+      - name: scenario
+        tests: [not_null]
+      - name: source_url
+        tests: [not_null]
+      - name: as_at_date
+        tests: [not_null]
+
+  - name: seed_per_capita_demand
+    columns:
+      - name: scenario
+        tests: [unique, not_null]
+      - name: litres_per_day
+        tests: [not_null]
+      - name: source_url
+        tests: [not_null]
+      - name: as_at_date
+        tests: [not_null]
+
+  - name: seed_supply_options
+    columns:
+      - name: option_name
+        tests: [unique, not_null]
+      - name: category
+        tests: [not_null]
+      - name: source_url
+        tests: [not_null]
+      - name: as_at_date
+        tests: [not_null]

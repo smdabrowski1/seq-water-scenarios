@@ -1,0 +1,142 @@
+version: 2
+
+sources:
+  - name: raw
+    description: >
+      Bronze layer: raw parquet landed by ingest/run_all.py, one dt=<date>
+      partition per day. dbt-duckdb's `external_location` maps each source
+      table straight onto a `read_parquet()` glob over all partitions - no
+      copy step, staging models read the raw files directly.
+    tables:
+      - name: seqwater_dam_levels_historical
+        description: >
+          Primary source for the 12-dam grid: daily %/ML for all 25
+          Seqwater-operated dams plus a precomputed "SEQ Water Grid"
+          aggregate, scraped from the live historic-dam-levels page (real
+          server-rendered data, no headless browser - see docs/decisions.md).
+        meta:
+          external_location: "read_parquet('data/raw/seqwater_dam_levels_historical/dt=*/seqwater_dam_levels_historical.parquet')"
+        columns:
+          - name: storage_date
+            tests: [not_null]
+          - name: dam_name
+            tests: [not_null]
+      - name: seqwater_dam_fsl_snapshot
+        description: >
+          Full supply volume (current operating FSL, already reduced where a
+          reduction is in effect), current volume/%, and any reduced-FSL
+          notice text, for all 25 dams - scraped from the live /dam-levels
+          table. Feeds dim_dam instead of a hand-maintained seed.
+        meta:
+          external_location: "read_parquet('data/raw/seqwater_dam_fsl_snapshot/dt=*/seqwater_dam_fsl_snapshot.parquet')"
+        columns:
+          - name: dam_name
+            tests: [not_null]
+      - name: silo_catchment_rainfall
+        description: >
+          Daily rainfall (mm) at one real, sourced coordinate per dam (BOM
+          gauge location where one exists, otherwise an OpenStreetMap
+          Nominatim coordinate for the named dam - see docs/decisions.md),
+          ~40 years, from SILO's DataDrillDataset API. This is a single point
+          per dam, not an area-weighted catchment average - SILO's own "point"
+          API is itself backed by a 5km grid (confirmed live: nearby
+          coordinates within the same cell return identical values), so two
+          close-together dams can legitimately share a rainfall reading.
+        meta:
+          external_location: "read_parquet('data/raw/silo_catchment_rainfall/dt=*/silo_catchment_rainfall.parquet')"
+        columns:
+          - name: rainfall_date
+            tests: [not_null]
+          - name: dam_name
+            tests: [not_null]
+      - name: bom_somerset_storage_volume
+        description: >
+          Somerset Dam's real daily storage volume (ML) from BOM Water Data
+          Online (KiWIS), 1996-05-22 onward - the only one of the 12 grid dams
+          with BOM storage history reaching back through the actual Millennium
+          Drought. A scenario-engine calibration input (see scenarios/), not a
+          dashboard source - Seqwater's own feed stays the primary/only source
+          for the 12-dam grid's observed history. Uses `value` (ML), not a %
+          column - BOM's Somerset % is computed against a different, stale
+          reference capacity than Seqwater's current reduced-FSL regime (see
+          docs/decisions.md), so volume is what avoids that mismatch entirely.
+        meta:
+          external_location: "read_parquet('data/raw/bom_somerset_storage_volume/dt=*/bom_somerset_storage_volume.parquet')"
+        columns:
+          - name: timestamp
+            tests: [not_null]
+
+  - name: scenarios_raw
+    description: >
+      Bronze layer for the scenario engine's own output (scenarios/run_all.py,
+      not ingest/) - one dt=<date> partition per run, same external_location-
+      over-a-glob pattern as the `raw` source above. Computed, not fetched -
+      SPEC.md section 6's rainfall analogues, climate adjustment, demand
+      projection, and safe-yield/commit-by-date logic. See docs/decisions.md's
+      2026-10-05 entries for the real validation work behind the water-balance
+      model these scenarios are built on, and its honestly-disclosed limits.
+    tables:
+      - name: scenario_dim
+        description: >
+          One row per named scenario (scenarios/config/scenarios.yml) - its
+          configuration and top-line results (safe yield, available yield,
+          balance-negative year).
+        meta:
+          external_location: "read_parquet('data/scenarios/scenario_dim/dt=*/scenario_dim.parquet')"
+        columns:
+          - name: scenario_name
+            tests: [not_null, unique]
+      - name: scenario_trajectory
+        description: >
+          One row per (scenario, historical analogue start-year, quarter
+          offset from today) - the raw material for fct_scenario_trajectory's
+          percentile bands. `beyond_validated_range` flags analogues whose
+          rainfall exceeds the water-balance model's observed calibration
+          range (84.7-1,229.3 mm/quarter) - a real, honest caveat, not an
+          edge case to hide (62% of the generic fan triggers it at some
+          point - see docs/decisions.md).
+        meta:
+          external_location: "read_parquet('data/scenarios/scenario_trajectory/dt=*/scenario_trajectory.parquet')"
+        columns:
+          - name: scenario_name
+            tests: [not_null]
+          - name: quarter_offset
+            tests: [not_null]
+      - name: scenario_balance
+        description: >
+          One row per (scenario, year) - demand vs. available yield, the
+          supply-demand balance SPEC.md section 7's dashboard view 4 (the
+          "money shot") is built from.
+        meta:
+          external_location: "read_parquet('data/scenarios/scenario_balance/dt=*/scenario_balance.parquet')"
+        columns:
+          - name: scenario_name
+            tests: [not_null]
+          - name: year
+            tests: [not_null]
+      - name: scenario_commit_by
+        description: >
+          One row per (scenario, supply option) - the actual spec 6.4
+          deliverable. `commit_by_year` is null when either the scenario
+          never crosses balance-negative, or the option's lead time is a real,
+          disclosed `TODO-VERIFY` rather than a guessed number (see
+          seed_supply_options).
+        meta:
+          external_location: "read_parquet('data/scenarios/scenario_commit_by/dt=*/scenario_commit_by.parquet')"
+        columns:
+          - name: scenario_name
+            tests: [not_null]
+          - name: option_name
+            tests: [not_null]
+      - name: scenario_trigger_crossings
+        description: >
+          One row per (scenario, real Seqwater drought-response trigger) -
+          what fraction of the scenario's analogue fan crosses each threshold,
+          and the median timing among those that do.
+        meta:
+          external_location: "read_parquet('data/scenarios/scenario_trigger_crossings/dt=*/scenario_trigger_crossings.parquet')"
+        columns:
+          - name: scenario_name
+            tests: [not_null]
+          - name: trigger_name
+            tests: [not_null]

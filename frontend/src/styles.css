@@ -1,0 +1,1029 @@
+:root {
+  /* Same tokens, same values, same roles as the Hobby CDM Project's own
+     light theme (frontend/src/styles.css) - deliberately matched, not
+     reinvented, per explicit direction to share one design language across
+     both projects. No dark-mode media query, on purpose, matching that
+     project exactly: a single committed light theme, not something that
+     silently flips based on the viewer's OS setting (confirmed the hard way
+     this session - a `prefers-color-scheme: dark` override meant the
+     "light, Airbnb-style" design was never actually visible on a system set
+     to dark mode, even though every screenshot taken to verify it looked
+     right, since screenshot tooling defaults to light regardless of the
+     host OS). */
+  --bg: #ffffff;
+  --panel: #f7f7f7;
+  --panel-2: #eeeeee;
+  --border: #e3e3e3;
+  --text: #222222;
+  --dim: #6a6a6a;
+  /* #767676, not the original #adadad - that value measured 2.24:1 against
+     white, well under WCAG's 4.5:1 minimum for text (confirmed by actual
+     computation, not eyeballed, via the ui-ux-pro-max skill's accessibility
+     check). #767676 is the lightest gray that still clears 4.5:1 on white -
+     noticeably softer/lighter than --dim, much closer to the original look,
+     while staying compliant everywhere this token is used as text color
+     (chart notes, map caption, scrubber labels, muted panel text). */
+  --faint: #767676;
+
+  /* Airbnb's "Rausch" coral - interactive/brand only (things you click, or
+     active selection), never decorative and never reused for data/status,
+     same separation of concerns as the sibling project. */
+  --accent: #ff385c;
+  --accent-weak: rgba(255, 56, 92, 0.1);
+
+  --success: #0d9488;
+  --success-weak: rgba(13, 148, 136, 0.1);
+  --danger: #d92d20;
+  --danger-weak: rgba(217, 45, 32, 0.08);
+
+  --ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(20, 20, 20, 0.06);
+  --shadow-md: 0 8px 24px rgba(20, 20, 20, 0.1);
+  --shadow-lg: 0 24px 60px rgba(20, 20, 20, 0.16);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Data colors stay the dataviz-skill-validated series palette - a
+     separate hue family from --accent on purpose (same reasoning as the
+     sibling project's status colors: "this is the brand" and "this is a
+     measurement" should never collide). Unaffected by this redesign. */
+  --series-blue: #2a78d6;
+  --series-orange: #eb6834;
+  /* Observable Plot's tip mark reads this var directly (confirmed live via
+     the rendered SVG: fill="var(--plot-background)") and uses currentColor
+     for its stroke/text - set both here rather than guess at JS-side options. */
+  --plot-background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--panel);
+  color: var(--text);
+  font-family: var(--ui);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px clamp(16px, 4vw, 40px) 56px;
+}
+
+.app-header {
+  text-align: center;
+  padding: 12px 0 28px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.app-subtitle {
+  margin: 4px 0 24px;
+  color: var(--dim);
+  font-size: 15px;
+}
+
+.app-header .app-subtitle {
+  margin: 10px 0 0;
+  font-size: 17px;
+}
+
+.error-banner {
+  background: var(--danger-weak);
+  color: var(--danger);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Deliberately large, high-contrast, unambiguous - not a compact tab strip.
+   Big touch targets (56px+ tall), bold label + plain-language subtitle so
+   the destination is obvious before clicking, strong accent-filled active
+   state - built to be easy to spot and click regardless of age or
+   familiarity with dashboard UIs. */
+.section-nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.section-nav-button {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 16px 22px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ui);
+  transition:
+    background 0.15s var(--ease-out),
+    border-color 0.15s var(--ease-out),
+    transform 0.1s var(--ease-out),
+    box-shadow 0.15s var(--ease-out);
+}
+
+.section-nav-button:hover {
+  border-color: var(--faint);
+  box-shadow: var(--shadow-md);
+}
+
+.section-nav-button:active {
+  transform: scale(0.99);
+}
+
+.section-nav-button.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+.section-nav-label {
+  /* 19px, not 18px - deliberately: at 18px bold this sits just under
+     WCAG's "large text" exception threshold (14pt / ~18.7px bold), so white
+     text on the accent (3.52:1) wouldn't legitimately qualify for the
+     relaxed 3:1 minimum. 19px bold clears 14pt, so the white label below is
+     a real, compliant use of that exception, not just eyeballed. */
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+/* White, per explicit direction (Airbnb's own style) - a known, accepted
+   tradeoff, not an oversight: measured 3.52:1 against this accent, which
+   passes WCAG's "large text" exception (3:1 minimum, text >=14pt bold/18pt
+   regular - the label above was bumped to 19px specifically so this holds).
+   Dark text (var(--text)) would measure 4.52:1, comfortably passing the
+   stricter normal-text minimum too, if this should ever be reconsidered. */
+.section-nav-button.is-active .section-nav-label {
+  color: #ffffff;
+}
+
+.section-nav-subtitle {
+  font-size: 13px;
+  color: var(--dim);
+}
+
+.section-nav-button.is-active .section-nav-subtitle {
+  /* White here too, per the same direction - but at 13px this does NOT
+     qualify for the large-text exception (would need ~18.7px bold), and
+     white only reaches ~3.5:1 at full opacity regardless of alpha - stays
+     under WCAG's 4.5:1 normal-text minimum. A real, knowing tradeoff for
+     the Airbnb-style look on this secondary line, not an overlooked one. */
+  color: rgba(255, 255, 255, 0.92);
+}
+
+@media (max-width: 560px) {
+  .section-nav {
+    flex-direction: column;
+  }
+  .section-nav-button {
+    flex-basis: auto;
+  }
+}
+
+.year-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--dim);
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.year-filter select {
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: var(--ui);
+  color: var(--text);
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+/* Replaces the browser's default blue focus ring (which stays lit after a
+   click, not just keyboard focus, in Chrome/Edge) with the same subtle
+   border + shadow treatment the rest of this UI uses - still a visible,
+   accessible focus indicator, just not a jarring blue halo that looks stuck
+   "highlighted" once you've made a selection. */
+.year-filter select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.15);
+}
+
+.date-scrubber {
+  margin-top: 16px;
+}
+
+.date-scrubber-card {
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.date-scrubber-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.date-scrubber-card-header .year-filter {
+  margin-bottom: 0;
+}
+
+.date-scrubber-card-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+
+.date-scrubber-card .date-scrubber {
+  margin-top: 10px;
+}
+
+/* Two native range inputs stacked on one track (no slider library): each
+   input is full-width and transparent except its own thumb (pointer-events
+   none on the input, re-enabled on the thumb pseudo-element alone), so only
+   the two circles are actually draggable while a separate always-visible
+   rail + highlight bar underneath renders the track/selected-span. */
+.date-scrubber-track {
+  position: relative;
+  height: 20px;
+}
+
+.date-scrubber-rail {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  transform: translateY(-50%);
+  background: var(--panel-2);
+  border-radius: var(--radius-pill);
+}
+
+.date-scrubber-highlight {
+  position: absolute;
+  top: 50%;
+  height: 4px;
+  transform: translateY(-50%);
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+}
+
+.date-scrubber-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.date-scrubber-thumb.is-active {
+  z-index: 2;
+}
+
+.date-scrubber-thumb::-webkit-slider-runnable-track {
+  background: none;
+}
+
+.date-scrubber-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #ffffff;
+  box-shadow: var(--shadow-sm);
+  cursor: grab;
+  margin-top: 2px;
+}
+
+.date-scrubber-thumb::-moz-range-track {
+  background: none;
+}
+
+.date-scrubber-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #ffffff;
+  box-shadow: var(--shadow-sm);
+  cursor: grab;
+}
+
+.date-scrubber-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--faint);
+  margin-top: 4px;
+}
+
+.date-scrubber-current {
+  color: var(--dim);
+  font-weight: 600;
+}
+
+.card {
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+}
+
+/* One unified "KPI hero" card - a single flowing header row (eyebrow label,
+   the headline stat as the row's actual focal point, the year selector),
+   then the chart spanning the full card width underneath. Not three
+   separate pieces stacked next to each other. */
+.grid-summary {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+  /* The base .card shadow alone reads as a very soft, almost invisible edge
+     against the page's own near-white background - a visible hairline
+     border (same token every other bordered panel on this page uses) gives
+     the card an actual boundary instead of just a drop shadow. */
+  border: 1px solid var(--border);
+}
+
+.grid-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.grid-summary-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  flex: 0 0 auto;
+}
+
+.grid-summary-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #2a78d61a;
+  color: #2a78d6;
+  flex-shrink: 0;
+}
+
+/* The headline figure sits in the middle of the row, between the eyebrow
+   and the selector, rather than on its own line below - it's a single
+   "as of today" reading, not a data point that needs the ML tonnage
+   alongside it (that detail is still one hover away on the chart below). */
+.grid-summary-stat {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-width: 180px;
+}
+
+/* The second stat (selected-range average) - fixed to the row's end rather
+   than also growing/centring like the headline stat, so the two don't
+   fight over the same middle ground. */
+.grid-summary-stat-end {
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.stat-value {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+/* Stacked under the big number rather than inline beside it (the old
+   .stat-sub) - a small pill-style "as of" line plus, when there's enough
+   history to compare against, a coloured week-on-week trend chip. This is
+   the common modern-dashboard pattern for a headline stat (a live/as-of
+   marker + a delta), not just a plain date string trailing the number. */
+.stat-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.stat-meta.is-end {
+  align-items: flex-end;
+}
+
+.stat-asof {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--dim);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.stat-asof-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  flex-shrink: 0;
+}
+
+.stat-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.stat-trend.is-up {
+  color: var(--success);
+  background: var(--success-weak);
+}
+
+.stat-trend.is-down {
+  color: var(--danger);
+  background: var(--danger-weak);
+}
+
+.grid-chart {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .grid-summary-header {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .grid-summary-stat {
+    order: -1;
+    flex-basis: 100%;
+    justify-content: center;
+  }
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 860px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* A flex column, not a plain block: lets the map itself (not the card)
+   stretch to fill the row's full height (CSS Grid's default stretch
+   already matches .map-column's height to .detail-column's, but a fixed-
+   height map inside a plain block left empty space below it - this is what
+   actually fills that space, with the caption keeping its own natural
+   height at the bottom). */
+.map-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-view {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 420px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.map-caption {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.map-caption p {
+  margin: 0;
+  color: var(--dim);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.map-caption-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.dam-select-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--dim);
+  margin-bottom: 20px;
+}
+
+.dam-select-label select {
+  flex: 1 1 auto;
+  font-size: 15px;
+  font-family: var(--ui);
+  padding: 10px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+}
+
+/* Same icon-badge + uppercase-label treatment as .grid-summary-eyebrow
+   above - each chart gets its own small title in that style instead of
+   repeating the selected dam's name (the select above already shows that),
+   so these read as "what this chart is", not a second identity label. */
+.chart-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+
+.chart-eyebrow:not(:first-child) {
+  margin-top: 18px;
+}
+
+.chart-eyebrow-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chart-eyebrow-icon-storage {
+  background: #2a78d61a;
+  color: #2a78d6;
+}
+
+.chart-eyebrow-icon-rainfall {
+  background: #eb68341a;
+  color: #eb6834;
+}
+
+.chart-panel {
+  margin-bottom: 8px;
+  /* currentColor is what Plot.tip's stroke/text actually render with
+     (confirmed live) - set it here so the tip renders legibly. */
+  color: var(--text);
+}
+
+/* Reserves the chart's own rendered height up front (matches the fixed
+   `height` passed to Plot.plot()) - belt-and-braces alongside the
+   insert-before-remove swap in plotUtils.js, so the container can never
+   collapse/reflow during a redraw regardless of render timing. */
+.chart-panel-storage {
+  min-height: 200px;
+}
+.chart-panel-rainfall {
+  min-height: 160px;
+}
+.grid-chart {
+  min-height: 180px;
+}
+
+/* Plot.tip sets fill="var(--plot-background)" as an inherited SVG
+   presentation attribute on its <g>, but that var() reliably failed to
+   resolve in testing (computed fill came back white regardless of the
+   actual --plot-background value, while the text's currentColor-based fill
+   resolved correctly) - confirmed via getComputedStyle, not guessed. A real
+   CSS rule targeting the tip's own path, instead of depending on the
+   attribute's own var() resolution, is what actually works. */
+.chart-panel svg g[aria-label="tip"] > g > path {
+  fill: var(--bg);
+  stroke: var(--border);
+  filter: drop-shadow(0 2px 6px rgba(20, 20, 20, 0.12));
+}
+
+/* Same info-card treatment as .map-caption (icon badge + accent-left-border
+   panel) - both are "here's how to read what's above" hints, so they should
+   look like the same kind of thing, not two different styles for the same
+   job. */
+.chart-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+}
+
+.chart-note p {
+  margin: 0;
+  color: var(--dim);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.chart-note-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.info-toggle {
+  margin-top: 8px;
+}
+
+.info-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  font-family: var(--ui);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--dim);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background 0.15s var(--ease-out),
+    border-color 0.15s var(--ease-out);
+}
+
+.info-toggle-button:hover {
+  background: var(--panel-2);
+  border-color: var(--faint);
+  color: var(--text);
+}
+
+.info-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--dim);
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.info-toggle-chevron {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.info-toggle-content {
+  margin-top: 10px;
+  padding: 12px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  color: var(--dim);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.info-toggle-content p {
+  margin: 0;
+}
+
+.limitations-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chart-error {
+  color: var(--danger);
+  background: var(--danger-weak);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 13px;
+}
+
+.maplibregl-popup-content {
+  font-family: var(--ui);
+  font-size: 13px;
+  border-radius: var(--radius-md) !important;
+}
+
+.maplibregl-ctrl-group {
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.scenarios-section {
+  margin-top: 24px;
+}
+
+.scenarios-section h2 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.scenarios-section > .app-subtitle {
+  text-align: center;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.scenarios-section h4 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.scenario-select-label {
+  margin-bottom: 20px;
+}
+
+.scenario-description {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px 0 0;
+  max-width: 680px;
+  padding: 12px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+}
+
+.scenario-description p {
+  margin: 0;
+  color: var(--dim);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.scenario-description-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.scenario-assumptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 16px 0 24px;
+  padding: 14px 18px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.scenario-assumption {
+  min-width: 220px;
+}
+
+.scenario-assumption dt {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--dim);
+  margin-bottom: 2px;
+}
+
+.scenario-assumption dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.scenario-assumption-tier {
+  font-weight: 400;
+  color: var(--dim);
+}
+
+.chart-panel-scenario {
+  min-height: 260px;
+}
+.chart-panel-balance {
+  min-height: 260px;
+  margin-top: 24px;
+}
+
+.scenario-panels-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+@media (max-width: 860px) {
+  .scenario-panels-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.commit-by-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.commit-by-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+}
+
+.commit-by-row:last-child {
+  border-bottom: none;
+}
+
+.commit-by-option {
+  color: var(--text);
+}
+
+.commit-by-year {
+  flex-shrink: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.commit-by-unknown {
+  flex-shrink: 0;
+  color: var(--faint);
+  font-size: 12.5px;
+  font-style: italic;
+  text-align: right;
+}
+
+.trigger-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.trigger-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--dim);
+  font-size: 12px;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.trigger-table td {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+
+.trigger-table tr:last-child td {
+  border-bottom: none;
+}
+
+.trigger-table td:nth-child(2),
+.trigger-table td:nth-child(3) {
+  text-align: right;
+}

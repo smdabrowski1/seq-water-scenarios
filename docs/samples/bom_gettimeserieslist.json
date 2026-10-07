@@ -1,0 +1,11 @@
+[
+  [
+    "station_name",
+    "station_no",
+    "station_id",
+    "ts_id",
+    "ts_name",
+    "parametertype_id",
+    "parametertype_name"
+  ]
+]

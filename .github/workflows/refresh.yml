@@ -1,0 +1,18 @@
+# Placeholder only - not yet wired to a working cron run.
+#
+# Not enabled until: SILO_API_KEY is provisioned as a repo secret, and
+# `make refresh` completes end to end locally without hitting the Phase 2
+# NotImplementedError stubs in warehouse/orchestrator.py. Manual dispatch only
+# for now so this doesn't fire (and fail) on a schedule before Phase 2+ lands.
+name: refresh
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: placeholder
+        run: echo "Not implemented yet - see docs/decisions.md and SPEC.md phase 5"

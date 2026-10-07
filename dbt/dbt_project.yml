@@ -1,0 +1,29 @@
+name: "seq_water_scenarios"
+version: "1.0.0"
+config-version: 2
+
+profile: "seq_water_scenarios"
+
+model-paths: ["models"]
+test-paths: ["tests"]
+seed-paths: ["../seeds"]
+
+# Every layer materializes as a table, not a view - deliberate, not the dbt
+# default. warehouse/orchestrator.py builds into a temp *.duckdb file and
+# os.replace()s it into the live path; DuckDB derives a database's catalog
+# name from the file's own stem, and dbt-duckdb bakes that catalog name into
+# a VIEW's stored SQL at creation time. A view built as "tmp_<run_id>" still
+# says so internally after the rename, and querying it then fails with
+# `Binder Error: Catalog "tmp_<run_id>" does not exist!` - confirmed the hard
+# way (see docs/decisions.md). A table's committed rows carry no such
+# reference, so this is the only materialization that survives the rename
+# unconditionally. The datasets here are small (tens of thousands of rows),
+# so the extra disk/build-time cost of tables-over-views is negligible.
+models:
+  seq_water_scenarios:
+    staging:
+      +materialized: table
+    intermediate:
+      +materialized: table
+    marts:
+      +materialized: table

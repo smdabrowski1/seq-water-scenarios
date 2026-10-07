@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8010:8000" # 8010, not 8000 - deliberately different from the Hobby CDM Project's port
+    volumes:
+      - ./data:/app/data
+      - ./reference:/app/reference
+    mem_limit: 2g

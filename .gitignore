@@ -1,0 +1,32 @@
+# Secrets
+.env
+
+# Data artifacts — derived/regenerable, never committed
+data/raw/*
+!data/raw/.gitkeep
+data/*.duckdb
+data/.cache/
+warehouse.duckdb
+*.duckdb
+registry.db
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+dbt/profiles.yml
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Site build output
+site/dist/
+site/node_modules/
+
+# OS
+.DS_Store

@@ -1,0 +1,20 @@
+# Copy to profiles.yml (gitignored) or point DBT_PROFILES_DIR at a copy of this file.
+#
+# `path` is resolved relative to the invocation cwd (the repo root, since Makefile
+# targets run `dbt ... --project-dir dbt`), not relative to this file's own
+# directory - confirmed the hard way when "../data/..." landed one level above
+# the repo. Always run dbt from the repo root (as `make build` does).
+seq_water_scenarios:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      # DBT_DUCKDB_PATH lets warehouse/orchestrator.py point a build at a temp
+      # path for the write-temp-then-validate-then-promote pattern; unset,
+      # defaults to the real warehouse file.
+      path: "{{ env_var('DBT_DUCKDB_PATH', 'data/warehouse.duckdb') }}"
+      threads: 4
+      # spatial: st_read() for reference/dam_boundaries.geojson (dam boundary
+      # polygons, visualization only - see docs/decisions.md).
+      extensions:
+        - spatial

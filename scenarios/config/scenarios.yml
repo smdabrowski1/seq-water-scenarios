@@ -1,0 +1,120 @@
+# Named scenarios, each crossing a rainfall/climate assumption with a
+# population and per-capita demand assumption - SPEC.md section 6. 8 curated,
+# story-driven scenarios (confirmed with the user - not the full mechanical
+# 3x3x3 cross-product of every dimension, most of which wouldn't have a real
+# narrative).
+#
+# `rainfall_replay`:
+#   - `fan`: the generic rotating analogue fan (every historical start-year
+#     with a full window on record, SPEC.md 6.1) - `n_quarters: 12` (3 years,
+#     matching the spec's own "what if the next 3 years repeated 1999-2001"
+#     framing).
+#   - `fixed`: one specific real historical start-year, run standalone (not
+#     part of a fan) - used for Millennium Drought Repeat, which needs the
+#     real ~1997-2009 length to represent the actual event (a 3-year window
+#     only shows its opening - see docs/decisions.md, 2026-10-05).
+#
+# `climate_adjustment: none` is a real, distinct choice (today's observed
+# rainfall sequence, unscaled) - see scenarios/climate.py.
+#
+# `per_capita_demand` keys match seed_per_capita_demand's `scenario` column
+# exactly (status_quo/efficiency/drought_restricted - see docs/decisions.md,
+# 2026-10-04 entry for what each real figure is and where it's sourced from).
+
+scenarios:
+  - name: baseline
+    description: >
+      Current trajectory continued - no climate adjustment, medium population
+      growth, current observed per-capita usage. The reference point every
+      other scenario is compared against.
+    rainfall_replay: {type: fan, n_quarters: 12}
+    climate_adjustment: {time_slice: null, scenario: none}
+    population_series: medium
+    per_capita_demand: status_quo
+
+  - name: optimistic
+    description: >
+      Low population growth and efficiency-level water use, no climate
+      adjustment factored in - the mildest demand-side scenario.
+    rainfall_replay: {type: fan, n_quarters: 12}
+    climate_adjustment: {time_slice: null, scenario: none}
+    population_series: low
+    per_capita_demand: efficiency
+
+  - name: high_growth
+    description: >
+      High population growth, current per-capita usage, no climate
+      adjustment - isolates the demand-side growth pressure on its own.
+    rainfall_replay: {type: fan, n_quarters: 12}
+    climate_adjustment: {time_slice: null, scenario: none}
+    population_series: high
+    per_capita_demand: status_quo
+
+  - name: climate_stressed_2050
+    description: >
+      Medium population growth, status-quo usage, under 2050 high-emissions
+      (SSP3-7.0) rainfall adjustment - the climate-side pressure on its own,
+      nearer-term.
+    rainfall_replay: {type: fan, n_quarters: 12}
+    climate_adjustment: {time_slice: 2050, scenario: SSP3-7.0}
+    population_series: medium
+    per_capita_demand: status_quo
+
+  - name: climate_stressed_2090
+    description: >
+      High population growth, status-quo usage, under 2090 high-emissions
+      (SSP3-7.0) rainfall adjustment - climate and demand pressure compounded,
+      longer-term.
+    rainfall_replay: {type: fan, n_quarters: 12}
+    climate_adjustment: {time_slice: 2090, scenario: SSP3-7.0}
+    population_series: high
+    per_capita_demand: status_quo
+
+  - name: millennium_drought_repeat
+    description: >
+      The real 1997-2009 rainfall sequence, replayed forward from today's
+      actual storage - medium population growth, drought-restricted usage
+      (the real, enforced Medium Level Water Restrictions tier Seqwater would
+      actually apply once the Grid crosses 50% storage, not status-quo usage
+      as if nothing changed). No climate adjustment - the real historical
+      rainfall as observed.
+    rainfall_replay: {type: fixed, start_year: 1997, n_quarters: 52}
+    climate_adjustment: {time_slice: null, scenario: none}
+    population_series: medium
+    per_capita_demand: drought_restricted
+
+  - name: millennium_drought_repeat_climate_adjusted
+    description: >
+      The same real 1997-2009 sequence, but scaled by 2090 high-emissions
+      (SSP3-7.0) rainfall adjustment and high population growth - "what would
+      the worst drought on record look like happening again, under a hotter,
+      drier, more populous future." The most stressed scenario in this set.
+    rainfall_replay: {type: fixed, start_year: 1997, n_quarters: 52}
+    climate_adjustment: {time_slice: 2090, scenario: SSP3-7.0}
+    population_series: high
+    per_capita_demand: drought_restricted
+
+  - name: best_case
+    description: >
+      Low population growth, efficiency-level usage, AND a low-emissions
+      (SSP1-2.6) climate future - every assumption set to its most favourable
+      real, sourced value, not an invented floor.
+    rainfall_replay: {type: fan, n_quarters: 12}
+    climate_adjustment: {time_slice: 2050, scenario: SSP1-2.6}
+    population_series: low
+    per_capita_demand: efficiency
+
+  - name: millennium_drought_repeat_unrestricted
+    description: >
+      The same climate-adjusted (2090 SSP3-7.0) Millennium Drought repeat and
+      high population growth as millennium_drought_repeat_climate_adjusted,
+      but with status-quo (not drought-restricted) demand - "what if
+      restrictions aren't successfully imposed, or aren't complied with."
+      The contrast between this and the restricted version is itself a real
+      finding: it shows how much of the system's resilience to a worst-case
+      drought actually depends on restrictions working, not just existing on
+      paper.
+    rainfall_replay: {type: fixed, start_year: 1997, n_quarters: 52}
+    climate_adjustment: {time_slice: 2090, scenario: SSP3-7.0}
+    population_series: high
+    per_capita_demand: status_quo

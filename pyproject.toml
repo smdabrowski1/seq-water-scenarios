@@ -1,0 +1,42 @@
+[project]
+name = "seq-water-scenarios"
+version = "0.1.0"
+description = "SEQ water supply-demand scenario platform: BOM/SILO ingest, dbt-duckdb modeling, Polars scenario engine, static dashboard"
+requires-python = ">=3.12"
+dependencies = [
+    # HTTP client for BOM KiWIS / SILO / Seqwater scrape (ingest/cache.py)
+    "httpx>=0.27",
+    # scenario engine (section 6) and typed ingest DataFrames
+    "polars>=1.0",
+    # warehouse file format + dbt adapter target
+    "duckdb>=1.0",
+    "dbt-core>=1.8",
+    "dbt-duckdb>=1.8",
+    # .env loading for SILO_API_KEY etc. (never committed)
+    "python-dotenv>=1.0",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    # parses scenarios/config/scenarios.yml - already present transitively via
+    # dbt-core, declared explicitly rather than relying on that implicitly.
+    "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+    "pytest>=8.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# .claude/skills/ holds third-party skill code (e.g. ui-ux-pro-max, installed
+# from github.com/nextlevelbuilder/ui-ux-pro-max-skill) - not this project's
+# own code, not ours to lint/reformat.
+extend-exclude = [".claude"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
