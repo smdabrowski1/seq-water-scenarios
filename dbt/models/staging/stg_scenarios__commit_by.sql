@@ -19,6 +19,7 @@ select
     option_name,
     balance_negative_year,
     lead_time_years,
-    commit_by_year
+    commit_by_year,
+    yield_gl_per_year
 from ranked
 where rn = 1

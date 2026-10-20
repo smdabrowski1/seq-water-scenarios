@@ -199,10 +199,13 @@ class FitAllControl {
     this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
     const button = document.createElement("button");
     button.type = "button";
-    button.setAttribute("aria-label", "Fit all dams in view");
-    button.title = "Fit all dams in view";
+    button.setAttribute("aria-label", "Reset to default view (all dams)");
+    button.title = "Reset to default view (all dams)";
+    // A house icon, not corner brackets - the latter reads as "fullscreen"
+    // (an unrelated browser affordance), where a home glyph is the
+    // established "reset view" convention in map UIs.
     button.innerHTML =
-      '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3H4.5A1.5 1.5 0 0 0 3 4.5V7M13 3h2.5A1.5 1.5 0 0 1 17 4.5V7M7 17H4.5A1.5 1.5 0 0 1 3 15.5V13M13 17h2.5a1.5 1.5 0 0 0 1.5-1.5V13" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3.5 10.5L10 4l6.5 6.5M5.5 8.75V16a.5.5 0 0 0 .5.5h3v-4h2v4h3a.5.5 0 0 0 .5-.5V8.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     button.addEventListener("click", () => this._onClick());
     this._container.appendChild(button);
     return this._container;

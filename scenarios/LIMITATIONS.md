@@ -89,11 +89,31 @@ several of these.
 
 ## Supply side
 
-- **Existing climate-independent supply (desal + groundwater + recycled
-  water, 118 GL/yr) is treated as a fixed constant**, not a modelled
-  trajectory with its own real constraints (plant maintenance windows,
-  treatment capacity limits, desal ramping speed). SPEC.md 6's own named
-  limitation: "desal ramping changes drawdown" - not represented here.
+- **Existing desal + recycled water (102 GL/yr) is treated as a fixed
+  constant**, not a modelled trajectory with its own real constraints (plant
+  maintenance windows, treatment capacity limits, desal ramping speed).
+  SPEC.md 6's own named limitation: "desal ramping changes drawdown" - not
+  represented here. These two genuinely are the climate-independent sources
+  SPEC.md's own domain primer names (desal is seawater; recycled water's
+  input is wastewater volume, tracking population more than rainfall).
+- **Minjerribah (North Stradbroke Island) groundwater is NOT
+  climate-independent** - it was originally lumped into the constant above,
+  a drift this code introduced rather than something SPEC.md ever claimed.
+  Seqwater's own North Stradbroke Island Drought Response Plan
+  (seqwater.com.au/document/2261) monitors real aquifer bore-level drought
+  triggers for this exact allocation, and a 2024 Redlands2030 report on the
+  same aquifer states its level "hasn't even recovered" since the last
+  drought. Its yield now varies year to year - a trailing 4-quarter average
+  of the actual rainfall being replayed, scaled against the long-run
+  historical average, floored at 20% of the sourced 16 GL/yr ceiling (first
+  attempt tied the decay to grid *storage* trigger tiers instead; wrong
+  basis - aquifer recharge responds to rainfall, not to dam levels, and a
+  flat scenario-wide figure didn't actually decay year to year at all).
+  **The floor and the trailing-window length are a reasoned assumption, not
+  a sourced figure** - no published GL/yr-vs-drought-severity curve exists
+  for this specific Grid allocation (checked live; the Drought Response
+  Plan gives response actions, not a yield number). Shown per-year in the
+  dashboard's supply breakdown, labelled "modelled, rainfall-dependent."
 - **The EMSV critical threshold uses 10%, the upper/safer bound of
   Seqwater's own stated 8-10% range**, not a single precise trigger point -
   a deliberate conservative choice, not the literal real trigger level.

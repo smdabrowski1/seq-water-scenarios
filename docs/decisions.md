@@ -828,3 +828,111 @@ path), and the full safe-yield/balance/commit-by chain on synthetic data.
 Mandatory limitations section written to `scenarios/LIMITATIONS.md` per
 SPEC.md 6's closing paragraph, naming every real simplifying assumption made
 this session rather than leaving them implicit in code comments alone.
+
+## 2026-10-09 — Fixed a quarter_offset off-by-one that misrendered every scenario's "today" anchor; sourced the Wyaralong/Logan River yield figure and put commit-by dates on the balance chart itself
+
+**Trajectory off-by-one, found via the dashboard, not a test:** every
+scenario's fan chart showed a visible discontinuity right at "today" -
+`scenarios/run_all.py` built `trajectory_rows` from `analogue["trajectory_ml"][1:]`,
+silently dropping index 0 (the real anchor - today's actual Grid storage,
+identical across every analogue by construction) and renumbering from
+"storage after Q1" as `quarter_offset=0`. Every analogue's Q1 rainfall
+differs, so the exported `quarter_offset=0` row legitimately varied across
+analogues (p10 != p50 != p90) where it should have been one constant value.
+Confirmed live: baseline's offset-0 p50 was ~1.84M ML against a real latest
+observed storage of ~1.75M ML - an ~88,000 ML gap with nothing to do with
+the model, just a dropped data point. Fixed by keeping the full
+`trajectory_ml` array and shifting the offset mapping so offset 0 is always
+the real anchor; `source_rainfall_date`/`rainfall_mm` are null for that row
+(no quarter's rainfall has been applied yet at offset 0) - neither column
+has a `not_null` test, so this didn't need a schema change. Re-ran
+`scenarios/run_all.py` and `dbt run --select tag:scenario_output` against
+the live warehouse directly (not a full `make refresh`) to land the fix
+without a real-API re-ingest.
+
+**Commit-by dates were a disconnected list; SPEC.md 7 actually asked for
+them marked on the balance chart itself** ("the WRMP-style chart... with
+option commit-by dates marked. This is the money shot"), which the
+built dashboard never did - `CommitByPanel` was a standalone text list with
+no link back to the chart it was about. Added purple dashed `Plot.ruleX`
+markers to `SupplyDemandBalanceChart` at each distinct commit-by year,
+grouped (several options can share a lead time), labelled, and positioned
+near the top of the chart away from the demand/yield lines and the existing
+red balance-negative marker. Deliberately excludes options with a 0-year
+lead time (already-operating infrastructure) - those land exactly on the
+balance-negative year itself and would just duplicate the red line, not add
+information.
+
+**Sourced a real yield figure for one of the two remaining `TODO-VERIFY`
+options** (closing part of the gap the 2026-10-05 entry above left open):
+Seqwater's own Feb 2025 "Proposed Wyaralong Water Treatment Plant Project
+Overview" (seqwater.com.au/media/2926/download) states "the plant would be
+capable of producing 120 million litres of drinking water a day, expandable
+to 150 million litres per day in the future" - 120 ML/day x 365 / 1000 =
+43.8 GL/yr, landed in `seed_supply_options.csv`'s `yield_gl_per_year` for
+the Logan River / Wyaralong Dam option (using the plant's stated initial
+capability, not the future-expandable figure). Also confirms "Proposed
+start of Operations - 2031," independently matching the ministerial
+statement already backing that option's 2031-derived lead time. **Second
+desalination plant's yield stays `TODO-VERIFY`** - checked Seqwater's
+project page, two desalination fact sheets, and the Water Security Program
+PDF; every source confirms the business case (capacity, location, timing)
+is still in progress, not published. Not guessed from the existing Gold
+Coast plant's 43 GL/yr, which is a different plant at a different site with
+no stated relationship to the new one's eventual size.
+
+## 2026-10-12 — Minjerribah groundwater was never actually climate-independent; its yield now decays with scenario drought severity
+
+**Found via a user question, not a planned audit:** `EXISTING_CLIMATE_INDEPENDENT_SUPPLY_ML_PER_YEAR`
+summed desal (43) + groundwater (16) + recycled water (59) = 118 GL/yr as one
+flat constant. But SPEC.md's own domain primer names only desal and
+recycled water as "climate-independent sources" - groundwater was never in
+that definition. That's the code quietly extending SPEC's own claim, not
+something sourced.
+
+**Checked live whether that extension was at least defensible:** Seqwater's
+own North Stradbroke Island (Minjerribah) Drought Response Plan
+(seqwater.com.au/document/2261, PLN-00468) monitors real groundwater
+bore-level drought triggers for this exact allocation (three tiers, 15m ->
+10m/4m -> 4m/2m AHD, escalating to inter-community water carting) - the
+aquifer is real and drought-connected, just slower/more buffered than a
+surface dam. A 2024 Redlands2030 report on the same aquifer: "the aquifer
+level in the vicinity of the extraction borefield hasn't even recovered
+[since the last drought], let alone built up." So "climate-independent" was
+actively wrong for this source, not just imprecise.
+
+**What's genuinely NOT available:** a sourced GL/yr-vs-drought-severity
+curve for the Grid-allocated portion specifically (the Drought Response
+Plan's own document covers the island's local *town* supply allocation -
+1,450 ML/yr across Amity Point/Point Lookout/Dunwich - a different,
+smaller entitlement than the Grid's 16 GL/yr). Checked BOM KiWIS live too,
+in case an alternate station existed - confirmed none of the SEQ Grid's
+other 11 dams have a BOM Storage Volume/Level series at all (only river
+gauges), closing that avenue entirely (see the 2026-10-09 entry above for
+the fuller BOM findings).
+
+**Resolution, with the user explicitly choosing "reasoned assumption,
+clearly flagged" over "leave it flat":** groundwater's yield now steps down
+(100% / 85% / 65% / 40% / 20% of the sourced 16 GL/yr ceiling) based on the
+worst (lowest) grid storage % reached anywhere in that scenario's own fan,
+using the same real Seqwater drought-response trigger tiers already
+computed for `fct_trigger_crossings` (`DROUGHT_TRIGGERS` in
+`scenarios/run_all.py`) - not invented thresholds. **The step percentages
+themselves are explicitly a reasoned assumption, not a sourced figure** -
+flagged as such in `scenarios/LIMITATIONS.md`, in `ScenarioSelector.jsx`'s
+"what to keep in mind" writeup, and inline in the dashboard's supply
+breakdown panel (which now shows e.g. "modelled - reduced for drought
+severity (EMSV reached)" instead of "existing, fixed" for this one row).
+Desal and recycled water stay genuinely flat constants - they're the real
+climate-independent sources.
+
+**Consequence:** `millennium_drought_repeat_unrestricted`'s
+balance-negative year moved from 2045 to 2043 (less available yield during
+its own worst drought quarters, since groundwater now correctly contributes
+less exactly when the model is simulating a severe drought) - a real,
+more-conservative change, not a regression. `dim_scenario` gained a
+`groundwater_worst_drought_trigger` column; `fct_commit_by_dates`' row for
+this option now carries the scenario's own decayed figure instead of the
+static seed ceiling, so the breakdown panel's total still matches the
+chart's yield line exactly. `dbt test`: 68 passing, 0 errors, same 2
+pre-existing unrelated warnings.

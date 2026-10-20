@@ -119,7 +119,7 @@ export default function DamCharts({ rows }) {
         <span className="chart-note-icon" aria-hidden="true">
           i
         </span>
-        <p>Hover over the charts to see storage and rainfall by location and date.</p>
+        <p>Hover over a chart to see storage and rainfall history by location.</p>
       </div>
     </div>
   );

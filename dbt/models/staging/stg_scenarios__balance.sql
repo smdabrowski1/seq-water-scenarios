@@ -18,6 +18,7 @@ select
     demand_ml_per_year,
     safe_yield_ml_per_year,
     available_yield_ml_per_year,
+    groundwater_yield_ml_per_year,
     surplus_deficit_ml_per_year
 from ranked
 where rn = 1

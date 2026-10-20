@@ -35,7 +35,7 @@ export default function ScenarioTrajectoryChart({ observed, projected }) {
       height: 260,
       marginLeft: 56,
       x: { type: "utc", label: null },
-      y: { label: "SEQ Water Grid storage (ML)", grid: true, domain: [0, 2300000] },
+      y: { label: null, grid: true, domain: [0, 2300000] },
       marks: [
         Plot.ruleY([0]),
         Plot.lineY(observed, {
@@ -93,8 +93,28 @@ export default function ScenarioTrajectoryChart({ observed, projected }) {
   }, [observed, projected]);
 
   return (
-    <div>
+    <section className="scenario-chart-card card">
+      <span className="chart-eyebrow">
+        <span className="chart-eyebrow-icon chart-eyebrow-icon-storage" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+            <path
+              d="M12 3C12 3 5 11.5 5 15.5C5 19.09 8.13 22 12 22C15.87 22 19 19.09 19 15.5C19 11.5 12 3 12 3Z"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+        Grid Storage Trajectory (ML)
+      </span>
+
       <div ref={chartRef} className="chart-panel chart-panel-scenario" />
+
+      <div className="chart-note">
+        <span className="chart-note-icon" aria-hidden="true">
+          i
+        </span>
+        <p>Hover over the chart to see observed and simulated storage by date.</p>
+      </div>
+
       <InfoToggle label="How to read this chart">
         <p>
           <strong>Solid line:</strong> observed history. <strong>Shaded band + dashed line:</strong>{" "}
@@ -103,6 +123,6 @@ export default function ScenarioTrajectoryChart({ observed, projected }) {
           validated rainfall range - see scenarios/LIMITATIONS.md.
         </p>
       </InfoToggle>
-    </div>
+    </section>
   );
 }

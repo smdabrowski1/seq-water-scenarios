@@ -15,6 +15,7 @@ select
     option_name,
     balance_negative_year,
     lead_time_years,
-    commit_by_year
+    commit_by_year,
+    yield_gl_per_year
 from {{ ref('stg_scenarios__commit_by') }}
 order by scenario_name, option_name

@@ -81,16 +81,27 @@ body {
 }
 
 .app-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 12px 0 28px;
+  padding: 16px 0 32px;
 }
 
 .app-header h1 {
   margin: 0;
   font-size: clamp(32px, 5vw, 44px);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   line-height: 1.1;
+}
+
+/* The one word this product is actually about, picked out in the same blue
+   as the storage charts - a small, deliberate accent rather than solid
+   black-on-black, the way a lot of product headers pull one word of their
+   name into their brand colour. */
+.app-header-accent {
+  color: #2a78d6;
 }
 
 .app-subtitle {
@@ -100,8 +111,10 @@ body {
 }
 
 .app-header .app-subtitle {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   font-size: 17px;
+  letter-spacing: 0.01em;
+  max-width: 440px;
 }
 
 .error-banner {
@@ -645,6 +658,222 @@ body {
   margin-top: 18px;
 }
 
+/* A fixed legend row, not in-chart end labels - its position never depends
+   on data values, so unlike a text label chasing the end of a line, it
+   cannot collide regardless of how close two series get. */
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--dim);
+}
+
+.chart-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* The breakdown panel - a clearly separate card-within-a-card (its own
+   border, not just more rows inside .scenario-chart-card) since it's
+   showing a different kind of thing: one year's full composition, not the
+   trend the chart above is about. The summary row stays visible whether
+   expanded or not, so collapsing never loses the headline result. */
+.yield-breakdown {
+  margin-top: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.yield-breakdown-summary-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.yield-breakdown-summary-row:hover {
+  background: var(--border);
+}
+
+.yield-breakdown-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.yield-breakdown-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.yield-breakdown-chip {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.yield-breakdown-chip.is-surplus {
+  color: var(--success);
+  background: var(--success-weak);
+}
+
+.yield-breakdown-chip.is-deficit {
+  color: var(--danger);
+  background: var(--danger-weak);
+}
+
+.yield-breakdown-chevron {
+  color: var(--faint);
+  transition: transform 0.15s ease;
+}
+
+.yield-breakdown-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* Collapsed means genuinely not rendered (see the component) - no
+   CSS-only height trick, since that left a real sliver of the bar visible
+   underneath the summary row no matter how it was tuned, confirmed live. */
+.yield-breakdown-inner {
+  padding: 0 16px 16px;
+}
+
+/* The composition itself, as one proportional stacked bar - reads faster
+   than a column of numbers, and the dashed demand marker shows directly
+   whether the stack actually clears it (inside the bar = surplus, the
+   marker sits past the coloured segments = deficit). */
+.yield-bar-wrap {
+  position: relative;
+  margin: 4px 0 22px;
+}
+
+.yield-bar {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 22px;
+  border-radius: var(--radius-sm, 6px);
+  overflow: hidden;
+  background: var(--border);
+}
+
+.yield-bar-segment {
+  height: 100%;
+}
+
+.yield-bar-demand-marker {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--text);
+  transform: translateX(-1px);
+}
+
+.yield-bar-demand-label {
+  position: absolute;
+  top: 100%;
+  margin-top: 4px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.yield-breakdown-list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.yield-breakdown-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 13px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.yield-breakdown-swatch {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.yield-breakdown-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.yield-breakdown-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  color: var(--text);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.yield-breakdown-detail {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--faint);
+}
+
+.yield-breakdown-value {
+  flex-shrink: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.yield-breakdown-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  padding: 4px 0;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.yield-breakdown-total {
+  font-weight: 700;
+  color: var(--text);
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
 .chart-eyebrow-icon {
   display: inline-flex;
   align-items: center;
@@ -663,6 +892,25 @@ body {
 .chart-eyebrow-icon-rainfall {
   background: #eb68341a;
   color: #eb6834;
+}
+
+/* Neutral, not blue/orange - this chart isn't "about" either of its two
+   series more than the other, so its own icon badge stays a neutral gray
+   rather than borrowing one series' color and implying bias toward it. */
+.chart-eyebrow-icon-balance {
+  background: var(--panel);
+  color: var(--dim);
+  border: 1px solid var(--border);
+}
+
+.chart-eyebrow-icon-accent {
+  background: rgba(255, 56, 92, 0.1);
+  color: var(--accent);
+}
+
+.chart-eyebrow-icon-danger {
+  background: var(--danger-weak);
+  color: var(--danger);
 }
 
 .chart-panel {
@@ -837,36 +1085,74 @@ body {
 }
 
 .scenarios-section h2 {
-  margin: 0;
+  margin: 0 0 24px;
   text-align: center;
   font-size: clamp(26px, 4vw, 34px);
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
-.scenarios-section > .app-subtitle {
-  text-align: center;
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.scenarios-section h4 {
-  margin: 0 0 12px;
-  font-size: 15px;
-  font-weight: 700;
+/* Same card treatment as Current & History's cards (a visible hairline
+   border, not just the shadow, plus consistent bottom spacing so each
+   block in this section reads as one more distinct unit in a stack, not
+   one long undifferentiated page). */
+.scenario-controls-card {
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
 }
 
 .scenario-select-label {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
+/* Deliberately NOT the same boxed-panel treatment as .scenario-methodology
+   above it - that's a general "how this tool works" callout; this is a
+   plain caption for whichever scenario is currently selected, so it reads
+   as lighter-weight and more immediate (changes every time you pick a new
+   scenario) rather than another static info box of the same visual weight.
+   Full width, no panel background/border - just icon + italic text. */
 .scenario-description {
   display: flex;
   align-items: flex-start;
+  gap: 8px;
+  margin: 10px 0 0;
+  width: 100%;
+}
+
+.scenario-description p {
+  margin: 0;
+  color: var(--dim);
+  font-size: 13.5px;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.scenario-description-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: #2a78d61a;
+  color: #2a78d6;
+  font-size: 11px;
+  font-weight: 700;
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Same info-card treatment as .scenario-description right below it (icon
+   badge + accent-left-border panel) - this is the engine-level explainer,
+   that one is the selected scenario's own description, so they read as two
+   members of the same family, not two different styles for "info". */
+.scenario-methodology {
+  display: flex;
+  align-items: flex-start;
   gap: 10px;
-  margin: 4px 0 0;
-  max-width: 680px;
+  margin: 0 0 20px;
   padding: 12px 16px;
   background: var(--panel);
   border: 1px solid var(--border);
@@ -874,14 +1160,14 @@ body {
   border-radius: var(--radius-md);
 }
 
-.scenario-description p {
+.scenario-methodology p {
   margin: 0;
   color: var(--dim);
   font-size: 13.5px;
   line-height: 1.55;
 }
 
-.scenario-description-icon {
+.scenario-methodology-icon {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
@@ -902,7 +1188,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  margin: 16px 0 24px;
+  margin: 16px 0 0;
   padding: 14px 18px;
   background: var(--panel);
   border: 1px solid var(--border);
@@ -935,95 +1221,341 @@ body {
   color: var(--dim);
 }
 
+/* Each scenario chart is now its own self-contained card (eyebrow + chart +
+   hover caption), same shape as GridSummary above in Current & History -
+   consistent bottom spacing here, not a margin-top on whatever follows. */
+.scenario-chart-card {
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
 .chart-panel-scenario {
   min-height: 260px;
 }
 .chart-panel-balance {
   min-height: 260px;
-  margin-top: 24px;
 }
 
-.scenario-panels-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
-  margin-top: 24px;
-}
-
-@media (max-width: 860px) {
-  .scenario-panels-grid {
-    grid-template-columns: 1fr;
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
   }
 }
 
-.commit-by-list {
-  list-style: none;
+@keyframes modal-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  /* The blur is what actually separates the dialog from the page - a
+     lighter scrim behind it reads as deliberate focus, not just a darkened
+     page with a box on top. */
+  background: rgba(20, 20, 20, 0.32);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1000;
+  animation: modal-backdrop-in 0.2s ease-out;
+}
+
+.modal-dialog {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 64px rgba(20, 20, 20, 0.22);
+  padding: 36px 40px;
+  /* Wider than a typical confirm dialog - at the old 480px, this much
+     prose wrapped into a cramped, ragged column. A wider measure lets each
+     line run longer, so the three paragraphs read as prose, not a tall
+     narrow stack. */
+  max-width: 600px;
+  width: 100%;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  animation: modal-dialog-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background: rgba(255, 56, 92, 0.1);
+  color: var(--accent);
+}
+
+.modal-dialog h3 {
+  margin: 0 0 16px;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.modal-dialog p {
+  margin: 0 0 16px;
+  color: var(--dim);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.modal-dialog p:last-of-type {
+  margin-bottom: 26px;
+}
+
+.modal-dismiss {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--faint);
+  cursor: pointer;
+}
+
+.modal-dismiss:hover {
+  background: var(--panel);
+  color: var(--dim);
+}
+
+.modal-dismiss:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.3);
+}
+
+.modal-close-button {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--ui);
+  color: #ffffff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 11px 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 56, 92, 0.28);
+}
+
+.modal-close-button:hover {
+  background: #e62e51;
+}
+
+.modal-close-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.3);
+}
+
+/* "No investment needed" - same info-card shape as .chart-note, but a
+   success tint and a checkmark instead of "i": a different kind of message
+   (a calm, positive status) deserves a visually different treatment, not
+   the same neutral-info look used for "here's how to read this chart". */
+.investment-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+}
+
+.investment-status-ok {
+  background: var(--success-weak);
+  border: 1px solid rgba(13, 148, 136, 0.25);
+}
+
+.investment-status p {
   margin: 0;
-  padding: 0;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.investment-status-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--success);
+  color: #ffffff;
+}
+
+/* The investment simulator - a bordered panel (clearly its own control,
+   not part of the chart's own SVG) holding one real switch per costable
+   option. Stacks vertically; each row is its own self-contained unit. */
+.investment-toggle-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.investment-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* A real pill switch, not a bare checkbox - this toggles a live simulation
+   (the chart's own yield line moves), which is an action with visible
+   weight, not a settings preference. The native input stays in the DOM for
+   keyboard/screen-reader access, visually hidden behind the custom track. */
+.investment-switch {
+  flex-shrink: 0;
+  position: relative;
+  display: inline-flex;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.investment-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.investment-switch-track {
+  display: inline-flex;
+  align-items: center;
+  width: 36px;
+  height: 20px;
+  padding: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--border);
+  transition: background-color 0.15s ease;
+}
+
+.investment-switch-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease;
+}
+
+.investment-switch input:checked + .investment-switch-track {
+  background: var(--success);
+}
+
+.investment-switch input:checked + .investment-switch-track .investment-switch-thumb {
+  transform: translateX(16px);
+}
+
+.investment-switch input:focus-visible + .investment-switch-track {
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.3);
+}
+
+.investment-toggle-text {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
-.commit-by-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--border);
+.investment-toggle-label {
   font-size: 13.5px;
-}
-
-.commit-by-row:last-child {
-  border-bottom: none;
-}
-
-.commit-by-option {
+  font-weight: 600;
   color: var(--text);
 }
 
-.commit-by-year {
-  flex-shrink: 0;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  color: var(--text);
+.investment-toggle-meta {
+  font-size: 12px;
+  color: var(--dim);
 }
 
-.commit-by-unknown {
-  flex-shrink: 0;
-  color: var(--faint);
+.investment-toggle-outcome {
+  margin-top: 2px;
   font-size: 12.5px;
-  font-style: italic;
-  text-align: right;
+  font-weight: 700;
 }
 
-.trigger-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13.5px;
+.investment-toggle-outcome.is-good {
+  color: var(--success);
 }
 
-.trigger-table th {
-  text-align: left;
+.investment-toggle-outcome.is-neutral {
+  color: var(--dim);
+}
+
+@keyframes floating-switcher-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+}
+
+/* Fixed to the viewport, not the page - stays reachable no matter how far
+   down the scenarios section the investment toggles/breakdown have
+   scrolled. Bottom-center, clear of the section nav/header at the top and
+   out of the way of the content itself, the common placement for a
+   floating utility control that shouldn't compete with the page's own
+   layout. */
+.floating-scenario-switcher {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 900;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+  padding: 8px 10px 8px 16px;
+  max-width: calc(100vw - 32px);
+  animation: floating-switcher-in 0.18s ease-out;
+}
+
+.floating-scenario-switcher-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--dim);
-  font-size: 12px;
-  padding: 0 0 8px;
-  border-bottom: 1px solid var(--border);
 }
 
-.trigger-table td {
-  padding: 9px 0;
-  border-bottom: 1px solid var(--border);
-  font-variant-numeric: tabular-nums;
+.floating-scenario-switcher-label select {
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: var(--ui);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  max-width: 54vw;
 }
 
-.trigger-table tr:last-child td {
-  border-bottom: none;
-}
-
-.trigger-table td:nth-child(2),
-.trigger-table td:nth-child(3) {
-  text-align: right;
+@media (max-width: 520px) {
+  .floating-scenario-switcher-label span:first-child {
+    display: none;
+  }
 }

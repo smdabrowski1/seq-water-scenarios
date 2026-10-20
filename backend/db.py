@@ -123,7 +123,8 @@ class Store:
         rows = cur.execute("""
             select
                 scenario_name, description, population_series, per_capita_demand_tier,
-                climate_time_slice, climate_scenario, balance_negative_year
+                climate_time_slice, climate_scenario, balance_negative_year,
+                rainfall_replay_type
             from dim_scenario
             order by scenario_name
         """).fetchall()
@@ -142,7 +143,7 @@ class Store:
 
         commit_by_rows = cur.execute(
             """
-            select option_name, lead_time_years, commit_by_year
+            select option_name, lead_time_years, commit_by_year, yield_gl_per_year
             from fct_commit_by_dates
             where scenario_name = ?
             order by option_name
@@ -213,7 +214,8 @@ class Store:
             """
             select
                 year, population_total, demand_ml_per_year,
-                available_yield_ml_per_year, surplus_deficit_ml_per_year
+                available_yield_ml_per_year, groundwater_yield_ml_per_year,
+                surplus_deficit_ml_per_year
             from fct_supply_demand_balance
             where scenario_name = ?
             order by year

@@ -9,19 +9,18 @@ import {
   fetchScenarios,
 } from "./api.js";
 import ChartErrorBoundary from "./components/ChartErrorBoundary.jsx";
-import CommitByPanel from "./components/CommitByPanel.jsx";
 import DamCharts from "./components/DamCharts.jsx";
 import DateRangeFilter, { filterByWindow } from "./components/DateRangeFilter.jsx";
 import DateScrubber from "./components/DateScrubber.jsx";
+import DemoDisclaimerModal from "./components/DemoDisclaimerModal.jsx";
+import FloatingScenarioSwitcher from "./components/FloatingScenarioSwitcher.jsx";
 import GridSummary from "./components/GridSummary.jsx";
-import LimitationsPanel from "./components/LimitationsPanel.jsx";
 import MapView from "./components/MapView.jsx";
 import ScenarioAssumptions from "./components/ScenarioAssumptions.jsx";
 import ScenarioSelector from "./components/ScenarioSelector.jsx";
 import ScenarioTrajectoryChart from "./components/ScenarioTrajectoryChart.jsx";
 import SectionNav from "./components/SectionNav.jsx";
 import SupplyDemandBalanceChart from "./components/SupplyDemandBalanceChart.jsx";
-import TriggerCrossingsPanel from "./components/TriggerCrossingsPanel.jsx";
 
 const VALID_SECTIONS = ["observed", "scenarios"];
 
@@ -70,6 +69,23 @@ export default function App() {
   const [scenarioTrajectory, setScenarioTrajectory] = useState(null);
   const [scenarioBalance, setScenarioBalance] = useState(null);
 
+  // The main scenario picker is up near the top of a long page - the
+  // balance chart's investment toggles and breakdown live well below it,
+  // so switching scenarios while looking at those means a scroll all the
+  // way back up. A floating switcher fills that gap, but only once the
+  // real picker has actually scrolled out of view (tracked here, not in
+  // the floating component itself, since it needs a ref to the real one).
+  const scenarioSelectorRef = useRef(null);
+  const [scenarioSelectorVisible, setScenarioSelectorVisible] = useState(true);
+  useEffect(() => {
+    if (activeSection !== "scenarios" || !scenarioSelectorRef.current) return;
+    const observer = new IntersectionObserver(([entry]) => setScenarioSelectorVisible(entry.isIntersecting), {
+      threshold: 0,
+    });
+    observer.observe(scenarioSelectorRef.current);
+    return () => observer.disconnect();
+  }, [activeSection, scenarios]);
+
   useEffect(() => {
     fetchDams().then(setDams).catch((e) => setError(String(e)));
     fetchGridTimeseries().then(setGridRows).catch((e) => setError(String(e)));
@@ -78,11 +94,16 @@ export default function App() {
   // Scenario data loads lazily, the first time the Scenarios section is
   // actually visited - most sessions may never open it, no reason to fetch
   // it upfront on every page load. Fetched once; switching back and forth
-  // afterward reuses what's already in state.
+  // afterward reuses what's already in state. The demo disclaimer rides the
+  // same "first visit" guard, rather than its own separate flag, since it's
+  // the exact same moment - shown once per session, not on every return
+  // trip to this section.
   const scenariosLoadStarted = useRef(false);
+  const [showDemoDisclaimer, setShowDemoDisclaimer] = useState(false);
   useEffect(() => {
     if (activeSection !== "scenarios" || scenariosLoadStarted.current) return;
     scenariosLoadStarted.current = true;
+    setShowDemoDisclaimer(true);
     fetchScenarios().then(setScenarios).catch((e) => setError(String(e)));
   }, [activeSection]);
 
@@ -151,11 +172,17 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>SEQ Water Security</h1>
+        <h1>
+          SEQ <span className="app-header-accent">Water</span> Security
+        </h1>
         <p className="app-subtitle">Dam levels and rainfall data across 12 SEQ locations</p>
       </header>
 
       {error && <div className="error-banner">{error}</div>}
+
+      {showDemoDisclaimer && (
+        <DemoDisclaimerModal onClose={() => setShowDemoDisclaimer(false)} />
+      )}
 
       <SectionNav activeSection={activeSection} onSelect={selectSection} />
 
@@ -242,26 +269,27 @@ export default function App() {
       </section>
 
       <section
-        className="scenarios-section card"
+        className="scenarios-section"
         hidden={activeSection !== "scenarios"}
         aria-labelledby="scenarios-heading"
       >
-        <h2 id="scenarios-heading">Scenarios</h2>
-        <p className="app-subtitle">
-          Replayed historical rainfall, climate adjustment, population growth, and demand -
-          combined into the year the system would need more supply, and by when a decision
-          would need to be made.
-        </p>
-        {scenarios && (
-          <ScenarioSelector
-            scenarios={scenarios}
-            selectedName={selectedScenario}
-            onSelect={setSelectedScenario}
-          />
-        )}
-        {scenarioDetail && scenarioBalance && (
-          <ScenarioAssumptions dim={scenarioDetail.dim} balance={scenarioBalance} />
-        )}
+        <h2 id="scenarios-heading" className="visually-hidden">
+          Scenarios
+        </h2>
+
+        <div className="scenario-controls-card card" ref={scenarioSelectorRef}>
+          {scenarios && (
+            <ScenarioSelector
+              scenarios={scenarios}
+              selectedName={selectedScenario}
+              onSelect={setSelectedScenario}
+            />
+          )}
+          {scenarioDetail && scenarioBalance && (
+            <ScenarioAssumptions dim={scenarioDetail.dim} balance={scenarioBalance} />
+          )}
+        </div>
+
         {scenarioTrajectory && (
           // No key tied to selectedScenario here - that would force a full
           // unmount/remount on every scenario change (the same height-
@@ -277,17 +305,22 @@ export default function App() {
         )}
         {scenarioBalance && (
           <ChartErrorBoundary>
-            <SupplyDemandBalanceChart balance={scenarioBalance} />
+            <SupplyDemandBalanceChart
+              balance={scenarioBalance}
+              commitBy={scenarioDetail?.commitBy}
+              dim={scenarioDetail?.dim}
+            />
           </ChartErrorBoundary>
         )}
-        {scenarioDetail && (
-          <div className="scenario-panels-grid">
-            <CommitByPanel commitBy={scenarioDetail.commitBy} />
-            <TriggerCrossingsPanel triggers={scenarioDetail.triggers} />
-          </div>
-        )}
-        {scenarioDetail && <LimitationsPanel />}
       </section>
+
+      {activeSection === "scenarios" && scenarios && !scenarioSelectorVisible && (
+        <FloatingScenarioSwitcher
+          scenarios={scenarios}
+          selectedName={selectedScenario}
+          onSelect={setSelectedScenario}
+        />
+      )}
     </div>
   );
 }
