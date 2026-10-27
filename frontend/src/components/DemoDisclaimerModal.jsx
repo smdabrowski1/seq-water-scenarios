@@ -31,15 +31,17 @@ export default function DemoDisclaimerModal({ onClose }) {
           </svg>
         </button>
 
-        <span className="modal-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 8v5" strokeLinecap="round" />
-            <path d="M12 16.5v.01" strokeLinecap="round" />
-            <circle cx="12" cy="12" r="9" />
-          </svg>
-        </span>
+        <div className="modal-title-row">
+          <span className="modal-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 8v5" strokeLinecap="round" />
+              <path d="M12 16.5v.01" strokeLinecap="round" />
+              <circle cx="12" cy="12" r="9" />
+            </svg>
+          </span>
 
-        <h3 id="demo-disclaimer-title">Before you dive in</h3>
+          <h3 id="demo-disclaimer-title">Before you dive in</h3>
+        </div>
 
         <p>Quick note: this Scenarios tool is a demo, not a finished planning tool.</p>
         <p>

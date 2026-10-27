@@ -1284,20 +1284,27 @@ body {
   animation: modal-dialog-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
 .modal-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   width: 44px;
   height: 44px;
-  margin-bottom: 16px;
   border-radius: 50%;
   background: rgba(255, 56, 92, 0.1);
   color: var(--accent);
 }
 
 .modal-dialog h3 {
-  margin: 0 0 16px;
+  margin: 0;
   font-size: 21px;
   font-weight: 800;
   letter-spacing: -0.01em;
