@@ -1,50 +1,35 @@
 """Static per-source configuration, dispatched by `kind`.
 
-Translates the Hobby CDM Project's `backend/registry.py` pattern: one config dict
-per data source (fetch params only) rather than one bespoke script per source. Each
-`kind` has exactly one generic fetcher (`ingest/bom_kiwis.py`, `ingest/silo.py`,
-`ingest/seqwater_scrape.py`); adding a new dam or station is a new dict entry, not
-new code.
+One config dict per data source (fetch params only), one generic fetcher per
+`kind` (`ingest/bom_kiwis.py`, `ingest/silo.py`, `ingest/seqwater_scrape.py`).
+Adding a dam or station is a new dict entry, not new code.
 
-**Seqwater is the primary source for the 12-dam grid.** Confirmed during recon
-(docs/decisions.md, "Seqwater's historic-dam-levels page has real inline
-data") that Seqwater's own historic-dam-levels page server-renders real daily
-%/ML for all 12 SEQ Water Grid dams plus a precomputed grid-total series - no
-headless browser needed, a static-HTML fetch is enough.
+**Seqwater is the primary source for the 12-dam grid.** Its historic-dam-levels
+page server-renders real daily %/ML for all 12 SEQ Water Grid dams plus a
+precomputed grid-total series - no headless browser needed. See docs/decisions.md.
 
-BOM's Somerset-only cross-check sources were removed 2026-09-28 once this was
-confirmed - a whole separate pipeline for one dam that Seqwater's own feed
-already covers stopped earning its keep. The cross-check did catch one real,
-now-documented finding (BOM's Somerset % is stale relative to Seqwater's own
-reduced-FSL reference; the two sources' ML volumes agreed closely) - that
-finding is preserved in docs/decisions.md, it didn't need the source to keep
-running to stay true.
+BOM's Somerset-only cross-check was dropped once that was confirmed - a separate
+pipeline for one dam Seqwater's feed already covers wasn't worth keeping running.
+It had already caught one real finding (BOM's Somerset % is stale relative to
+Seqwater's reduced-FSL reference; ML volumes agreed closely), preserved in
+docs/decisions.md.
 
-**Re-added 2026-10-04, for a different reason: scenario-engine calibration
-- then superseded as the actual calibration source two days later, kept as
-reference data regardless.** Somerset is the only one of the 12 grid dams
-with real BOM storage history reaching back through the actual Millennium
-Drought (1996-05-22 onward), so the first attempt at the water-balance model
-(see scenarios/) fit rainfall-to-storage-change on Somerset alone. Real
-out-of-sample validation (not just in-sample R^2) showed that relationship
-has essentially no genuine predictive power (best attempt: out-of-sample
-R^2 = -0.04) - Somerset's level turns out to be substantially driven by
-operator decisions (flood mitigation, transfers with Wivenhoe), not passive
+Re-added later for scenario-engine calibration. Somerset is the only one of the
+12 grid dams with BOM storage history reaching back through the Millennium
+Drought (1996-05-22 onward), so the first water-balance model attempt fit
+rainfall-to-storage-change on Somerset alone. Out-of-sample validation showed
+no real predictive power there (R^2 = -0.04) - Somerset's level is driven
+mostly by operator decisions (flood mitigation, transfers with Wivenhoe), not
 catchment hydrology. The model that actually validates
-(`int_grid_water_balance_coefficients`, leave-one-out CV R^2 = 0.627) fits
-the SEQ Grid *total* against regional rainfall instead - inter-dam transfers
-cancel out at the grid level by construction. See docs/decisions.md for the
-full comparison across every approach tried.
+(`int_grid_water_balance_coefficients`, leave-one-out CV R^2 = 0.627) fits the
+SEQ Grid *total* against regional rainfall instead, since inter-dam transfers
+cancel out at the grid level. Full comparison in docs/decisions.md.
 
-Kept in `SOURCES` anyway: it's real, genuinely-sourced historical data (the
-only dam-level record spanning the actual drought), useful on its own for
-plausibility-checking scenario output even though it isn't what the model is
-fit on. Uses `value_ml` (BOM's volume column), not its `%` column, to
-sidestep the known FSL-reference mismatch entirely. A long `cache_ttl_seconds`
-is set deliberately - this is static historical data, not a freshness-critical
-feed, and a long TTL also means an already-cached response keeps this source
-usable through a live BOM outage (confirmed useful - BOM's API had a real
-multi-hour, still-ongoing outage starting the same day this was added).
+Kept in `SOURCES` anyway as the only dam-level record spanning the actual
+drought - useful for plausibility-checking scenario output even though it
+isn't the calibration source. Uses `value_ml`, not `%`, to avoid the known
+FSL-reference mismatch. Long `cache_ttl_seconds`: static historical data, and
+a long TTL kept this source usable through a real multi-hour BOM outage.
 """
 
 from __future__ import annotations
@@ -62,39 +47,31 @@ SOURCES: dict[str, dict[str, Any]] = {
     "seqwater_dam_fsl_snapshot": {
         "kind": "scrape",
         "resource": "snapshot",
-        # FSL/capacity reference data, fetched daily like everything else rather than
-        # hand-transcribed into a seed - it changes rarely, but there's no reason a
-        # rare change should require a manual CSV edit instead of just re-scraping.
+        # FSL/capacity reference data - scraped daily rather than hand-transcribed
+        # into a seed, even though it changes rarely.
         "optional": False,
     },
     "silo_catchment_rainfall": {
         "kind": "silo",
-        # Locations are hardcoded in ingest/silo.py's CATCHMENT_LOCATIONS (real,
-        # sourced coordinates for all 12 dams - see docs/decisions.md), not
-        # here - unlike the BOM/Seqwater sources, this fetcher covers many
-        # locations in one call, so there's nothing per-dam to configure.
-        "optional": False,  # SILO_API_KEY is set - this is a real primary source now
+        # Locations live in ingest/silo.py's CATCHMENT_LOCATIONS, not here - this
+        # fetcher covers all 12 dams in one call, so nothing per-dam to configure.
+        "optional": False,
     },
     "bom_somerset_storage_volume": {
         "kind": "bom",
         "station_no": "143305A",
-        # DMQaQc.Merged.DailyMean.24HR, Storage Volume, ML - confirmed real, see docs/decisions.md
+        # DMQaQc.Merged.DailyMean.24HR, Storage Volume, ML - see docs/decisions.md
         "ts_id": "368803010",
-        # real period of record starts 1996-05-22; a few months earlier is harmless (empty rows)
+        # period of record actually starts 1996-05-22; earlier rows are just empty
         "from_date": "1996-01-01",
-        # Deliberately pinned, not left to default-to-today: `to_date` is part of
-        # the cache key, so a dynamic "today" would cache-miss on every new day
-        # regardless of cache_ttl_seconds - defeating the point of a long TTL the
-        # moment BOM's API is unreachable (confirmed the hard way same day: a
-        # 90-day TTL still couldn't serve the cached response because the `to`
-        # param didn't match). This is a calibration snapshot, not a live feed -
-        # bump this date by hand occasionally to pick up new trailing days, not
-        # on every run.
+        # Pinned, not "today": `to_date` is part of the cache key, so a moving
+        # date would cache-miss daily and defeat the long TTL - exactly what
+        # broke the cached fallback during a real BOM outage. Calibration
+        # snapshot, not a live feed - bump by hand to pick up new trailing days.
         "to_date": "2026-09-28",
         "cache_ttl_seconds": 30 * 24 * 3600,  # 30 days - see module docstring
-        # Optional: this is a calibration input, not something the dashboard's
-        # headline series depends on - a BOM outage shouldn't fail the whole
-        # pipeline the way a missing Seqwater/SILO source would.
+        # Calibration input, not part of the dashboard's headline series - a BOM
+        # outage shouldn't fail the whole pipeline.
         "optional": True,
     },
 }

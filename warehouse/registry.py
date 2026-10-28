@@ -1,11 +1,10 @@
 """SQLite-backed registry of pipeline runs.
 
-Translates the Hobby CDM Project's `backend/db.py` dataset-version registry pattern
-to this project's shape: one warehouse file, so one row per *run* rather than one row
-per (dataset, version). The registry answers two questions safely across process
-restarts and concurrent invocations: "is a run currently in flight" and "which run's
-warehouse file is the one the dashboard export step should read from" — the latter
-only ever changes inside `activate_run`'s single transaction.
+One warehouse file per run, so one row per *run*. Answers two questions
+safely across process restarts and concurrent invocations: "is a run
+currently in flight" and "which run's warehouse file should the dashboard
+export step read from" — the latter only ever changes inside
+`activate_run`'s single transaction.
 """
 
 from __future__ import annotations
@@ -56,10 +55,9 @@ def reap_stale_jobs(
 ) -> None:
     """Fail any non-terminal run older than the threshold.
 
-    A young non-terminal row can't be distinguished from a genuinely still-running
-    job without a time threshold — same accepted tradeoff as the sibling project's
-    `reap_stale_jobs`. A container crash mid-run leaves that run locked out for up
-    to `stale_after_minutes` before a retry is allowed.
+    A young non-terminal row can't be distinguished from a genuinely still-
+    running job without a time threshold. A container crash mid-run leaves
+    that run locked out for up to `stale_after_minutes` before a retry.
     """
     cutoff = (datetime.now(UTC) - timedelta(minutes=stale_after_minutes)).isoformat()
     placeholders = ",".join("?" for _ in TERMINAL_STATUSES)

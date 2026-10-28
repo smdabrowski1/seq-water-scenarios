@@ -1,26 +1,19 @@
 """SILO (Long Paddock) DataDrill point API fetcher.
 
-IMPORTANT per SPEC.md 3.1: SILO explicitly warns its gap-filled data is not suitable
-for climate-change detection studies. Use this data for catchment rainfall history
-only - never to claim a trend. This caveat travels with the code, not just the spec
-doc, so it survives someone reading this file without the spec open.
+SILO warns its gap-filled data isn't suitable for climate-change detection
+studies - use for catchment rainfall history only, never to claim a trend.
 
-Confirmed against the live endpoint (see docs/decisions.md):
-- No registration is actually required, despite SPEC.md's "free registration"
-  framing - `username`/`password` are accepted values, not verified credentials
-  (SILO's own docs literally suggest 'apirequest' as an example password). A
-  real, permission-obtained email is still used here rather than a placeholder.
-- `DataDrillDataset.php` returns an *interpolated* value from SILO's 5km grid
-  at any `lat`/`lon` you ask for (to the nearest 0.05 degrees) - not tied to a
-  real weather station. This is why CATCHMENT_LOCATIONS below has fabricated
-  no coordinates itself: each one is a real, sourced location (BOM's own
-  gauge coordinate where one exists, otherwise OpenStreetMap Nominatim's
-  coordinate for the named dam - see docs/decisions.md for the exact source
-  per dam).
-- Units are millimetres (confirmed via SILO's own climate-variables page).
-- The `source` code in each day's response is NOT YET VERIFIED - SILO's docs
-  pages that should explain it 404'd during recon. Landed as-is, not
-  interpreted; do not assume what it means until confirmed.
+Notes from checking the live endpoint (see docs/decisions.md for detail):
+- No registration actually required - `username`/`password` aren't verified
+  (SILO's own docs suggest 'apirequest' as an example password). A real email
+  is used anyway.
+- `DataDrillDataset.php` interpolates from SILO's 5km grid at any `lat`/`lon`
+  (nearest 0.05 degree) - not tied to a real weather station. CATCHMENT_LOCATIONS
+  below are real sourced coordinates (BOM gauge where one exists, otherwise
+  OpenStreetMap Nominatim) - see docs/decisions.md for the source per dam.
+- Units are millimetres.
+- The `source` code in each day's response is unverified - SILO's docs pages
+  for it 404'd. Landed as-is; don't assume what it means.
 """
 
 from __future__ import annotations
@@ -52,8 +45,8 @@ CATCHMENT_LOCATIONS: list[dict[str, Any]] = [
 ]
 
 HISTORY_START = "19860101"  # ~40 years - covers the Millennium Drought and the
-# 2011/2022 floods, the analogue years SPEC.md section 6.1 cares most about. Still
-# short of SILO's full 1889+ depth (a one-line change to widen further if ever needed).
+# 2011/2022 floods (the analogue years we care about). Short of SILO's full
+# 1889+ depth; widen if needed.
 
 
 def fetch_point_data(source_config: dict[str, Any], cache: Cache) -> pl.DataFrame:

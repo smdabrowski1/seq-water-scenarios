@@ -1,5 +1,4 @@
-// 8010, not 8000 - deliberately different from the Hobby CDM Project's port,
-// so both projects can run on the same machine at once without a conflict.
+// 8010, not 8000 - avoids clashing with other local projects on the same port.
 const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8010";
 
 async function getJson(path) {

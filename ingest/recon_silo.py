@@ -1,11 +1,10 @@
-"""Phase 0 recon: hit the SILO point API once and save the raw response.
+"""Recon script: hit the SILO point API once and save the raw response.
 
 Run manually: `uv run python -m ingest.recon_silo` (requires SILO_API_KEY in .env -
 free registration at longpaddock.qld.gov.au/silo/, the registered email is the key).
 
-Throwaway-but-committed, same rationale as ingest/recon_bom.py: inspect the real
-response shape/units/date format before ingest/silo.py's parsing is trusted. Update
-docs/decisions.md with what you observe.
+Throwaway-but-committed, same as ingest/recon_bom.py - inspect the real response
+shape/units/date format. Update docs/decisions.md with anything new observed.
 """
 
 from __future__ import annotations

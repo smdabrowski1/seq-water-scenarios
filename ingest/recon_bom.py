@@ -1,11 +1,10 @@
-"""Phase 0 recon: hit BOM KiWIS once each for getSiteList/getTimeseriesList/
+"""Recon script: hit BOM KiWIS once each for getSiteList/getTimeseriesList/
 getTimeseriesValues and save the raw response for inspection.
 
 Run manually: `uv run python -m ingest.recon_bom`
 
-This is throwaway-but-committed: the point is to look at the *actual* response
-shape before ingest/bom_kiwis.py's parsing is trusted, and to save that shape under
-docs/samples/ as a reference. Update docs/decisions.md with what you observe.
+Throwaway-but-committed - kept as a reference for the actual response shape
+under docs/samples/. Update docs/decisions.md with anything new observed.
 """
 
 from __future__ import annotations

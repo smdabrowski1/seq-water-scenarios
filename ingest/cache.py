@@ -1,13 +1,10 @@
 """Persistent on-disk HTTP cache with hand-rolled retry/backoff.
 
-No retry library dependency (tenacity etc.) - confirmed with the user to hand-roll
-this instead, since the spec asks to flag any dependency not named in its stack list
-before adding it. Backed by SQLite rather than a second ad-hoc cache mechanism,
-since `warehouse/registry.py` already brings in sqlite3 as a dependency.
+No retry library dependency - hand-rolled instead. SQLite-backed since
+`warehouse/registry.py` already depends on sqlite3.
 
-This is what makes `make ingest` idempotent on a cold-then-warm re-run (spec's
-Phase 1 done-when criterion): a cache hit within `ttl` returns immediately without
-another network call.
+Makes a cold-then-warm re-run of `make ingest` idempotent: a cache hit within
+`ttl` returns immediately without another network call.
 """
 
 from __future__ import annotations

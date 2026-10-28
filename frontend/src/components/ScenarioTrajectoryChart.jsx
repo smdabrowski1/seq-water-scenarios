@@ -3,12 +3,10 @@ import { useEffect, useRef } from "react";
 import InfoToggle from "./InfoToggle.jsx";
 import { swapPlot } from "../plotUtils.js";
 
-// Real observed history (solid line) continuing into a simulated fan
-// (shaded p10-p90 band + dashed p50 line) - same blue throughout (this is
-// one metric, grid storage, not two different series; color follows the
-// entity, not the observed/projected distinction - dataviz skill). The
-// *style* change (solid -> dashed, line -> band) is what signals "this part
-// is simulated," not a color change.
+// Observed history (solid line) continuing into a simulated fan (shaded
+// p10-p90 band + dashed p50 line) - same blue throughout, since this is one
+// metric (grid storage), not two series. The *style* change (solid ->
+// dashed, line -> band) signals "this part is simulated," not a color change.
 const STORAGE_BLUE = "#2a78d6";
 
 export default function ScenarioTrajectoryChart({ observed, projected }) {
@@ -20,10 +18,9 @@ export default function ScenarioTrajectoryChart({ observed, projected }) {
 
     const today = projected[0]?.date;
     // Lower band/line opacity once the replayed rainfall exceeds the
-    // water-balance model's own validated range - a real, required
-    // disclosure (see scenarios/LIMITATIONS.md), not decoration. The tip
-    // below states this explicitly in words too - the visual cue alone
-    // isn't treated as sufficient on its own.
+    // water-balance model's validated range (see scenarios/LIMITATIONS.md).
+    // The tip below also states this in words - the visual cue alone isn't
+    // relied on.
     const projectedStyled = projected.map((d) => ({
       ...d,
       bandOpacity: d.any_beyond_validated_range ? 0.08 : 0.18,

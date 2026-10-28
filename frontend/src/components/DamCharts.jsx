@@ -58,13 +58,12 @@ export default function DamCharts({ rows }) {
         Plot.ruleY([0]),
         // areaY/lineY, not barY/rectY - barY assumes a categorical (band)
         // x-scale, which conflicts with this chart's continuous "utc"
-        // x-scale and throws (confirmed live: "scale incompatible with
-        // channel: utc !== band", an uncaught error that unmounted the whole
-        // React tree). rectY avoids that error but its `interval` option
-        // produced a wrong y-axis (max 4,000mm against real data topping out
-        // at ~209mm) - not investigated further, since at ~1,829 days in a
-        // ~640px panel (well under 1px/day) discrete bars aren't legible at
-        // this zoom level anyway; a thin area reads better here regardless.
+        // x-scale and throws ("scale incompatible with channel: utc !==
+        // band"). rectY avoids that error but its `interval` option produced
+        // a wrong y-axis (max 4,000mm against real data topping out at
+        // ~209mm). Not worth chasing further either way - at ~1,829 days in
+        // a ~640px panel, discrete bars wouldn't be legible at this zoom
+        // level; a thin area reads better regardless.
         Plot.areaY(rainfallData, { x: "date", y: "rainfall_mm", fill: "#eb6834", fillOpacity: 0.5 }),
         Plot.lineY(rainfallData, { x: "date", y: "rainfall_mm", stroke: "#eb6834", strokeWidth: 1 }),
         Plot.tip(

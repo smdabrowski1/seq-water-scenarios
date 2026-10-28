@@ -3,13 +3,12 @@ import { useEffect, useRef } from "react";
 import { swapPlot } from "../plotUtils.js";
 
 // One unified "KPI hero" card - an eyebrow label, the headline stat (today's
-// real reading, independent of whatever window the chart is scrubbed to),
-// and the average over the currently selected range, in one flowing header
-// row, then the trend chart spans the card's full width underneath. The
-// date-range selector itself now lives on the date-range card above (it
-// drives this chart along with the dam charts further down, so it belongs
-// with the shared control, not duplicated here) - this card's right-hand
-// slot holds a second stat instead.
+// reading, independent of whatever window the chart is scrubbed to), and
+// the average over the selected range, in one flowing header row, with the
+// trend chart spanning the card's full width underneath. The date-range
+// selector lives on the date-range card above instead (it drives this
+// chart along with the dam charts further down, so it belongs with the
+// shared control); this card's right-hand slot holds a second stat.
 
 const dateFormatter = new Intl.DateTimeFormat("en-AU", {
   day: "numeric",

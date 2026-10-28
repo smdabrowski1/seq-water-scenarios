@@ -32,7 +32,7 @@ function sectionFromHash() {
 export default function App() {
   // Two top-level sections, reflected in the URL hash (#observed/#scenarios)
   // so a link, refresh, or the browser's back/forward button lands on the
-  // same section - not just in-memory tab state.
+  // same section instead of just in-memory tab state.
   const [activeSection, setActiveSection] = useState(sectionFromHash);
 
   useEffect(() => {
@@ -45,8 +45,8 @@ export default function App() {
     window.location.hash = id;
     setActiveSection(id);
     // A major navigation change, unlike switching dams/scenarios within a
-    // section (which must NOT scroll - see the fixes below) - landing on a
-    // new section at the top is the expected, helpful behaviour here.
+    // section (which must NOT scroll - see below) - landing on a new
+    // section at the top is the expected behaviour here.
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -57,9 +57,8 @@ export default function App() {
   const [error, setError] = useState(null);
   // null/null = the full available window (storage data only spans ~5 years
   // total, so this is already the "5 years to most recent" view). Both ends
-  // are independently settable now (dropdown picks a whole year; the dual
-  // scrubber below can open any custom window) rather than a fixed-length
-  // window panned from a single end.
+  // are independently settable: the dropdown picks a whole year, the dual
+  // scrubber below opens any custom window.
   const [windowStart, setWindowStart] = useState(null);
   const [windowEnd, setWindowEnd] = useState(null);
 
@@ -92,12 +91,11 @@ export default function App() {
   }, []);
 
   // Scenario data loads lazily, the first time the Scenarios section is
-  // actually visited - most sessions may never open it, no reason to fetch
-  // it upfront on every page load. Fetched once; switching back and forth
-  // afterward reuses what's already in state. The demo disclaimer rides the
-  // same "first visit" guard, rather than its own separate flag, since it's
-  // the exact same moment - shown once per session, not on every return
-  // trip to this section.
+  // visited - most sessions may never open it, no reason to fetch it
+  // upfront. Fetched once; switching back and forth afterward reuses
+  // what's already in state. The demo disclaimer rides the same "first
+  // visit" guard instead of its own flag, since it's the same moment -
+  // shown once per session, not on every return trip to this section.
   const scenariosLoadStarted = useRef(false);
   const [showDemoDisclaimer, setShowDemoDisclaimer] = useState(false);
   useEffect(() => {
@@ -118,13 +116,12 @@ export default function App() {
   // fetch resolves - same root issue as the date-slider scroll jump (see
   // plotUtils.js's swapPlot): clearing state first unmounts every
   // conditionally-rendered chart/panel below, the section's height
-  // collapses to zero for a moment, and everything after it on the page
-  // visibly jumps. Keeping the previous scenario's content mounted and
-  // swapping it in place once the new data lands avoids that collapse
-  // entirely - the charts' own swapPlot then handles the redraw smoothly,
-  // same as switching dams or dragging the scrubber already does. Guarded
-  // against out-of-order responses (rapid scenario switching) with a ref,
-  // not a state null-out.
+  // collapses to zero for a moment, and everything after it visibly jumps.
+  // Keeping the previous scenario's content mounted and swapping it in
+  // place once the new data lands avoids that collapse - the charts' own
+  // swapPlot then handles the redraw smoothly, same as switching dams or
+  // dragging the scrubber. Out-of-order responses (rapid scenario
+  // switching) are guarded with a ref instead of a state null-out.
   const latestScenarioRequest = useRef(null);
   const loadedScenarioRef = useRef(null);
 
@@ -132,11 +129,11 @@ export default function App() {
     // Gated on the Scenarios section being open too, not just a scenario
     // being selected - selectedScenario already has a default value at
     // mount, so without this check it would fetch immediately on first
-    // load even if the user never opens the Scenarios section at all.
+    // load even if the user never opens the Scenarios section.
     if (!selectedScenario || activeSection !== "scenarios") return;
     // Already have this exact scenario's data loaded (e.g. the user left
     // the section and came back without changing the selection) - skip the
-    // redundant re-fetch rather than silently re-requesting identical data.
+    // redundant re-fetch.
     if (loadedScenarioRef.current === selectedScenario) return;
     const requestId = selectedScenario;
     latestScenarioRequest.current = requestId;
@@ -187,20 +184,19 @@ export default function App() {
       <SectionNav activeSection={activeSection} onSelect={selectSection} />
 
       {/* Both sections stay mounted once rendered, toggled via `hidden`
-          rather than conditionally rendered/unmounted - MapView owns a real
+          instead of conditionally rendered/unmounted - MapView owns a real
           MapLibre GL instance with its own expensive init effect, and
           unmounting it on every section switch would re-initialise the map
-          (and re-fetch its tiles) every single time the user came back. */}
+          (and re-fetch its tiles) every time the user came back. */}
       <section hidden={activeSection !== "observed"} aria-labelledby="observed-heading">
         <h2 id="observed-heading" className="visually-hidden">
           Current &amp; History
         </h2>
 
         {/* Sits above every chart it drives (the grid-storage trend below,
-            plus both dam charts further down) rather than trailing after
+            plus both dam charts further down) instead of trailing after
             the dam charts - a shared filter reads as global when it's
-            positioned before the content it controls, not buried after
-            some of it. */}
+            positioned before the content it controls. */}
         <div className="date-scrubber-card card">
           <div className="date-scrubber-card-header">
             <span className="date-scrubber-card-label">Date range</span>
@@ -292,10 +288,10 @@ export default function App() {
 
         {scenarioTrajectory && (
           // No key tied to selectedScenario here - that would force a full
-          // unmount/remount on every scenario change (the same height-
-          // collapse-causes-scroll-jump problem this effect was just fixed
-          // for, one layer up). Staying mounted lets the chart's own
-          // swapPlot handle the redraw in place, same as the dam/date charts.
+          // unmount/remount on every scenario change, the same height-
+          // collapse-causes-scroll-jump problem fixed above. Staying
+          // mounted lets the chart's own swapPlot handle the redraw in
+          // place, same as the dam/date charts.
           <ChartErrorBoundary>
             <ScenarioTrajectoryChart
               observed={scenarioTrajectory.observed}

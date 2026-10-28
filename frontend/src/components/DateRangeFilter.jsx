@@ -1,11 +1,9 @@
-// Standard UI, not a chart mark (dataviz skill: "filters are standard UI...
-// one row, above the charts"). A year dropdown rather than fixed day-count
-// presets (90d/1yr/2yr/All) - this data is naturally year-shaped (so "look at
-// 2023" is a meaningful, nameable question in a way "look at the last 587
-// days" isn't), and it scales to however many years the warehouse ends up
-// holding without needing new preset buttons added by hand. The dual-handle
-// DateScrubber below can still select any custom window; this dropdown is
-// just the fast path to a whole calendar year or the whole history.
+// A year dropdown, not fixed day-count presets (90d/1yr/2yr/All) - this data
+// is naturally year-shaped, so "look at 2023" is a meaningful question in a
+// way "look at the last 587 days" isn't, and it scales to however many years
+// the warehouse ends up holding without new preset buttons. The dual-handle
+// DateScrubber below still selects any custom window; this dropdown is just
+// the fast path to a whole calendar year or the whole history.
 export default function DateRangeFilter({ allDates, windowStart, windowEnd, onChange }) {
   if (!allDates?.length) return null;
 
@@ -14,8 +12,8 @@ export default function DateRangeFilter({ allDates, windowStart, windowEnd, onCh
   const lastYear = Number(allDates[allDates.length - 1].slice(0, 4));
   for (let y = lastYear; y >= firstYear; y -= 1) years.push(y);
 
-  // "All" can't be expressed as a single year, so it's its own sentinel
-  // rather than overloading one of the year values.
+  // "All" can't be expressed as a single year, so it gets its own sentinel
+  // instead of overloading one of the year values.
   const isAll = windowStart == null && windowEnd == null;
   const isWholeYear =
     !isAll &&

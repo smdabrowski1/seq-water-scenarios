@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 
-// A literal two-handle slider at the bottom of the chart - drag either end
-// to open up any window across the full history, not just a fixed-length
-// window panned from one handle (the previous single-thumb version).
+// Two-handle slider at the bottom of the chart - drag either end to open up
+// any window across the full history, not just a fixed-length window panned
+// from one handle.
 //
-// Visual drag position is local state, committed to the parent (which drives
-// a full chart rebuild - expensive, and was a plausible source of a reported
-// "page jumps on click" bug, since every `input` event during a drag
-// re-rendered both Plot charts) only on release - so dragging itself never
-// triggers more than one real redraw. See plotUtils.js for the actual fix to
-// that bug (it wasn't the scroll-restore hack tried here first - removed).
+// Visual drag position is local state; it only commits to the parent (which
+// triggers a full chart rebuild) on release, so dragging never fires more
+// than one real redraw. A naive version re-rendered both Plot charts on
+// every `input` event during the drag, which caused a "page jumps on click"
+// bug - see plotUtils.js for the actual fix.
 export default function DateScrubber({ allDates, windowStart, windowEnd, onChange }) {
   const maxIndex = (allDates?.length ?? 1) - 1;
   const committedStart = Math.max(0, allDates?.indexOf(windowStart) ?? 0);

@@ -2,9 +2,8 @@
 landing each as a date-partitioned raw parquet file.
 
 Idempotent by construction: each partition is written via write-temp-then-
-os.replace(), so re-running the same day overwrites that partition rather than
-appending duplicate rows - this is what makes a cold-then-warm `make ingest`
-idempotent per SPEC.md's Phase 1 done-when criterion.
+os.replace(), so re-running the same day overwrites that partition rather
+than appending duplicate rows.
 """
 
 from __future__ import annotations

@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
 
-// Shown once, the first time the Scenarios section is opened - a real,
-// personal note rather than a generic "demo" badge, since the scenario
-// engine is the part of this project most likely to be mistaken for an
-// operational forecasting tool if it isn't said plainly up front.
+// Shown once, the first time the Scenarios section is opened - a personal
+// note instead of a generic "demo" badge, since the scenario engine is the
+// part most likely to be mistaken for an operational forecasting tool.
 export default function DemoDisclaimerModal({ onClose }) {
   const closeButtonRef = useRef(null);
 

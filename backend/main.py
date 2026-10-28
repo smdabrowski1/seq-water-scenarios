@@ -1,7 +1,6 @@
 """FastAPI app serving the dam storage/rainfall/geometry data straight from
-the DuckDB warehouse - mirrors the Hobby CDM Project's backend/main.py shape.
-No write endpoints: refreshing data is `make refresh` (warehouse/orchestrator.py),
-run separately, not triggered from this API.
+the DuckDB warehouse. No write endpoints - refreshing data is `make refresh`
+(warehouse/orchestrator.py), run separately, not triggered from this API.
 """
 
 from __future__ import annotations
@@ -80,9 +79,8 @@ def scenario_balance(scenario_name: str) -> list[dict]:
     return store.scenario_balance(scenario_name)
 
 
-# Serves the Vite build output in Docker (mirrors the Hobby CDM Project's
-# single-container pattern) - absent in local dev, where Vite's own dev
-# server on :5173 serves the frontend instead and CORS above covers it.
+# Serves the Vite build output in Docker. Absent in local dev, where Vite's
+# own dev server on :5173 serves the frontend instead and CORS above covers it.
 _frontend_dist = Path(__file__).parent.parent / "frontend" / "dist"
 if _frontend_dist.exists():
     app.mount("/", StaticFiles(directory=_frontend_dist, html=True), name="frontend")

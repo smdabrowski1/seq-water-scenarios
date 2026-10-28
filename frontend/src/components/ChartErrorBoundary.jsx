@@ -1,10 +1,9 @@
 import { Component } from "react";
 
-// Without this, an uncaught error inside a chart's render effect (e.g. the
-// Plot.barY/utc-scale mismatch found via live testing) unmounts the entire
-// React tree, not just the chart - confirmed the hard way ("appears then
-// disappears"). Charts are the most likely place for a data-shape surprise,
-// so they get their own boundary rather than sharing fate with the whole app.
+// Without this, an uncaught error inside a chart's render effect (e.g. a
+// Plot.barY/utc-scale mismatch) unmounts the entire React tree, not just
+// the chart. Charts are the most likely place for a data-shape surprise, so
+// they get their own boundary.
 export default class ChartErrorBoundary extends Component {
   state = { error: null };
 

@@ -1,13 +1,12 @@
 """Pipeline orchestrator: ingest -> dbt build -> dbt test -> promote.
 
-Translates the Hobby CDM Project's `backend/refresh.py` shape: write to a temp path,
-validate, `os.replace()` into the live path, and only then flip the registry —
-failure at any point before that last step leaves whatever is currently live
-completely untouched.
+Write to a temp path, validate, `os.replace()` into the live path, and only
+then flip the registry — a failure before that last step leaves whatever is
+currently live untouched.
 
 dbt is pointed at the temp path via the `DBT_DUCKDB_PATH` env var
-(dbt/profiles.yml.example reads it with a default), so a build-in-progress never
-touches the warehouse file the dashboard export step reads from.
+(dbt/profiles.yml.example reads it with a default), so a build-in-progress
+never touches the warehouse file the dashboard export step reads from.
 """
 
 from __future__ import annotations
@@ -150,8 +149,7 @@ _VALIDATE_TABLES = [
 
 def _validate_warehouse(tmp_warehouse: Path) -> None:
     """A dbt-test pass already validates model logic; this is the file-level
-    check that the build actually produced usable tables - mirrors the
-    sibling project's "parquet opens and has rows" convention.
+    check that the build actually produced usable tables.
 
     Checks one table from every layer (an intermediate model, not just the
     final marts) - a real bug (models materialized as views got their

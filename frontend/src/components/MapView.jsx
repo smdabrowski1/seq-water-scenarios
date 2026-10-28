@@ -134,8 +134,8 @@ export default function MapView({ dams, selectedDam, onSelectDam }) {
     else map.once("load", setData);
 
     // Fit to the real dam extent once, instead of a guessed center/zoom - a
-    // fixed whole-SEQ view made the actual reservoir polygons (much smaller
-    // footprint than the region) look like tiny specks, confirmed live.
+    // fixed whole-SEQ view made the reservoir polygons (much smaller
+    // footprint than the region) look like tiny specks.
     if (!allDamsBoundsRef.current && dams.features.length) {
       const bounds = new maplibregl.LngLatBounds();
       for (const feature of dams.features) {
@@ -169,12 +169,11 @@ export default function MapView({ dams, selectedDam, onSelectDam }) {
     forEachCoordinate(feature.geometry, (lng, lat) => bounds.extend([lng, lat]));
     // No isStyleLoaded()/once("load") gate here, unlike the add-source/
     // add-layer setup above (which genuinely needs the style loaded) - a
-    // camera move doesn't. Confirmed live that gate was the actual bug:
-    // map.isStyleLoaded() returned false on a long-since-fully-loaded,
-    // already-interactive map (an unrelated internal state, not "hasn't
-    // loaded yet"), silently routing into a once("load", ...) listener that
-    // can never fire again since "load" only ever fires once per map
-    // instance - the zoom silently never happened.
+    // camera move doesn't. That gate was actually the bug: map.isStyleLoaded()
+    // returned false on a long-since-fully-loaded, already-interactive map
+    // (an unrelated internal state, not "hasn't loaded yet"), silently
+    // routing into a once("load", ...) listener that can never fire again -
+    // "load" only fires once per map instance - so the zoom never happened.
     map.fitBounds(bounds, {
       padding: 80,
       maxZoom: 13, // some reservoirs (e.g. Lake Macdonald) are tiny - caps how tight this zooms

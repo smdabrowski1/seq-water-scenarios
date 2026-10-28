@@ -8,15 +8,13 @@ export default function ScenarioSelector({ scenarios, selectedName, onSelect }) 
 
   return (
     <div className="scenario-select-label">
-      {/* How the scenario engine itself works - lives here, right above the
-          picker it explains, rather than as a loose subtitle under the
-          section heading with nothing visually tying it to the tool it
-          describes. The one-line version stays visible; the full
-          methodology/data/assumptions writeup (this absorbed the standalone
-          "Limitations & assumptions" panel that used to sit at the bottom
-          of the whole page, disconnected from the scenario it was about) is
-          a click away, same expand-for-more pattern as the trajectory
-          chart's "How to read this chart". */}
+      {/* How the scenario engine works - sits right above the picker it
+          explains, instead of as a loose subtitle disconnected from it. The
+          one-line version stays visible; the full methodology/data/
+          assumptions writeup is a click away (same expand-for-more pattern
+          as the trajectory chart's "How to read this chart"). This absorbed
+          the old standalone "Limitations & assumptions" panel that used to
+          sit at the bottom of the page. */}
       <div className="scenario-methodology">
         <span className="scenario-methodology-icon" aria-hidden="true">
           i

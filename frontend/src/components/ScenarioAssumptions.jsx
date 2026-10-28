@@ -1,9 +1,9 @@
 import InfoToggle from "./InfoToggle.jsx";
 
-// Makes the two demand-side assumptions explicit in real numbers, not just
-// tier names - "medium population growth" and "status_quo demand" don't say
-// anything on their own; the actual population trajectory and L/person/day
-// figure are what the user asked to see spelled out.
+// Spells out the two demand-side assumptions as real numbers, not just tier
+// names - "medium population growth" and "status_quo demand" don't say
+// anything on their own without the actual population trajectory and
+// L/person/day figure.
 const DEMAND_TIER_LABELS = {
   status_quo: "status quo",
   efficiency: "efficiency",
@@ -49,9 +49,9 @@ export default function ScenarioAssumptions({ dim, balance }) {
       </dl>
 
       {/* Scenario-specific assumptions, keyed on `dim` - re-expands with
-          whatever's true for the currently selected scenario rather than a
-          static list, since what rainfall basis/climate adjustment/supply
-          figure applies genuinely changes scenario to scenario. */}
+          whatever's true for the currently selected scenario, since the
+          rainfall basis/climate adjustment/supply figure changes between
+          scenarios. */}
       <InfoToggle label="This scenario's assumptions">
         <p>
           <strong>Rainfall basis.</strong> {formatRainfallBasis(dim)}

@@ -28,9 +28,8 @@ from scenarios.engine import (
 from scenarios.engine import baseline_demand_ml_per_quarter as compute_baseline_demand
 
 # Real Seqwater drought-response triggers (Water Security Program 2023,
-# Figure 10 - sourced this session, see docs/decisions.md). Used for
-# fct_trigger_crossings: what fraction of a scenario's analogue fan crosses
-# each threshold, and when.
+# Figure 10 - see docs/decisions.md). Used for fct_trigger_crossings: what
+# fraction of a scenario's analogue fan crosses each threshold, and when.
 DROUGHT_TRIGGERS = {
     "pre_drought": 70.0,
     "drought_declared": 50.0,
@@ -39,35 +38,32 @@ DROUGHT_TRIGGERS = {
 }
 
 SCENARIOS_CONFIG_PATH = Path(__file__).parent / "config" / "scenarios.yml"
-# GL/yr -> ML/yr. Only desal + recycled water here - SPEC.md's own domain
-# primer names exactly these two as "climate-independent sources"
-# (desal is literally seawater; recycled water's input is wastewater
-# volume, which tracks population more than rainfall). Groundwater used to
-# be folded into this same flat constant - a drift this code introduced,
-# never something SPEC.md itself claimed - until a user question prompted
-# checking: Seqwater's own North Stradbroke Island Drought Response Plan
-# (seqwater.com.au/document/2261) monitors real aquifer bore-level drought
-# triggers for this exact allocation, and a 2024 Redlands2030 report on the
-# same aquifer states its level "hasn't even recovered" since the last
-# drought - groundwater is not actually climate-independent, just slower
-# and more buffered than a surface dam. See GROUNDWATER_FLOOR below for how
-# its yield now varies year to year instead of staying flat.
+# GL/yr -> ML/yr. Only desal + recycled water here - the project's domain
+# primer names exactly these two as "climate-independent sources" (desal is
+# literally seawater; recycled water's input is wastewater volume, which
+# tracks population more than rainfall). Groundwater used to be folded into
+# this same flat constant, which was wrong: Seqwater's North Stradbroke
+# Island Drought Response Plan (seqwater.com.au/document/2261) monitors real
+# aquifer bore-level drought triggers for this exact allocation, and a 2024
+# Redlands2030 report on the same aquifer says its level "hasn't even
+# recovered" since the last drought - groundwater isn't climate-independent,
+# just slower and more buffered than a surface dam. See GROUNDWATER_FLOOR
+# below for how its yield now varies year to year instead of staying flat.
 EXISTING_DESAL_RECYCLED_ML_PER_YEAR = (43 + 59) * 1000
 GROUNDWATER_FULL_ML_PER_YEAR = 16 * 1000  # seed_supply_options' sourced ceiling
 
 # No sourced GL/yr-vs-drought-severity curve exists for the Grid-allocated
-# portion of this aquifer specifically (checked live - the Drought Response
-# Plan above gives real bore-level triggers and response actions, not a
-# yield-reduction figure). First attempt tied the decay to grid *storage*
-# trigger tiers (reusing DROUGHT_TRIGGERS) - wrong basis, confirmed by a user
-# question: aquifer recharge responds to *rainfall*, not to how full the
-# surface dams happen to be, and a flat scenario-wide figure doesn't actually
-# decay at all, it's just one smaller constant. This version instead tracks
-# a trailing 4-quarter average of the actual rainfall being replayed, scaled
-# against the long-run historical average, recomputed every quarter - a real
-# year-by-year curve, not a single number. **The floor (20%) and the use of
-# a trailing-4-quarter window are still a reasoned assumption, not a sourced
-# figure** - flagged as such wherever shown.
+# portion of this aquifer specifically - the Drought Response Plan above
+# gives real bore-level triggers and response actions, not a yield-reduction
+# figure. An earlier version tied the decay to grid *storage* trigger tiers
+# (reusing DROUGHT_TRIGGERS), which was the wrong basis: aquifer recharge
+# responds to rainfall, not to how full the surface dams are, and a flat
+# scenario-wide figure doesn't decay at all - it's just a smaller constant.
+# This version tracks a trailing 4-quarter average of the actual rainfall
+# being replayed, scaled against the long-run historical average, recomputed
+# every quarter - a real year-by-year curve, not a single number. **The
+# floor (20%) and the trailing-4-quarter window are a reasoned assumption,
+# not a sourced figure** - flagged as such wherever shown.
 GROUNDWATER_FLOOR = 0.2
 GROUNDWATER_TRAILING_QUARTERS = 4
 
@@ -271,19 +267,17 @@ def run_all(warehouse_path: Path, data_dir: Path, log_cb=None) -> None:
         commit_by = compute_commit_by_dates(balance_negative_year, supply_options)
 
         for analogue in fan:
-            # quarter_offset is what the dashboard actually plots against (N
-            # quarters from today, mapped to a real future calendar date
-            # downstream in dbt) - offset 0 MUST be today's actual starting
-            # storage (trajectory_ml[0], identical across every analogue),
-            # not "after one quarter of that analogue's own rainfall".
-            # Previously this loop started at trajectory_ml[1:], silently
-            # dropping the real anchor point - every analogue then disagreed
-            # at offset 0 (it's already one quarter of divergent rainfall
-            # in), which the dashboard rendered as a visible jump right at
-            # the observed/projected splice. Confirmed live: baseline's
-            # offset-0 p50 was ~1.84M ML against a real latest observed
-            # storage of ~1.75M ML - an ~88,000 ML discontinuity that had
-            # nothing to do with the model, just a dropped data point.
+            # quarter_offset is what the dashboard plots against (N quarters
+            # from today, mapped to a calendar date downstream in dbt) -
+            # offset 0 MUST be today's actual starting storage
+            # (trajectory_ml[0], identical across every analogue), not
+            # "after one quarter of that analogue's own rainfall". This loop
+            # used to start at trajectory_ml[1:], dropping that anchor point,
+            # so every analogue disagreed at offset 0 - rendered as a visible
+            # jump at the observed/projected splice (baseline's offset-0 p50
+            # was ~1.84M ML against a real latest observed storage of ~1.75M
+            # ML - an ~88,000 ML discontinuity from a dropped data point, not
+            # the model).
             for offset, storage in enumerate(analogue["trajectory_ml"]):
                 if offset == 0:
                     q_start, rain = None, None
@@ -305,16 +299,14 @@ def run_all(warehouse_path: Path, data_dir: Path, log_cb=None) -> None:
         for option_name, commit_year in commit_by.items():
             option_row = supply_options.filter(pl.col("option_name") == option_name)
             lead_time = option_row["lead_time_years"][0]
-            # Stays text, same convention as lead_time_years - a real,
-            # disclosed TODO-VERIFY (Second desalination plant) is kept
-            # visible through the pipeline, never cast/coerced away. Back to
-            # the static seed ceiling here, including for groundwater - its
-            # real, varying figure now lives per-year in `balance_rows`
-            # (groundwater_yield_ml_per_year), which is where a per-year
-            # number actually belongs; this table only ever had one row per
-            # (scenario, option), which can't represent "decays every year"
-            # - it was overridden with a single decayed figure for one
-            # session but that was a worse fit than just reverting.
+            # Stays text, same convention as lead_time_years - a disclosed
+            # TODO-VERIFY (Second desalination plant) stays visible through
+            # the pipeline, never cast/coerced away. Uses the static seed
+            # ceiling here, including for groundwater: its real, varying
+            # figure lives per-year in `balance_rows`
+            # (groundwater_yield_ml_per_year) instead, since this table only
+            # ever has one row per (scenario, option) and can't represent a
+            # value that decays every year.
             yield_gl_per_year = option_row["yield_gl_per_year"][0]
             commit_by_rows.append(
                 {

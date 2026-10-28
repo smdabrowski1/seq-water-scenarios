@@ -1,11 +1,9 @@
 """DuckDB access layer.
 
-Mirrors the Hobby CDM Project's `engine.py` concurrency pattern: FastAPI runs
-sync route handlers on a thread pool, but a single shared DuckDB connection
-isn't safe for concurrent `execute()` calls from multiple threads - so every
-query grabs `self.con.cursor()` at the top rather than using `self.con`
-directly. Read-only against the warehouse; nothing here ever writes - that's
-`warehouse/orchestrator.py`'s job, run separately via `make refresh`.
+FastAPI runs sync route handlers on a thread pool, but a single shared DuckDB
+connection isn't safe for concurrent `execute()` calls from multiple threads,
+so every query grabs `self.con.cursor()` first. Read-only against the
+warehouse - writes happen in `warehouse/orchestrator.py` via `make refresh`.
 """
 
 from __future__ import annotations

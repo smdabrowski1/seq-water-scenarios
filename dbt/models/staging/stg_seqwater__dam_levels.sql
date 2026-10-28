@@ -4,10 +4,10 @@
 --
 -- Deduplicated to the most recent `dt` partition per (storage_date, dam_name):
 -- this source is a full ~5-year refetch every run, not an incremental append,
--- so once more than one dt= partition exists on disk (this project keeps raw
--- partitions immutable, never deletes old ones), the same row would otherwise
--- appear once per partition - confirmed the hard way as a real bug (see
--- docs/decisions.md) when it silently doubled fct_grid_storage_daily.
+-- so once more than one dt= partition exists on disk (raw partitions are
+-- immutable, never deleted), the same row would otherwise appear once per
+-- partition - a real bug that silently doubled fct_grid_storage_daily until
+-- fixed (see docs/decisions.md).
 with ranked as (
     select
         storage_date,

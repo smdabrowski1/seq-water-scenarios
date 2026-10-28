@@ -2,16 +2,13 @@ import * as Plot from "@observablehq/plot";
 import { useEffect, useRef, useState } from "react";
 import { swapPlot } from "../plotUtils.js";
 
-// The spec's "money shot": declining/flat yield vs. growing demand. Two real
-// series need two distinct colors + a legend (dataviz skill: "legend always
-// present for >=2 series... direct-labeled"). Demand reuses the existing
-// rainfall orange (a consistent "pressure/input" role); yield reuses the
-// existing storage blue. The deficit region (demand > yield) is shaded with
-// the real --danger hex (#d92d20, from styles.css - not resolved via
-// var() here, same reason the chart tip CSS needed a hardcoded fallback
-// this session: Plot renders raw SVG, which doesn't reliably inherit custom
-// properties) - a real status-color use (highlighting a state), not a third
-// series identity color.
+// Declining/flat yield vs. growing demand. Two series, two distinct colors
+// plus a direct-labeled legend. Demand reuses the existing rainfall orange
+// (a "pressure/input" role); yield reuses the existing storage blue. The
+// deficit region (demand > yield) is shaded with the --danger hex (#d92d20,
+// from styles.css) hardcoded rather than resolved via var() - Plot renders
+// raw SVG, which doesn't reliably inherit custom properties. This is a
+// status-color use (highlighting a state), not a third series identity color.
 const DEMAND_ORANGE = "#eb6834";
 const YIELD_BLUE = "#2a78d6";
 const DEFICIT_RED = "#d92d20";
@@ -102,9 +99,8 @@ export default function SupplyDemandBalanceChart({ balance, commitBy, dim }) {
     );
     const yMax = maxValue * 1.12;
 
-    // A plain mark being false/undefined in Plot's marks array throws
-    // ("invalid mark") rather than being skipped like a falsy React child
-    // would be - confirmed live earlier this session - so conditional marks
+    // A falsy mark in Plot's marks array throws ("invalid mark") instead of
+    // being skipped like a falsy React child would be, so conditional marks
     // are built separately and filtered, never inlined with `&&`.
     const marks = [
       Plot.ruleY([0]),
@@ -210,11 +206,11 @@ export default function SupplyDemandBalanceChart({ balance, commitBy, dim }) {
       </span>
 
       {/* A fixed legend, not end-of-line text labels - those collide
-          whenever the two series converge in value (confirmed live: demand
-          catching up to available yield pushed "Demand"/"Available yield"
-          on top of each other, unreadable). A legend's position never
-          depends on where the data happens to be, so it can't collide
-          regardless of how the lines move. */}
+          whenever the two series converge in value (demand catching up to
+          available yield pushed "Demand"/"Available yield" on top of each
+          other, unreadable). A legend's position doesn't depend on where
+          the data happens to be, so it can't collide regardless of how the
+          lines move. */}
       <div className="chart-legend">
         <span className="chart-legend-item">
           <span className="chart-legend-dot" style={{ background: DEMAND_ORANGE }} aria-hidden="true" />
@@ -471,11 +467,11 @@ function YieldBreakdownPanel({
         </span>
       </button>
 
-      {/* Fully unmounted when collapsed, not just visually hidden - the
-          CSS-only grid-rows collapse trick left a real, confirmed-live
-          sliver of the bar peeking out from under the summary row no
-          matter how it was tuned. A conditional render has no such leak:
-          collapsed genuinely means nothing below the summary row exists. */}
+      {/* Fully unmounted when collapsed, not just visually hidden - a
+          CSS-only grid-rows collapse trick left a sliver of the bar
+          peeking out from under the summary row no matter how it was
+          tuned. A conditional render has no such leak: collapsed means
+          nothing below the summary row exists. */}
       {expanded && (
         <div className="yield-breakdown-inner">
           {/* The composition itself, as one proportional bar - reads faster

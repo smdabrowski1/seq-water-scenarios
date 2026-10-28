@@ -1,9 +1,7 @@
 # Scenario engine: limitations
 
-Required by SPEC.md section 6's closing paragraph: "a documented limitations
-section... name these before anyone asks." Every item here is real and
-specific to this engine's actual construction, not generic disclaimers -
-each one was found and tested during this session, not assumed. See
+Every item here is real and specific to this engine's actual construction,
+not a generic disclaimer - each one was found and tested, not assumed. See
 `docs/decisions.md`'s 2026-10-05 entries for the full investigation behind
 several of these.
 
@@ -29,18 +27,17 @@ several of these.
   carries `any_beyond_validated_range` for exactly this reason - check it
   before trusting a number at face value.
 - **Linear, two-parameter, no antecedent-moisture memory.** Real hydrology
-  (researched this session) treats antecedent soil moisture as "the prime
-  factor of nonlinearity" in rainfall-runoff response; this model has no such
-  state - each quarter's simulated change depends only on that quarter's own
-  rainfall. Tested explicitly: adding lagged rainfall terms did not improve
-  validation, so this wasn't fixed by a quick addition, but it remains a real
-  structural gap, not a solved problem.
+  treats antecedent soil moisture as a primary driver of rainfall-runoff
+  nonlinearity; this model has no such state - each quarter's simulated
+  change depends only on that quarter's own rainfall. Adding lagged rainfall
+  terms was tried and didn't improve validation, so this is a real
+  structural gap, not an unexplored fix.
 - **The simulated "worst case" is bounded by 40 years of observed rainfall
   (1986-2025), not a true tail-risk estimate.** The Millennium Drought Repeat
-  scenarios replay the real worst drought *in our data* - if an unobserved,
-  more severe multi-year sequence is physically possible, this engine has no
-  way to generate or represent it (spec 6.2 names this same limitation for
-  climate adjustment specifically: "cannot generate unprecedented events").
+  scenarios replay the worst drought *in our data* - if a more severe,
+  unobserved multi-year sequence is physically possible, this engine has no
+  way to generate or represent it (same limitation the climate-adjustment
+  method has: it can't generate unprecedented events either).
 
 ## Demand
 
@@ -55,17 +52,17 @@ several of these.
   non-demand component (evaporation + typical release pattern) stays
   constant regardless of scenario. See `scenarios/engine.py`'s module
   docstring.
-- **Per-capita demand figures are derived, not measured** (SPEC.md 6's own
-  named limitation) - `seed_per_capita_demand`'s three tiers come from real
-  Seqwater-published targets/triggers, but applying any one of them as a
-  *constant* across a multi-year scenario is a simplification; real usage
-  responds dynamically to restriction announcements, weather, and behaviour
-  in ways a fixed L/day figure doesn't capture.
-- **Demand growth is not present anywhere in the historical rainfall
-  record** (SPEC.md 6's own named limitation) - the water-balance model was
-  fit on 2021-2026 storage behaviour under 2021-2026 demand; nothing in the
-  fit itself "knows" about future population growth, which is why demand is
-  projected and layered on separately rather than extrapolated from the fit.
+- **Per-capita demand figures are derived, not measured.**
+  `seed_per_capita_demand`'s three tiers come from real Seqwater-published
+  targets/triggers, but applying any one of them as a *constant* across a
+  multi-year scenario is a simplification; real usage responds dynamically
+  to restriction announcements, weather, and behaviour in ways a fixed L/day
+  figure doesn't capture.
+- **Demand growth isn't present anywhere in the historical rainfall
+  record.** The water-balance model was fit on 2021-2026 storage behaviour
+  under 2021-2026 demand; nothing in the fit itself "knows" about future
+  population growth, which is why demand is projected and layered on
+  separately rather than extrapolated from the fit.
 - **Population projections (`seed_population_projections`) only extend to
   2046.** Any scenario whose balance-negative year would fall after 2046 is
   reported as `None` ("never crosses" within the data available) rather than
@@ -74,8 +71,7 @@ several of these.
 
 ## Climate adjustment
 
-- **Delta-change method** (SPEC.md 6.2's own named limitation): scales
-  observed historical rainfall by a fixed real percentage
+- **Delta-change method**: scales observed historical rainfall by a fixed real percentage
   (`seed_climate_projections`), which preserves the historical sequencing of
   wet/dry periods and cannot generate a genuinely different (e.g. more
   front-loaded, or longer single dry spell) future pattern.
@@ -91,28 +87,27 @@ several of these.
 
 - **Existing desal + recycled water (102 GL/yr) is treated as a fixed
   constant**, not a modelled trajectory with its own real constraints (plant
-  maintenance windows, treatment capacity limits, desal ramping speed).
-  SPEC.md 6's own named limitation: "desal ramping changes drawdown" - not
-  represented here. These two genuinely are the climate-independent sources
-  SPEC.md's own domain primer names (desal is seawater; recycled water's
-  input is wastewater volume, tracking population more than rainfall).
+  maintenance windows, treatment capacity limits, desal ramping speed) -
+  desal ramping changing drawdown isn't represented here. These two
+  genuinely are the climate-independent sources (desal is seawater; recycled
+  water's input is wastewater volume, tracking population more than
+  rainfall).
 - **Minjerribah (North Stradbroke Island) groundwater is NOT
   climate-independent** - it was originally lumped into the constant above,
-  a drift this code introduced rather than something SPEC.md ever claimed.
-  Seqwater's own North Stradbroke Island Drought Response Plan
-  (seqwater.com.au/document/2261) monitors real aquifer bore-level drought
-  triggers for this exact allocation, and a 2024 Redlands2030 report on the
-  same aquifer states its level "hasn't even recovered" since the last
-  drought. Its yield now varies year to year - a trailing 4-quarter average
-  of the actual rainfall being replayed, scaled against the long-run
-  historical average, floored at 20% of the sourced 16 GL/yr ceiling (first
-  attempt tied the decay to grid *storage* trigger tiers instead; wrong
-  basis - aquifer recharge responds to rainfall, not to dam levels, and a
-  flat scenario-wide figure didn't actually decay year to year at all).
-  **The floor and the trailing-window length are a reasoned assumption, not
-  a sourced figure** - no published GL/yr-vs-drought-severity curve exists
-  for this specific Grid allocation (checked live; the Drought Response
-  Plan gives response actions, not a yield number). Shown per-year in the
+  which was wrong. Seqwater's own North Stradbroke Island Drought Response
+  Plan (seqwater.com.au/document/2261) monitors real aquifer bore-level
+  drought triggers for this exact allocation, and a 2024 Redlands2030 report
+  on the same aquifer states its level "hasn't even recovered" since the
+  last drought. Its yield now varies year to year - a trailing 4-quarter
+  average of the actual rainfall being replayed, scaled against the
+  long-run historical average, floored at 20% of the sourced 16 GL/yr
+  ceiling (an earlier version tied the decay to grid *storage* trigger
+  tiers instead, the wrong basis - aquifer recharge responds to rainfall,
+  not dam levels, and a flat scenario-wide figure didn't decay year to year
+  at all). **The floor and the trailing-window length are a reasoned
+  assumption, not a sourced figure** - no published GL/yr-vs-drought-severity
+  curve exists for this specific Grid allocation; the Drought Response Plan
+  gives response actions, not a yield number. Shown per-year in the
   dashboard's supply breakdown, labelled "modelled, rainfall-dependent."
 - **The EMSV critical threshold uses 10%, the upper/safer bound of
   Seqwater's own stated 8-10% range**, not a single precise trigger point -
@@ -121,12 +116,12 @@ several of these.
   differently-sourced, and one remains unknown.** The second desalination
   plant's 5-year lead time comes from genuine industry precedent (cross-
   checked against three real Australian desal projects). The Logan River
-  connection's 5-year figure is this project's own *derived* estimate (a
-  real stated 2031 target year minus the 2026 as-at-date), not a duration
-  Seqwater states directly - a meaningfully different kind of sourcing,
-  flagged in `seed_supply_options`'s own notes column. The Gold Coast
-  Desalination Plant capacity upgrade's lead time is genuinely unavailable
-  (`TODO-VERIFY`) - no source found gives it one, and none was guessed.
+  connection's 5-year figure is a derived estimate (a stated 2031 target
+  year minus the 2026 as-at-date), not a duration Seqwater states directly -
+  a meaningfully different kind of sourcing, flagged in
+  `seed_supply_options`'s own notes column. The Gold Coast Desalination
+  Plant capacity upgrade's lead time is genuinely unavailable
+  (`TODO-VERIFY`) - no source gives it one, and none was guessed.
 
 ## What this means in practice
 

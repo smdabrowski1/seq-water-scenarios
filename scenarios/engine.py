@@ -28,9 +28,9 @@ from scenarios.analogues import simulate_trajectory
 from scenarios.demand import project_demand_ml_per_year
 
 # EMSV (Essential Minimum Supply Volume) trigger: 8-10% of Grid storage,
-# Seqwater's own most severe drought-response tier (SPEC.md research this
-# session, Water Security Program 2023 p.34). Using the upper/safer bound
-# (10%) as the critical threshold a safe yield must never cross.
+# Seqwater's own most severe drought-response tier (Water Security Program
+# 2023 p.34). Using the upper/safer bound (10%) as the critical threshold a
+# safe yield must never cross.
 EMSV_TRIGGER_PCT = 10.0
 
 # Real baseline used only to compute the demand *delta* applied to alpha -
@@ -95,9 +95,8 @@ def find_safe_yield(
 ) -> float:
     """Binary search for the maximum constant annual demand such that no
     analogue in `fan` ever drops below `critical_threshold_ml`. Same concept
-    real water utilities call "system yield" (IQQM-style modelling, per this
-    session's research) - "increase demand until the level of service
-    objective is no longer valid."
+    water utilities call "system yield" (IQQM-style modelling) - increase
+    demand until the level of service objective is no longer met.
     """
 
     def passes(demand_ml_per_year: float) -> bool:

@@ -1,21 +1,16 @@
 """Seqwater historical dam-levels fetcher.
 
-NOT a fallback/nice-to-have anymore - confirmed during recon (see
-docs/decisions.md, "Seqwater's historic-dam-levels page has real inline data")
-that https://www.seqwater.com.au/historic-dam-levels server-renders a
-drupalSettings JSON blob (`seqw_dam_levels.historical`) with daily %/ML for
-all 25 Seqwater-operated dams plus a precomputed "SEQ Water Grid" aggregate -
-no JavaScript execution, no headless browser needed. This is the *only*
-source found with real data for all 12 SEQ Water Grid dams; BOM only has it
-for Somerset (see ingest/bom_kiwis.py / docs/decisions.md).
+https://www.seqwater.com.au/historic-dam-levels server-renders a drupalSettings
+JSON blob (`seqw_dam_levels.historical`) with daily %/ML for all 25
+Seqwater-operated dams plus a precomputed "SEQ Water Grid" aggregate - no JS
+execution, no headless browser needed. The only source with real data for all
+12 SEQ Water Grid dams; BOM only covers Somerset (see ingest/bom_kiwis.py).
 
-Known limitation: the page's default load only returns the last ~5 years
-(the `historical_dam_storage_form`'s default start_date). The full range back
-to 2008-07-01 exists (visible in the date picker's `min` attribute) but
-requires replaying that form's Drupal AJAX submission - attempted during
-recon, did not return the widened dataset in the time available. TODO-VERIFY
-extend to the full 2008+ range; not blocking for now since 5 years of real
-daily data per dam is already far more than BOM gave us for 11 of the 12 dams.
+Known limitation: the page's default load only returns the last ~5 years (the
+`historical_dam_storage_form`'s default start_date). Full range back to
+2008-07-01 exists (date picker's `min` attribute) but needs replaying that
+form's Drupal AJAX submission - not implemented. Not blocking: 5 years of real
+daily data per dam is still more than BOM gave us for 11 of the 12 dams.
 """
 
 from __future__ import annotations
@@ -34,10 +29,8 @@ _SETTINGS_RE = re.compile(r'data-drupal-selector="drupal-settings-json">(.*?)</s
 
 
 def fetch(source_config: dict[str, Any], cache: Cache) -> pl.DataFrame:
-    """Single dispatcher for `kind: scrape` (see ingest/config.py's `resource`
-    field) - both endpoints are the same source system, just two different
-    pages, so this keeps "one fetcher per kind" true rather than adding a
-    second `kind`."""
+    """Dispatcher for `kind: scrape` (see ingest/config.py's `resource` field) -
+    both endpoints are the same source system, just different pages."""
     resource = source_config["resource"]
     if resource == "historical":
         return fetch_dam_levels(source_config, cache)
@@ -49,11 +42,10 @@ def fetch(source_config: dict[str, Any], cache: Cache) -> pl.DataFrame:
 def fetch_dam_levels(source_config: dict[str, Any], cache: Cache) -> pl.DataFrame:
     """Long-format daily dam levels: one row per (date, dam_name).
 
-    Includes the precomputed "SEQ Water Grid" aggregate as its own
-    `dam_name` row (source's `g`/`l` fields) - this is the spec's headline
-    metric, computed by Seqwater itself, not re-derived here. The "All Dams"
-    aggregate (source's `c` field, all 25 dams including non-grid ones) is
-    dropped - out of scope per SPEC.md's 12-dam grid definition.
+    Includes the precomputed "SEQ Water Grid" aggregate as its own `dam_name`
+    row (source's `g`/`l` fields) - computed by Seqwater itself, not re-derived
+    here. The "All Dams" aggregate (source's `c` field, all 25 dams including
+    non-grid ones) is dropped - outside the 12-dam grid this project covers.
     """
     html = cache.get_text(HISTORICAL_URL)
     settings = _extract_drupal_settings(html)
@@ -97,12 +89,12 @@ _REDUCED_FSL_NOTE_RE = re.compile(
 
 
 def fetch_current_snapshot(cache: Cache) -> pl.DataFrame:
-    """The live /dam-levels table: dam name, full supply volume (ML, i.e. the
-    *current operating* FSL reference - already reduced where a reduction is
+    """The live /dam-levels table: dam name, full supply volume (ML - the
+    *current operating* FSL reference, already reduced where a reduction is
     in effect), current volume (ML), % full, any reduced-FSL notice text, and
-    the source id linking to the historical series. Used to populate
-    seeds/dam_metadata.csv's FSL columns with real figures instead of
-    TODO-VERIFY, and to cross-reference `source_id` in the historical fetch.
+    the source id linking to the historical series. Populates
+    seeds/dam_metadata.csv's FSL columns and cross-references `source_id`
+    against the historical fetch.
     """
     html = cache.get_text("https://www.seqwater.com.au/dam-levels")
     start = html.find('<table class="dam-levels-table')
