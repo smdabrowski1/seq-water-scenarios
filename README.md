@@ -1,5 +1,7 @@
 # seq-water-scenarios
 
+**[Live demo](https://seqwater.sebdabrowski.com)** · **[Walkthrough](https://sebdabrowski.com/seq-water)**
+
 A scheduled data platform: ingests South East Queensland (SEQ) water data (BOM,
 SILO, Seqwater), models it with dbt, pre-computes supply-demand scenarios, and
 serves them through a static dashboard. Full brief: [SPEC.md](SPEC.md).
