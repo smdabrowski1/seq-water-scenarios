@@ -4,7 +4,7 @@
 
 A scheduled data platform: ingests South East Queensland (SEQ) water data (BOM,
 SILO, Seqwater), models it with dbt, pre-computes supply-demand scenarios, and
-serves them through a static dashboard. Full brief: [SPEC.md](SPEC.md).
+serves them through a live dashboard. Full brief: [SPEC.md](SPEC.md).
 
 **The question this answers:** when does SEQ need its next major water supply
 investment, and how much does that date move under different rainfall and
@@ -12,10 +12,10 @@ population assumptions?
 
 ## Status
 
-This repo covers **Phase 0 (Recon), Phase 1 (Ingest), and the start of Phase 2
-(Model)** of the spec's 7-phase build plan (SPEC.md section 8). The scenario
-engine (Phase 3) and dashboard (Phase 4) are still stubbed - see the stub
-docstrings in `scenarios/*.py` and the empty `site/` directory.
+All of the spec's 7-phase build plan (SPEC.md section 8) is built: ingest,
+dbt modeling, the Polars scenario engine (`scenarios/`), and a FastAPI +
+React dashboard (`backend/` + `frontend/`) serving it live - see the links
+at the top of this README.
 
 **What's real today:** `make refresh` runs the full pipeline end to end -
 ingest → dbt seed/run into a temp DuckDB file → dbt test → validate → atomic
@@ -92,6 +92,22 @@ make test      # pytest, including the pipeline_runs registry's start/activate/r
 make lint      # ruff check + format --check
 ```
 
+To run the dashboard itself once the warehouse is built:
+
+```bash
+# backend
+uv run uvicorn backend.main:app --reload --port 8010
+
+# frontend (separate terminal)
+cd frontend && npm install && npm run dev
+```
+
+Or build and run the whole thing as one container:
+
+```bash
+docker compose up --build   # http://localhost:8010
+```
+
 ## Why GitHub Actions cron, not Airflow
 
 A daily batch of this size - a handful of API calls plus one dbt build - doesn't
@@ -115,15 +131,15 @@ SILO API       ┼─→ ingest/ (httpx + cache) ─→ raw parquet (data/raw/, 
                                             data/warehouse.duckdb
                                                      │
                                                      ▼
-                                    scenario engine, Polars (Phase 3, not built)
+                                      scenario engine, Polars (scenarios/)
                                                      │
                                                      ▼
-                               export to JSON (Phase 4, not built) → static dashboard → GitHub Pages
+                                FastAPI (backend/) → React dashboard (frontend/)
 ```
 
 `warehouse/registry.py` + `warehouse/orchestrator.py` implement the
 write-temp → validate → promote pattern: a failed or interrupted run never
-touches the warehouse file the (future) dashboard export would read from.
+touches the warehouse file the dashboard reads from.
 Every dbt layer materializes as a `table`, not the dbt-default `view` for
 staging/intermediate - DuckDB bakes a view's catalog name (derived from the
 file's own stem) into its stored SQL at creation time, which breaks after the
@@ -151,7 +167,13 @@ temp-file-to-final-path rename; tables don't carry that reference. See
   flood-range check on storage %, composite-uniqueness check on
   `fct_grid_storage_daily`) - warn/fail as appropriate, no `dbt_utils`
   dependency.
-- `scenarios/` — Polars scenario engine; stub signatures only until Phase 3.
+- `scenarios/` — Polars scenario engine: rainfall replay/climate adjustment
+  (`climate.py`), demand projection (`demand.py`), analogue scenarios
+  (`analogues.py`), and the water-balance model itself (`engine.py`). See
+  `scenarios/LIMITATIONS.md` for what it doesn't model.
+- `backend/` — FastAPI app serving the warehouse read-only to the dashboard.
+- `frontend/` — React dashboard: observed dam/grid history and the
+  scenario explorer (trajectory, supply-demand balance, investment toggles).
 - `seeds/dam_grid_membership.csv` — deliberately small: only the facts that
   genuinely can't be scraped (BOM site-id crosswalk, catchment) plus the
   12-dam grid-membership categorization. Everything else about the dams
@@ -161,7 +183,6 @@ temp-file-to-final-path rename; tables don't carry that reference. See
   all 12 dams, fetched once from OpenStreetMap (not a recurring ingest
   source - dam boundaries don't change day to day) and committed like a seed.
   Visualization only; ODbL-licensed, attribution required wherever displayed.
-- `site/` — static dashboard; framework choice deferred to Phase 4.
 - `docs/decisions.md` / `docs/data-quality.md` — ADR-lite log and data-quality
   incident log, kept up to date as the project progresses - including the
   corrections logged when earlier conclusions turned out to be wrong.

@@ -13,7 +13,7 @@ build:
 	uv run dbt build --project-dir dbt --profiles-dir dbt
 
 serve:
-	cd site && npm run dev
+	cd frontend && npm run dev
 
 lint:
 	uv run ruff check .
